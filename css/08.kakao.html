@@ -6,14 +6,56 @@
     <title>kakao: login</title>
     <link rel="icon" href="./images/kakaotalklogo.png" type="image/png">
     <link rel="stylesheet" href="./commons.css" type="text/css">
-<!-- 디자인을 작성하기 위한 영역 -->
     <style>
-        *{
-            box-sizing: border-box;
+        div{
+            /* box-shadow: 0 0 0 1px gray;  */
+        }
+        input{
+            width: 100%;
+            border: none;
+            font-size: 16px;
+        }
+        button.normal{
+            width: 100%;
+            background-color: #fee500;
+            border: none;
+            padding: 0.75em;
+            font-size: 15px;
+        }
+        button.a{
+            width: 100%;
+            background-color: rgb(233, 240, 240);
+            padding: 0.75em;
+            border: none;
+        }
+        a{
+            text-decoration: none;
+            color: rgb(36, 35, 35);
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    
+    <div class="container" style="width: 430px;">
+        <div class="cell center"><img src="./images/kakao.png" width="100"></div>    
+        <div class="cell" style="margin-top: 40px;">
+            <input type="text" name="memberId" required 
+                    placeholder="카카오메일 아이디, 이메일, 전화번호">
+        </div>  
+        <hr>  
+        <div class="cell" style="margin-top: 20px;">
+            <input type="text" name="memberPassword required"
+                    placeholder="비밀번호">    
+        </div>
+        <hr>
+        <div class="cell" style="margin-top: 40px;">
+            <button class="normal">
+                로그인
+            </button></div>
+        <hr style="margin-top: 20px; margin-bottom: 20px;">
+        <div class="cell center"><button class="a"><a href="#">
+            QR코드 로그인
+        </a></button></div>
+    </div>
 </body>
 </html>

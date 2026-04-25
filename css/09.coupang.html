@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠팡: 로그인</title>
+    <link rel="icon" href="./images/coupang.png" type="image/jpeg">
+    <link rel="stylesheet" href="./commons.css" type="text/css">
+    <style>
+        input{
+            width: 100%;
+            padding: 1em;
+        }
+        button.btn-login{
+            width: 100%;
+            padding: 0.75em;
+            background-color: rgb(78, 110, 251);
+            border: none;
+            color: aliceblue;
+            border-radius: 0.25em;
+            letter-spacing: 0.10em;
+        }
+        button.btn-passkey{
+            width: 100%;
+            padding: 0.75em;
+            border-radius: 0.25em;
+            border-color: rgb(177, 177, 177);
+            border-style: solid;
+            background-color: white;
+
+        }
+        a{
+            text-decoration: none;
+            color: rgb(53, 51, 51);
+            font-weight: bold;
+            font-size: 14px;
+            color: rgb(128, 130, 133);
+            letter-spacing: 0.10em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="width: 430px;">
+        <div class="cell center" style="margin-top: 100px;"><img src="./images/coupang.png"></div>
+        <div class="cell" style="margin-top: 30px;">
+            <input type="text" name="memberId" required 
+                    placeholder="아이디(이메일)">    
+        </div>
+        <div class="cell">
+            <input type="password" name="memberPassword" required 
+                    placeholder="비밀번호"
+        </div>
+        <div class="cell" style="margin-top: 20px;">
+            <button class="btn-login">
+                로그인
+            </button>
+        </div>
+        <hr class="cell" style="margin-top: 15px;">
+        <div>
+            <button class="btn-passkey" style="margin-top: 7px;">
+                <a href="#">회원가입</a>
+            </button>
+        </div>
+    </div>
+</body>
+</html>
