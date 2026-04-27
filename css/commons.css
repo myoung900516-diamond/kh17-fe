@@ -90,6 +90,19 @@
         .me-40{margin-right: 40px;}
         .me-50{margin-right: 50px;}
 
+        /* 글자(아이콘) 색상 유틸리티 클래스 */
+        .red{color: #d63031;}
+        .orange{color: #e17055;}
+        .yellow{color: #fdcb6e;}
+        .green{color: #00b894;}
+        .blue{color: #0984e3;}
+        .purple{color: #6c5ce7;}
+        .white{color: white ;}
+        .black{color: #2d3436;}
+        .gray{color: #636e72;}
+        .silver{color: #b2bec3;}
+        .gold{color: #d4af37 ;}
+
         .field{
             outline: none;
             font-size: 20px;
