@@ -10,15 +10,15 @@
     </style>
 </head>
 <body>
-    <form autocomplete="off">
-        <div class="container w-400 mt-50">
+    <form autocomplete="off" method="post" enctype="multipart/form-data">
+        <div class="container w-500 mt-50 mb-50">
             <div class="cell center"><h1>도서 등록</h1></div>
             <div class="cell">
                 <label>도서제목 *</label>
                 <input type="text" name="bookTitle" required class="field w-100">
             </div>   
             <div class="cell">
-                <label>저자</label>
+                <label>지은이</label>
                 <input type="text" name="bookAuthor" class="field w-100">
             </div>   
             <div class="cell">
@@ -48,13 +48,14 @@
 			        <option>과학</option>
 			        <option>추리소설</option>
 			        <option>자기계발</option>
+			        <option>수험서</option>
 		        </select>
             </div>   
             <div class="cell">
-                <label>커버이미지</label>
-                <input type="file" name="attach" accept=".png, .jpg" class="field w-100">
+                <label>표지</label>
+                <input type="file" name="attach" class="field w-100">
             </div>   
-                        <div class="cell mt-40 right">
+            <div class="cell mt-40 right">
                 <button class="btn btn-neutral">
                     목록으로
                 </button>
@@ -62,11 +63,7 @@
                     등록하기
                 </button>   
             </div>
-
-
-
         </div>
-        
     </form>
 </body>
 </html>

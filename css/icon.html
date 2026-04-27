@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" href="./commons.css" type="text/css">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <style>
+    </style>
+</head>
+<body>
+    <div class="container w-100 mt-50">
+        <h1>아이콘 다루기(Font Awesome 7)</h1>
+    </div>
+    <!--
+         <태그의 의미>
+         -i 태그는 원래 이텔리체를 표시하기 위한 태그로 만들어졌다
+         -font-style쓰면 되니 사람들이 생각보다 많이 안씀 
+         -Font Awesome 개발자가 이런 생각을 한다
+         -"어차피 잘 안쓰니까 i를 icon의 i라고 치고 쓰게 하자!"
+         
+         그래서 i태그로 예시를 제공해준다(원래 다른 태그도 가능)
+         ---------------------------------------------
+         <클래스의 의미>
+         fa는 Font Awesome의 줄임말
+
+         .fa-solid는 "속이 채워진 도형"을 의미
+         .fa-regular는 "속이 비워진 도형"을 의미
+         .fa-brands는 "기업 로고 도형"을 의미
+
+         그 뒤에 나오는 클래스는 도형의 종류를 의미
+    -->
+    <div class="cell" style="color: hsl(189, 85%, 55%); font-size: 50px;">
+        <i class="fa-regular fa-gem"></i>
+        <i class="fa-solid fa-gem"></i>
+    </div>
+
+    <div class="cell">
+        <i class="fa-solid fa-heart"></i>
+        <i class="fa-regular fa-heart"></i>
+    </div>
+    <!-- <div class="cell">
+        <i class="fa-solid fa-"></i>
+    </div> -->
+    <!-- 
+        [아이콘 장점] 글자처럼 취급된다
+        - 색상을 color로 바꿀 수 있다
+        - 크기를 font-size로 바꿀 수 있다
+        즉, 글자와 가장 자연스러운 배치가 가능 
+        
+    -->
+    <div class="cell" style="color: red;">
+        <i class="fa-solid fa-heart">90000</i>
+    </div>
+    <div class="cell" style="color: rgb(38, 38, 206); font-size: 25px;">
+        <i class="fa-solid fa-eye">553</i>
+    </div>
+    <!-- 
+        [아이콘 장점] 크기 배율 클래스가 가능 
+    -->
+    <div class="cell" style="color: red;">
+        <i class="fa-brands fa-youtube"></i>
+        <i class="fa-brands fa-youtube fa-2x"></i>
+    </div>
+    <div class="cell" style="color: #FEE500; font-size: 50px;">
+        <i class="fa-brands fa-kakao-talk"></i>
+    </div>
+    
+</body>
+</html>

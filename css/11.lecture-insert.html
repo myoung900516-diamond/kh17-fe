@@ -10,16 +10,19 @@
     </style>
 </head>
 <body>
-    <form autocomplete="off">
-        <div class="container w-400 mt-50">
+    <form autocomplete="off" method="post" enctype="multipart/form-data">
+        <div class="container w-400 mt-50 mb-50">
+            <div class="cell center">
+                <h1>강좌정보등록</h1>
+            </div>
             <div class="cell">
-                <label>강좌명 *</label>
+                <label>강의명 *</label>
                 <input type="text" name="lectureTitle" required 
                         placeholder="강좌명을 입력하세요" 
                         class="field w-100">
             </div>    
             <div class="cell">
-                <label>강좌유형 *</label>
+                <label>강의유형 *</label>
                 <select class="field w-100" name="lectureCategory" 
                         required>
                     <option value="">선택하세요</option>
@@ -29,8 +32,8 @@
                 </select>
             </div>
             <div class="cell">
-                <label>강좌기간 *</label>
-                <input type="number" name="lectureDuration" 
+                <label>강의기간 *</label>
+                <input type="text" inputmode="numeric" name="lectureDuration" 
                     min="30" step="30" value="30" required 
                     class="field w-100">
             </div>
@@ -41,7 +44,7 @@
                 class="field w-100">
             </div>
             <div class="cell">
-                <label>강좌형태 *</label>
+                <label>강의형태 *</label>
                 <select class="field w-100" name="lectureType" 
                         required>
                     <option value="">선택하세요</option>
@@ -51,7 +54,7 @@
                 </select>
             </div>
             <div class="cell">
-                <label>이미지 등록</label>
+                <label>미리보기</label>
                 <input type="file" name="attach" 
                         accept=".png, .jpg" multiple class="field w-100">
             </div>
