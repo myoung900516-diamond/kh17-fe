@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도서등록</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" href="./commons.css" type="text/css">
+    <style>
+    </style>
+</head>
+<body>
+    <form autocomplete="off">
+        <div class="container w-400 mt-50">
+            <div class="cell center"><h1>도서 등록</h1></div>
+            <div class="cell">
+                <label>도서제목 *</label>
+                <input type="text" name="bookTitle" required class="field w-100">
+            </div>   
+            <div class="cell">
+                <label>저자</label>
+                <input type="text" name="bookAuthor" class="field w-100">
+            </div>   
+            <div class="cell">
+                <label>출간일</label>
+                <input type="date" name="bookPublicationDate" class="field w-100">
+            </div>   
+            <div class="cell">
+                <label>가격 *</label>
+                <input type="text" name="bookPrice" required class="field w-100">
+            </div>   
+            <div class="cell">
+                <label>출판사</label>
+                <input type="text" name="bookPublisher" class="field w-100">
+            </div>   
+            <div class="cell">
+                <label>페이지수 *</label>
+                <input type="text" name="bookPageCount" required class="field w-100">
+            </div>   
+            <div class="cell">
+                <label>장르 *</label>
+                <select class="field w-100" name="bookGenre" required>
+			        <option value = "">선택</option>
+			        <option>판타지</option>
+			        <option>교양</option>
+			        <option>소설</option>
+			        <option>역사</option>
+			        <option>과학</option>
+			        <option>추리소설</option>
+			        <option>자기계발</option>
+		        </select>
+            </div>   
+            <div class="cell">
+                <label>커버이미지</label>
+                <input type="file" name="attach" accept=".png, .jpg" class="field w-100">
+            </div>   
+                        <div class="cell mt-40 right">
+                <button class="btn btn-neutral">
+                    목록으로
+                </button>
+                <button class="btn btn-positive">
+                    등록하기
+                </button>   
+            </div>
+
+
+
+        </div>
+        
+    </form>
+</body>
+</html>

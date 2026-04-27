@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강좌등록</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" href="./commons.css" type="text/css">
+    <style>
+    </style>
+</head>
+<body>
+    <form autocomplete="off">
+        <div class="container w-400 mt-50">
+            <div class="cell">
+                <label>강좌명 *</label>
+                <input type="text" name="lectureTitle" required 
+                        placeholder="강좌명을 입력하세요" 
+                        class="field w-100">
+            </div>    
+            <div class="cell">
+                <label>강좌유형 *</label>
+                <select class="field w-100" name="lectureCategory" 
+                        required>
+                    <option value="">선택하세요</option>
+                    <option>이론</option>
+                    <option>실습</option>
+                    <option>시험</option>
+                </select>
+            </div>
+            <div class="cell">
+                <label>강좌기간 *</label>
+                <input type="number" name="lectureDuration" 
+                    min="30" step="30" value="30" required 
+                    class="field w-100">
+            </div>
+            <div class="cell">
+                <label>수강료 *</label>
+                <input type="number" name="lecturePrice" 
+                min="1000" step="1000" value="1000" required 
+                class="field w-100">
+            </div>
+            <div class="cell">
+                <label>강좌형태 *</label>
+                <select class="field w-100" name="lectureType" 
+                        required>
+                    <option value="">선택하세요</option>
+                    <option>온라인</option>
+                    <option>오프라인</option>
+                    <option>혼합</option>
+                </select>
+            </div>
+            <div class="cell">
+                <label>이미지 등록</label>
+                <input type="file" name="attach" 
+                        accept=".png, .jpg" multiple class="field w-100">
+            </div>
+            <div class="cell mt-40 right">
+                <button class="btn btn-neutral">
+                    목록으로
+                </button>
+                <button class="btn btn-positive">
+                    등록하기
+                </button>   
+            </div>
+        </div>
+    </form>
+</body>
+</html>
