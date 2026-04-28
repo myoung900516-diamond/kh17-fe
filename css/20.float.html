@@ -10,9 +10,27 @@
         type="text/css">
     <link rel="stylesheet" href="./commons.css" type="text/css">
     <style>
+        div{
+            box-shadow: 0 0 0 1px gray; 
+        }
         .first-char{
             font-size: 100px;
             float: left;
+        }
+        /* float 전용 격리 영역 생성
+            -.float-area 안에 있는 모든 항목은 float:left이다
+            -새로운 영역을 만들어 clear는 힘드니 가상영역을 활용
+                - ::before는 시작 지점을 의미
+                - ::after는 종료 지점을 의미 */
+        .float-area > * {
+            float:left;
+            
+        }
+        .float-area::after{
+            /* 이 영역은 실제로는 존재하지 않는다 */
+            content:"";
+            display: block;
+            clear: both;
         }
     </style>
 </head>
@@ -22,8 +40,10 @@
             <h1>Float 속성 다루기</h1>
         </div>
         <div class="cell">
-            <span class="first-char">L</span>orem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac massa neque. Nunc sit amet urna et nisl imperdiet viverra vitae eget massa. Nam sit amet vehicula dui. Praesent ullamcorper varius arcu, ac volutpat nulla semper quis. Aliquam eget semper ligula. Sed elementum ipsum mauris, fringilla volutpat nulla volutpat vitae. Nunc lobortis ante ex, vitae faucibus eros tristique vel. Nunc venenatis id ex eu feugiat. Nulla cursus neque vel nibh commodo porttitor.
-            <span class="first-char">M</span>auris at maximus orci, vitae efficitur leo. Nullam ultrices hendrerit nibh eu blandit. Morbi laoreet pellentesque sem, vitae fermentum turpis. Suspendisse viverra dignissim lectus ac laoreet. Suspendisse dictum justo sit amet ante cursus, vel congue ex venenatis. Aliquam maximus eget augue id sollicitudin. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed non elementum nisl. Donec maximus congue velit, ac ultricies purus semper ut. Curabitur eu enim eget nunc dapibus lacinia non non massa. Vivamus elit purus, dapibus non vehicula quis, accumsan in odio.
+            <div class="float-area">
+                <span class="first-char">L</span>orem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac massa neque. Nunc sit amet urna et nisl imperdiet viverra vitae eget massa. Nam sit amet vehicula dui. Praesent ullamcorper varius arcu, ac volutpat nulla semper quis. Aliquam eget semper ligula. Sed elementum ipsum mauris, fringilla volutpat nulla volutpat vitae. Nunc lobortis ante ex, vitae faucibus eros tristique vel. Nunc venenatis id ex eu feugiat. Nulla cursus neque vel nibh commodo porttitor.
+                <span class="first-char">M</span>auris at maximus orci, vitae efficitur leo. Nullam ultrices hendrerit nibh eu blandit. Morbi laoreet pellentesque sem, vitae fermentum turpis. Suspendisse viverra dignissim lectus ac laoreet. Suspendisse dictum justo sit amet ante cursus, vel congue ex venenatis. Aliquam maximus eget augue id sollicitudin. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed non elementum nisl. Donec maximus congue velit, ac ultricies purus semper ut. Curabitur eu enim eget nunc dapibus lacinia non non massa. Vivamus elit purus, dapibus non vehicula quis, accumsan in odio.
+            </div>
         </div>
         <div class="cell">
             inline-block은 반씩 나눠서 배치할 수 없다
@@ -52,6 +72,20 @@
         <div style="clear:both;"></div>
         <div class="cell mt-50">
             일반글자
+        </div>
+        <!-- 
+            최종목표:
+            -float-area라는 클래스를 만들어서 float끼리 놀게하자
+            -이 영역이 끝나면 자동으로 clear까지 되도록 처리
+        -->
+        <div class="cell mt-50">
+            <div class="float-area">
+                <div class="w-50">1</div>
+                <div class="w-50">2</div>
+            </div>
+        </div>
+        <div class="cell mt-50">일반글자</div>
+        <div class="cell mt-50">일반글자
         </div>
     </div>
     
