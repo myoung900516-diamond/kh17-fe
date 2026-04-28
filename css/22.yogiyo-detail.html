@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1인분 주문</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="./commons.css" type="text/css">
+    <style>
+        div{
+            /* box-shadow: 0 0 0 1px gray;  */
+        }
+        .outer{
+            width: 400px;
+            height: 150px;
+            aspect-ratio: 1/1;
+            padding: 10px;
+        }
+        .outer > .inner {
+            border:1px solid gray;
+            width: 100%;
+            height: 100%;
+
+            font-size: 20px;
+            font-weight: bold;
+            padding: 1em;
+
+            background-color: rgb(241, 240, 237);
+        }
+        .outer > .inner > .a{
+        display:inline-block;
+        width:20%;
+        height:90%;
+        border: 1px solid black;
+
+        background-image:url("./images/diamond.png");
+        background-size:cover;
+        background-position:left;
+        background-repeat:no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cell mt-50">
+            <div class="float-area">
+                <div class="outer">
+                    <div class="inner">
+                        <a href="#" class="a"></a>
+                        <div class="">
+
+                            라이스박스
+                            리뷰/사장님댓글
+                            요기요결제/5000번 배달
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+</body>
+</html>
