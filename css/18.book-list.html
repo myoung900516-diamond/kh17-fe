@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도서 목록</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="./commons.css" type="text/css">
+    <style>
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cell center">
+            <h1>도서 목록</h1>
+        </div>
+        <div class="cell center">
+            <form autocomplete="off">
+                <select name="column" class="field">
+                    <option value="book_title">도서명</option>
+                    <option value="book_author">저자</option>
+                    <option value="book_publisher">출판사</option>
+                    <option value="book_genre">장르</option>
+                </select>
+                <input type="text" required name="keyword"
+                        class="field" placeholder="검색어 입력">
+                <button type="submit" class="btn btn-positive">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    검색
+                </button>
+            </form>
+        </div>
+        <div class="cell right">
+            <a href="#" class="btn btn-neutral">신규 도서 등록</a>
+            <a href="#" class="btn btn-neutral">전체 목록</a>
+        </div>
+        <div class="cell">
+            1-10 of 65
+        </div>
+        <div class="cell">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>도서번호</th>
+                        <th>도서명</th>
+                        <th>저자</th>
+                        <th>출판일</th>
+                        <th>출판사</th>
+                        <th>가격</th>
+                        <th>페이지수</th>
+                        <th>장르</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>완벽한 원시인</td>
+                        <td>자청</td>
+                        <td>2026-03-15</td>
+                        <td>열린책들</td>
+                        <td>23,000원</td>
+                        <td>369</td>
+                        <td>자기계발</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>완벽한 원시인</td>
+                        <td>자청</td>
+                        <td>2026-03-15</td>
+                        <td>열린책들</td>
+                        <td>23,000원</td>
+                        <td>369</td>
+                        <td>자기계발</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>완벽한 원시인</td>
+                        <td>자청</td>
+                        <td>2026-03-15</td>
+                        <td>열린책들</td>
+                        <td>23,000원</td>
+                        <td>369</td>
+                        <td>자기계발</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>완벽한 원시인</td>
+                        <td>자청</td>
+                        <td>2026-03-15</td>
+                        <td>열린책들</td>
+                        <td>23,000원</td>
+                        <td>369</td>
+                        <td>자기계발</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>완벽한 원시인</td>
+                        <td>자청</td>
+                        <td>2026-03-15</td>
+                        <td>열린책들</td>
+                        <td>23,000원</td>
+                        <td>369</td>
+                        <td>자기계발</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>완벽한 원시인</td>
+                        <td>자청</td>
+                        <td>2026-03-15</td>
+                        <td>열린책들</td>
+                        <td>23,000원</td>
+                        <td>369</td>
+                        <td>자기계발</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>완벽한 원시인</td>
+                        <td>자청</td>
+                        <td>2026-03-15</td>
+                        <td>열린책들</td>
+                        <td>23,000원</td>
+                        <td>369</td>
+                        <td>자기계발</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>완벽한 원시인</td>
+                        <td>자청</td>
+                        <td>2026-03-15</td>
+                        <td>열린책들</td>
+                        <td>23,000원</td>
+                        <td>369</td>
+                        <td>자기계발</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="cell">
+            <div class="pagination">
+                <a href="#">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </a>
+                <a href="#" class="on">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">7</a>
+                <a href="#">8</a>
+                <a href="#">9</a>
+                <a href="#">10</a>
+                <a href="#">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

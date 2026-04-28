@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>디자인 수업</title>
+    <title>국가 목록</title>
     <link rel="icon" href="/kh.png" type="image/jpeg">
     <link rel="stylesheet" 
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
@@ -36,6 +36,31 @@
         .table tbody{
             text-align: center;
         }
+        /* 
+            페이지네이션 디자인
+            -.pagination이라고 추가하면 자동 적용되도록 구현
+            -a태그를 개조해서 폭 설정이 가능하도록 구현
+         */
+         .pagination{
+            text-align: center;
+         }
+         .pagination > a{
+            color: rgb(78, 76, 76);
+            text-decoration: none;
+            text-align: center;
+            border: 1px solid transparent;
+            display: inline-block;
+            font-size: 16px;
+            min-width: 2em;
+            padding: 0.25em;
+         }
+         .pagination > a.on, 
+         .pagination > a:hover{
+            /* border: 1px solid rgb(36, 33, 33); */
+            box-shadow: 0 0 0 1px gray;
+            font-weight: bold;
+            color: rgb(201, 71, 19);
+         }
     </style>
 </head>
 <body>
@@ -47,9 +72,9 @@
         <div class="cell center">
             <form autocomplete="off">
                 <select name="column" class="field">
-                    <opion value="country_name">국가명</opion>
-                    <opion value="country_region">대륙명</opion>
-                    <opion value="country_capital">수도</opion>
+                    <option value="country_name">국가명</option>
+                    <option value="country_region">대륙명</option>
+                    <option value="country_capital">수도</option>
                 </select>
                 <input type="text" name="keyword" required 
                         class="field" placeholder="검색어 입력">
@@ -117,7 +142,24 @@
             </table>
         </div>
         <div class="cell">
-            pagination
+            <div class="pagination">
+                <a href="#">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </a>
+                <a href="#" class="on">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">7</a>
+                <a href="#">8</a>
+                <a href="#">9</a>
+                <a href="#">10</a>
+                <a href="#">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+            </div>
         </div>
     </div>
     

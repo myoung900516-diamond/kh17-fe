@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강의 목록</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="./commons.css" type="text/css">
+    <style>
+    </style>
+</head>
+<body>
+    <div class="container w-800">
+        <div class="cell center">
+            <h1>강의 목록</h1>
+        </div>
+        <div class="cell right">
+            <a href="#" class="btn btn-neutral">신규 강의 등록</a>
+        </div>
+        <div class="cell center mt-40">
+            <form autocomplete="off">
+                <select name="column" class="field">
+                    <option value="lecture_title">강의명</option>
+                    <option value="lecture_category">카테고리</option>
+                    <option value="lecture_type">강의형태</option>
+                </select>
+                <input type="text" name="keyword" required 
+                    class="field" placeholder="검색어 입력">
+                <button type="submit" class="btn btn-positive">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    검색
+                </button>
+            </form>
+        </div>
+        <div class="cell">
+            1-10 of 50
+        </div>
+        <div class="cell">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>강의번호</th>
+                        <th class="w-40">강의명</th>
+                        <th>카테고리</th>
+                        <th>강의시간</th>
+                        <th>수강료</th>
+                        <th>강의형태</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>java</td>
+                        <td>실습</td>
+                        <td>60</td>
+                        <td>900000</td>
+                        <td>온라인</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>java</td>
+                        <td>실습</td>
+                        <td>60</td>
+                        <td>900000</td>
+                        <td>온라인</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>java</td>
+                        <td>실습</td>
+                        <td>60</td>
+                        <td>900000</td>
+                        <td>온라인</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>java</td>
+                        <td>실습</td>
+                        <td>60</td>
+                        <td>900000</td>
+                        <td>온라인</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>java</td>
+                        <td>실습</td>
+                        <td>60</td>
+                        <td>900000</td>
+                        <td>온라인</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="cell">
+            <div class="pagination">
+                <a href="#">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </a>
+                <a href="#" class="on">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">7</a>
+                <a href="#">8</a>
+                <a href="#">9</a>
+                <a href="#">10</a>
+                <a href="#">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
