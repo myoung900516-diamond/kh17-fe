@@ -3,20 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>디자인 수업</title>
+    <title>자유게시판</title>
     <link rel="icon" href="/kh.png" type="image/jpeg">
     <link rel="stylesheet" 
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         type="text/css">
     <link rel="stylesheet" href="./commons.css" type="text/css">
     <style>
+        /* 링크 디자인
+            -변화를 부드럽게 보여주도록 처리
+            -transition-property : 변화를 부드럽게 처리할 항목
+            -transition-duration : 변화가 완료되는 지속시간
+            -transition-timing-function : 변화의 처리방식
+                -linear: 일정한 변화
+                -ease-out : 끝을 느리게(자동차 브레이크)
+        */
+        .link{
+            display: inline-block;
+            color: black;
+            text-decoration: none;
+            transition-property: transform, color;
+            transition-duration: 0.1s;
+            transition-timing-function: ease-out;
+        }
+        .link:hover{
+            /* text-decoration: underline; */
+            /* color: brown; */
+            
+            /* transform을 이용한 물리적인 변화
+                -translate()로 이동
+                -rotate()로 회전
+                -skew()로 기울이기
+                -scale()로 확대 축소 
+            */
+            transform: scale(1.09);
+            /* transform: rotate(45deg); */
+
+
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="cell">
-            <h1>자유게시판</h1>
-            타인에 대한 무분별한 비방글은 예고 없이 삭제 될 수 있습니다
+    <div class="container w-1200 mt-50 mb-50">
+        <div class="cell center mb-0">
+            <h1 class="mb-0">자유게시판</h1>
+        </div>
+        <div class="cell center mt-0">
+            <h4 class="mt-0">대한 무분별한 비방글은 예고 없이 삭제 될 수 있습니다
+                </h4>
         </div>
         <hr>
         <div class="cell">
@@ -28,7 +62,7 @@
                     <tr>
                         <th>번호</th>
                         <th>구분</th>
-                        <th>제목</th>
+                        <th class="w-40">제목</th>
                         <th>작성자</th>
                         <th>작성일</th>
                         <th>조회수</th>
@@ -39,7 +73,9 @@
                     <tr>
                         <td>1</td>
                         <td>공지</td>
-                        <td>테스트</td>
+                        <td class="left">
+                            <a href="#" class="link">테스트</a>
+                        </td>
                         <td>유저1</td>
                         <td>2026-04-02</td>
                         <td>60</td>
@@ -48,7 +84,9 @@
                     <tr>
                         <td>1</td>
                         <td>공지</td>
-                        <td>테스트</td>
+                        <td class="left">
+                            <a href="#" class="link">테스트</a>
+                        </td>
                         <td>유저1</td>
                         <td>2026-04-02</td>
                         <td>60</td>
@@ -57,7 +95,9 @@
                     <tr>
                         <td>1</td>
                         <td>공지</td>
-                        <td>테스트</td>
+                        <td class="left">
+                            <a href="#" class="link">테스트</a>
+                        </td>
                         <td>유저1</td>
                         <td>2026-04-02</td>
                         <td>60</td>
@@ -66,7 +106,9 @@
                     <tr>
                         <td>1</td>
                         <td>공지</td>
-                        <td>테스트</td>
+                        <td class="left">
+                            <a href="#" class="link">테스트</a>
+                        </td>
                         <td>유저1</td>
                         <td>2026-04-02</td>
                         <td>60</td>
@@ -75,7 +117,9 @@
                     <tr>
                         <td>1</td>
                         <td>공지</td>
-                        <td>테스트</td>
+                        <td class="left">
+                            <a href="#" class="link">테스트</a>
+                        </td>
                         <td>유저1</td>
                         <td>2026-04-02</td>
                         <td>60</td>
@@ -84,7 +128,9 @@
                     <tr>
                         <td>1</td>
                         <td>공지</td>
-                        <td>테스트</td>
+                        <td class="left">
+                            <a href="#" class="link">테스트</a>
+                        </td>
                         <td>유저1</td>
                         <td>2026-04-02</td>
                         <td>60</td>
@@ -93,7 +139,9 @@
                     <tr>
                         <td>1</td>
                         <td>공지</td>
-                        <td>테스트</td>
+                        <td class="left">
+                            <a href="#" class="link">테스트</a>
+                        </td>
                         <td>유저1</td>
                         <td>2026-04-02</td>
                         <td>60</td>
@@ -102,7 +150,9 @@
                     <tr>
                         <td>1</td>
                         <td>공지</td>
-                        <td>테스트</td>
+                        <td class="left">
+                            <a href="#" class="link">테스트</a>
+                        </td>
                         <td>유저1</td>
                         <td>2026-04-02</td>
                         <td>60</td>
@@ -111,7 +161,9 @@
                     <tr>
                         <td>1</td>
                         <td>공지</td>
-                        <td>테스트</td>
+                        <td class="left">
+                            <a href="#" class="link">테스트</a>
+                        </td>
                         <td>유저1</td>
                         <td>2026-04-02</td>
                         <td>60</td>
@@ -140,7 +192,7 @@
                 </a>
             </div>
         </div>
-        <div class="cell left">
+        <div class="cell right">
             <a href="#" class="btn btn-neutral">
                 <i class="fa-solid fa-pen-to-square"></i>
             </a>
@@ -154,6 +206,7 @@
                     class="field" placeholder="검색어입력">
             <button type="submit" class="btn btn-positive">
                 <i class="fa-solid fa-magnifying-glass"></i>
+                <span>검색</span>
             </button>
         </div>
     </div>
