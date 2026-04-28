@@ -198,3 +198,24 @@ a.btn{
 .table.table-stripe > tbody > tr:nth-child(2n){
     background-color: rgb(243, 185, 185);
 }
+.link{
+    display: inline-block;
+    color: black;
+    text-decoration: none;
+    transition-property: transform, color;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-out;
+}
+.link:hover{
+    /* text-decoration: underline; */
+    /* color: brown; */
+    
+    /* transform을 이용한 물리적인 변화
+        -translate()로 이동
+        -rotate()로 회전
+        -skew()로 기울이기
+        -scale()로 확대 축소 
+    */
+    transform: scale(1.09);
+    /* transform: rotate(45deg); */
+}

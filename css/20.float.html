@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>float 속성</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="./commons.css" type="text/css">
+    <style>
+        .first-char{
+            font-size: 100px;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container w-600">
+        <div class="cell center">
+            <h1>Float 속성 다루기</h1>
+        </div>
+        <div class="cell">
+            <span class="first-char">L</span>orem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac massa neque. Nunc sit amet urna et nisl imperdiet viverra vitae eget massa. Nam sit amet vehicula dui. Praesent ullamcorper varius arcu, ac volutpat nulla semper quis. Aliquam eget semper ligula. Sed elementum ipsum mauris, fringilla volutpat nulla volutpat vitae. Nunc lobortis ante ex, vitae faucibus eros tristique vel. Nunc venenatis id ex eu feugiat. Nulla cursus neque vel nibh commodo porttitor.
+            <span class="first-char">M</span>auris at maximus orci, vitae efficitur leo. Nullam ultrices hendrerit nibh eu blandit. Morbi laoreet pellentesque sem, vitae fermentum turpis. Suspendisse viverra dignissim lectus ac laoreet. Suspendisse dictum justo sit amet ante cursus, vel congue ex venenatis. Aliquam maximus eget augue id sollicitudin. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed non elementum nisl. Donec maximus congue velit, ac ultricies purus semper ut. Curabitur eu enim eget nunc dapibus lacinia non non massa. Vivamus elit purus, dapibus non vehicula quis, accumsan in odio.
+        </div>
+        <div class="cell">
+            inline-block은 반씩 나눠서 배치할 수 없다
+        </div>
+        <div class="cell">
+            <button class="btn" style="width:49.63%">좌측</button>
+            <button class="btn" style="width:49.63%">우측</button>
+        </div>
+        <div class="cell mt-50">
+            float를 써서 배치하면 여백이 안생긴다<br>
+            <button class="btn w-50" style="float: left">좌측</button>
+            <button class="btn w-50" style="float:left">우측</button>
+        </div>
+        <div class="cell">
+            <div class="w-50" style="float:left;">좌측</div>
+            <!-- <div class="w-50" style="float:left;">우측</div> -->
+        </div>
+        <!-- 
+            *중요*
+            -float는 여백이 없고 배치방향 설정이 쉽지만...
+            -우리가 여태까지 설계한 레이아웃을 무시한다
+            -float는 제한된 공간에서 자기들끼리만 놀게 해야한다(격리)
+            -float속성을 정리할 수 있는 별도의 공간이 필요
+                -(clear 속성이 사용된 영역이 필요)
+        -->
+        <div style="clear:both;"></div>
+        <div class="cell mt-50">
+            일반글자
+        </div>
+    </div>
+    
+</body>
+</html>
