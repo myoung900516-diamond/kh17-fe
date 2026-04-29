@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexible Layout</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="./commons.css" type="text/css">
+    <style>
+        div{
+            box-shadow: 0 0 0 1px gray; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cell center">
+            <h1>Flexible Layout</h1>
+        </div>
+        <!-- 
+            float를 이용해도 다단 배치는 가능하다..
+            -다만 높이가 서로 다를 경우 이를 보정하지 않는다(구멍이 뚫린다)
+            -나머지라는 폭을 설정할 수 없다.
+
+        -->
+        <div class="cell">
+            <div class="float-area">
+                <div class="w-100">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </div>
+                <div class="w-100">2단</div>
+                <div class="w-100">3단</div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="float-area">
+                <div class="w-100">1단</div>
+                <div class="w-100">2단</div>
+            </div>
+        </div>
+
+        <!-- 
+            flex영역을 만들어서 float의 문제점들을 해결해보자
+            -flex는 영역에 설정하는 것(float는 개별적으로 설정)
+            -별도의 설정하지 않으면 줄이 바뀌지 않음
+            -영역의 높이를 일정하게 맞춤
+            -방향전환이 자유로움(flex-direction)
+        -->
+        <div class="cell">
+            <div style="display: flex; flex-direction: row;">
+                <div class="w-100">1</div>
+                <div class="w-100">2</div>
+                <div class="w-100">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</div>
+                <div class="w-100">4</div>
+            </div>
+        </div>   
+    </div>
+</body>
+</html>
