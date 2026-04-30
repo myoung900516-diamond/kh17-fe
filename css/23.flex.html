@@ -13,6 +13,28 @@
         div{
             box-shadow: 0 0 0 1px gray; 
         }
+        /* flex디자인
+            -기본 영역은 .flex-area로 설정
+            -내부에 .flex-fill이 있다면 flex-grow설정
+            -정중앙 배치만 할 경우 .flex-center를 영역에 추가 설정
+            -세로 배치
+        */
+        .flex-area{
+            display: flex;
+            flex-direction: row; /*한줄에배치*/
+            flex-wrap: nowrap; /*줄바꿈금지*/
+        }
+        .flex-area > .flex-fill {
+            flex-grow: 1;
+        }
+        .flex-area.fill-center{
+            justify-content: center;
+            align-items: center;
+        }
+        .flex-area.flex-vertical{
+            flex-direction: column;
+        }
+
     </style>
 </head>
 <body>
@@ -35,8 +57,8 @@
         </div>
         <div class="cell">
             <div class="float-area">
-                <div class="w-100">1단</div>
-                <div class="w-100">2단</div>
+                <div class="w-100">1단ff</div>
+                <div class="w-100">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</div>
             </div>
         </div>
 
@@ -51,10 +73,45 @@
             <div style="display: flex; flex-direction: row;">
                 <div class="w-100">1</div>
                 <div class="w-100">2</div>
-                <div class="w-100">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</div>
+                <div class="w-100">3</div>
                 <div class="w-100">4</div>
             </div>
         </div>   
+        <!-- 
+            클래스는 float처럼 flex-area라고 영역 지정
+        -->
+        <div class="cell">
+            <div class="flex-area">
+                <div class="w-100">1dd</div>
+                <div class="w-100">1dd</div>
+                <div class="w-100">1dd</div>
+            </div>
+        </div>
+        <!-- 
+            flex 내부 항목에 flex-grow를 적으면 "잔여 공간"을 비율로 나눠가진다 
+            *(주의) 1:1이라고 해서 50%가 되는게 아니다(남은 공간을 나눠가지는 것)
+            *한쪽만 줘서 남은 공간을 다 차지하도록 구현하면 "나머지"를 설정할 수 있다
+        -->
+        <div class="cell">
+            <div class="flex-area">
+                <div style="flex-grow: 1;">1단ss</div>
+                <div style="flex-grow: 1;">2단ss</div>
+            </div>
+        </div>
+
+        <!-- 
+            flex는 내용물의 정렬상태를 매우 디테일하게 설정할 수 있다(총 9가지 위치) 
+            - justify-content 속성으로 좌, 우, 중앙, 양쪽 정렬등을 설정할 수있다
+            - align-items 속성으로 상, 중, 하 정렬을 설정할 수있다.
+        -->
+         <div class="cell">
+            <div class="flex-area" style="height:200px; justify-content: center; align-items: center;">
+                <div> 
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    로딩중...
+                </div>
+            </div>
+         </div>
     </div>
 </body>
 </html>
