@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+        .target{
+            font-size: 50px;
+            font-weight: bold;
+
+            transition:color 0.1s ease-out;
+        }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        //style을 변경할 때는 신중해야 한다(기존의 inline 스타일이 없어질 수 있다.)
+        function turnRed(){
+            var target = document.querySelector(".target");
+            // target.style= "color: red";//권장하지 않음(style전체를)
+            target.style.color = "red";//나머지 스타일을 유지해줌
+            // document.getElementById("").style.color = "red";
+        }
+        function turnGreen(){
+            var target = document.querySelector(".target");
+            // target.style= "color: green";
+            target.style.color = "green";
+            //document.getElementById("").style.color = "green";
+        }
+        function turnBlue(){
+            var target = document.querySelector(".target");
+            // target.style= "color: blue";
+            target.style.color = "blue";
+            //document.getElementById("").style.color = "blue";
+        }
+        function turnBlack(){
+            var target = document.querySelector(".target");
+            // target.style= "color: black";
+            target.style.color = "black";
+            //document.getElementById("").style.color = "black";
+        }
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>색상 변경문제 </h1>
+        </div>
+        <div class="cell center">
+            <button type="button" class="btn" style="color: red;" onclick="turnRed();">빨강</button>
+            <button type="button" class="btn" style="color: green;" onclick="turnGreen();">초록</button>
+            <button type="button" class="btn" style="color: blue;" onclick="turnBlue();">파랑</button>
+            <button type="button" class="btn" style="color: black;" onclick="turnBlack();">검정</button>
+        </div>
+        <div class="cell center target">
+            Hello Javascript!
+            <!-- <h1 id="h1">Hello Javascript!</h1> -->
+        </div>
+
+
+    </div>
+</body>
+</html>
