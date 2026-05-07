@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        /* div{ box-shadow: 0 0 0 1px #cccccc;} */
+        .outer{
+            width: 10%;
+            padding: 2px;
+        }
+        .display{
+            font-size:  16px;
+            min-height:2.5em;
+            word-break: break-all;
+        }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        function deleteAll(){
+            var target = document.querySelector(".target");
+            target.value = "";
+            var display = document.querySelector(".display");
+            display.textContent = "";
+        }
+        
+        function addText(number){
+            var target = document.querySelector(".target");
+
+            var current = Number(target.value.replaceAll(",", ""));
+
+            var result = current + number;
+
+            target.value = result.toLocaleString();
+
+            var display = document.querySelector(".display");
+
+            var current2 = Number(display.textContent.replaceAll(",", ""));
+            
+            var result2 = current2 + number;
+
+            display.textContent = result2.toLocaleString();
+        }
+        
+        function deleteOne(number){
+            var target = document.querySelector(".target");
+            var origin = target.value;
+            var cut = origin.substring(0, origin.length-1);
+            target.value =cut;
+            var display = document.querySelector(".display");
+            var origin2 = display.textContent;
+            var cut2 = origin2.substring(0, origin2.length-1);
+            display.textContent =cut2;
+        }
+        
+
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>계좌이체</h1>
+        </div>
+        <div class="cell">
+            <input type="text" class="field w-80 target" placeholder="이체할 금액을 입력하세요">
+        </div>
+
+        <div class="cell flex-area" style="flex-wrap: wrap;">
+            <div class="field outer">
+                <button type="button" class="btn btn-neutral w-100" onclick="addText(10000000);">천만</button>
+            </div>
+            <div class="field outer">
+                <button type="button" class="btn btn-neutral w-100" onclick="addText(1000000)">백만</button>
+            </div>
+            <div class="field outer">
+                <button type="button" class="btn btn-neutral w-100" onclick="addText(100000)">십만</button>
+            </div>
+            <div class="field outer">
+                <button type="button" class="btn btn-neutral w-100" onclick="addText(10000)">만</button>
+            </div>
+            <div class="field outer">
+                <button type="button" class="btn btn-neutral w-100" onclick="addText(1000)">천</button>
+            </div>
+            <div class="field outer">
+                <button type="button" class="btn btn-neutral w-100" onclick="addText(100)">백</button>
+            </div>
+            <div class="field outer">
+                <button type="button" class="btn btn-neutral w-100" onclick="addText(10)">십</button>
+            </div>
+            <div class="field outer">
+                <button type="button" class="btn btn-neutral w-100" onclick="addText(1)">일</button>
+            </div>
+            <div class="field outer">
+                <button type="button" class="btn btn-negative w-100" onclick="deleteOne();">
+                    <i class="fa-solid fa-delete-left"></i>
+                </button>
+            </div>
+            <div class="field outer">
+                <button type="button" class="btn btn-negative w-100" onclick="deleteAll();">
+                    <i class="fa-solid fa-eraser"></i>
+                </button>
+            </div>
+            <div class="cell flex-area">
+                <div class="flex-fill">이체하시려는 금액은 총</div>
+                <div class="display"></div>
+                <div class="flex-fill">원 입니다.</div>
+            </div>
+            
+            
+        </div>
+
+    </div>
+</body>
+</html>
