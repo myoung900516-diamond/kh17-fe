@@ -42,13 +42,32 @@
 
             var display = document.querySelector(".display");
 
-            var current2 = Number(display.textContent.replaceAll(",", ""));
-            
-            var result2 = current2 + number;
+            display.textContent = target.value;
 
-            display.textContent = result2.toLocaleString();
+            // var current2 = Number(display.textContent.replaceAll(",", ""));
+            
+            // var result2 = current2 + number;
+
+            // display.textContent = result2.toLocaleString();
         }
+        function addByKeyboard(){
+            var target = document.querySelector(".target");
+
+            var value = target.value.replace(/[^0-9]/g, "");
+
         
+            var number = Number(value);
+
+        
+            var result = number.toLocaleString();
+
+        
+            target.value = result;
+
+            var display = document.querySelector(".display");
+
+            display.textContent = result;
+        }
         function deleteOne(number){
             var target = document.querySelector(".target");
             var origin = target.value;
@@ -69,7 +88,7 @@
             <h1>계좌이체</h1>
         </div>
         <div class="cell">
-            <input type="text" class="field w-80 target" placeholder="이체할 금액을 입력하세요">
+            <input type="text" class="field w-80 target" placeholder="이체할 금액을 입력하세요" oninput="addByKeyboard();">
         </div>
 
         <div class="cell flex-area" style="flex-wrap: wrap;">

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        /* div{ box-shadow: 0 0 0 1px #cccccc;} */
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        function calculateLength(){
+            var target = document.querySelector(".target");
+            var size = target.value;
+            var byte = new TextEncoder().encode(size).length;
+            var count = document.querySelector(".count");
+            count.textContent = byte;
+
+            if(byte > 1000){
+                count.style.color = "red";
+            }
+            else{
+                count.style.color = "black";
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>자기소개</h1>
+        </div>
+        <div class="cell">
+            (Q) 가장 최근에 관심있게 본 IT소식은 무엇입니까?(그래서 뭘 해봤나요?)
+        </div>
+        <div class="cell">
+            <textarea name="q1" rows=10 class="field w-100 target" oninput="calculateLength();"></textarea>
+            <span class="count">0</span>/1000byte
+        </div>
+        <div class="cell right"><span class="count">0</span>/1000byte</div>
+    </div>
+</body>
+</html>
