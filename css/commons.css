@@ -454,11 +454,14 @@ ul{
     background-position: right 0.5em center;
     padding-right: 2em;
 }
+.select.field{
+    background-position-x: right 1em;
+}
 .field.success{
-    background-image: url("./images/success.png");
+    background-image: url("https://cdn.jsdelivr.net/gh/myoung900516-diamond/cdn/valid.png");
     border-color:rgb(72, 72, 236);
 }
 .field.fail{
-    background-image: url("./images/fail.png");
+    background-image: url("https://cdn.jsdelivr.net/gh/myoung900516-diamond/cdn/invalid.png");
     border-color: rgb(214, 39, 39);
 }
