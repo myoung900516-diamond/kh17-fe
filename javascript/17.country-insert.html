@@ -36,7 +36,7 @@
             tag.classList.add(valid ? "success" : "fail");
         }
         function getByteLength(str){
-            return new TextEncoder.encode(str).length;
+            return new TextEncoder().encode(str).length;
         }
         function filterCountryPopulation(){
             var tag = document.querySelector("[name=countryPopulation]");
@@ -89,7 +89,7 @@
                 <input type="text" name="countryCapital" 
                     class="field w-100" 
                     placeholder="e.g., 서울"
-                    onblur="checkCountryCapital();"  spellcheck="false">
+                    onblur="checkCountryCapital();">
                 <div class="success-feedback"></div>
                 <div class="fail-feedback">미입력이거나 허용 크기를 초과했습니다.</div>
             </div>
