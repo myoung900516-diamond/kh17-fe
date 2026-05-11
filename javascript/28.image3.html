@@ -16,19 +16,19 @@
     <!-- 자바스크립트 작성 영역 -->
     <script>
       window.addEventListener("load", function(){
-            var btn = document.querySelectorAll(".btn");
+            var buttons = document.querySelectorAll(".btn");
 
-            btn[0].addEventListener("click", function(){
-                var target = document.querySelector("img");
-                target.width = 150;
+            buttons[0].addEventListener("click", function(){
+                var img = document.querySelector("img");
+                img.width = 150;
             });
-            btn[1].addEventListener("click", function(){
-                var target = document.querySelector("img");
-                target.width = 300;
+            buttons[1].addEventListener("click", function(){
+                var img = document.querySelector("img");
+                img.width = 300;
             });
-            btn[2].addEventListener("click", function(){
-                var target = document.querySelector("img");
-                target.width = 450;
+            buttons[2].addEventListener("click", function(){
+                var img = document.querySelector("img");
+                img.width = 450;
             });
         });
     

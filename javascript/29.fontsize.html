@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        /* div{ box-shadow: 0 0 0 1px #cccccc;} */
+        .target{
+            font-weight: bold;
+            transition:font-size 0.1s ease-out;
+            word-break: break-all;
+            font-size: 16px;
+        }
+    
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        window.addEventListener("load", function(){
+            var size = 16;
+
+            
+            var btnSmall = document.querySelector(".btn-small");
+            btnSmall.addEventListener("click", function(){
+                if(size == 10) return;
+                var target = document.querySelector(".target");
+                size -= 1;
+                target.style.fontSize = size +"px";
+
+                var span = document.querySelector(".current");
+                span.textContent = "현재 : " + size + "px";
+            });
+            
+            
+            var btnLarge = document.querySelector(".btn-large");
+            btnLarge.addEventListener("click", function(){
+                if(size == 36) return;
+                var target = document.querySelector(".target");
+                size += 1;
+                target.style.fontSize = size +"px";
+
+                var span = document.querySelector(".current");
+                span.textContent = "현재 : " + size + "px";
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>글자 크기 변경 문제</h1>
+        </div>
+        <div class="cell center">
+            <button type="button" class="btn btn-small">
+                <i class="fa-solid fa-minus"></i>
+            </button>
+            <span class="current">현재 : 16px</span>
+            <button type="button" class="btn btn-large">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+        <hr>
+        <div class="cell left target">
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        
+        </div>
+
+    </div>
+</body>
+</html>
