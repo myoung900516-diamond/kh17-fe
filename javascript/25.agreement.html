@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>agreement</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        function checkBoxProcess(){
+            var checkRequired = document.querySelector(".check-required");
+            var checkItemRequired = document.querySelectorAll(".check-item-required");
+
+            checkRequired.addEventListener("change", function(){
+                checkItemRequired.forEach(function(checkbox){
+                    checkbox.checked = checkRequired.checked;
+                });
+            });
+
+            var checkAll = document.querySelector(".check-all");
+            var checkItem = document.querySelectorAll(".check-item");
+
+            checkAll.addEventListener("change", function(){
+                checkItem.forEach(function(checkbox){
+                    checkbox.checked = checkAll.checked;
+                });
+            });
+             
+            checkItemRequired.forEach(function(checkbox){
+
+            checkbox.addEventListener("change", function(){
+
+                var allRequiredChecked = true;
+
+                checkItemRequired.forEach(function(item){
+                    if(!item.checked){
+                        allRequiredChecked = false;
+                    }
+                });
+
+                checkRequired.checked = allRequiredChecked;
+            });
+
+            });
+
+            checkItem.forEach(function(checkbox){
+
+                checkbox.addEventListener("change", function(){
+
+                    var allChecked = true;
+
+                    checkItem.forEach(function(item){
+                        if(!item.checked){
+                            allChecked = false;
+                        }
+                    });
+
+                    checkAll.checked = allChecked;
+                });
+            });
+            
+        }
+        
+        window.onload = checkBoxProcess;
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>동의/비동의</h1>
+        </div>
+        <div class="cell"> <input type="checkbox" class="check-item check-required"> 필수 이용약관에 모두 동의합니다
+
+        </div>
+        <div class="cell"> <input type="checkbox" class="check-all"> 이용약관에 모두 동의합니다
+        </div>
+        <hr>
+        <div class="cell"> <input type="checkbox" class="check-item check-item-required"> (필수) 어쩌구저쩌구1
+        </div>
+        <div class="cell"> <input type="checkbox" class="check-item check-item-required"> (필수) 어쩌구저쩌구2
+        </div>
+        <div class="cell"> <input type="checkbox" class="check-item"> (선택) 어쩌구저쩌구3
+        </div>
+        <div class="cell"> <input type="checkbox" class="check-item"> (선택) 어쩌구저쩌구4
+        </div>
+    </div>
+</body>
+</html>
