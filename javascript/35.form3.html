@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>디자인 수업</title>
+    <title>입력폼검사(국가명)</title>
     <link rel="icon" href="/kh.png" type="image/jpeg">
     <link rel="stylesheet" 
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
@@ -61,7 +61,9 @@
             });
             
             document.querySelector("[name=countryPopulation]").addEventListener("input", function(){
-                
+                var regex = /[^0-9]+/g;
+                var replacement = this.value.replace(regex, "");
+                this.value = replacement;
             });
             document.querySelector("[name=countryPopulation]").addEventListener("blur", function(){
                 var valid = this.value.length > 0 && parseInt(this.value) > 0;
@@ -77,6 +79,7 @@
                 document.querySelector("[name=countryName]").dispatchEvent(new Event("blur"));
                 document.querySelector("[name=countryCapital]").dispatchEvent(new Event("blur"));
                 document.querySelector("[name=countryPopulation]").dispatchEvent(new Event("blur"));
+                document.querySelector("[name=countryPopulation]").dispatchEvent(new Event("input"));
                 //return false;
                 // if(countryNameValid == false){
                     //     e.preventDefault();

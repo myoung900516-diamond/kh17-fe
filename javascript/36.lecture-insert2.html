@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>입력폼검사(강의)</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        window.addEventListener("load", function(){
+
+            var state = {
+                lectureTitleValid : false,
+                lectureCategoryValid : false,
+                lectureDurationValid : false,
+                lecturePriceValid : false,
+                lectureTypeValid : false, 
+
+                ok : function(){
+                    return this.lectureTitleValid && this.lectureCategoryValid 
+                            && this.lectureDurationValid && this.lecturePriceValid 
+                            && this.lectureTypeValid;
+                }
+
+            };
+
+            document.querySelector("[name=lectureTitle]").addEventListener("blur", function(){
+                var valid = this.value.length > 0;
+                this.classList.remove("success", "fail");
+                this.classList.add(valid? "success": "fail");
+
+                state.lectureTitleValid = valid;
+            });
+
+            document.querySelector("[name=lectureCategory]").addEventListener("input", function(){
+                var regex = /^(이론|실습|시험)$/;
+                var valid = regex.test(this.value);
+                this.classList.remove("success", "fail");
+                this.classList.add(valid? "success" : "fail");
+
+                state.lectureCategoryValid = valid;
+            });
+
+            //document.querySelector("[name=lectureDuration]").addEventListener("input", numberFilter);
+            //document.querySelector("[name=lecturePrice]").addEventListener("input", numberFilter);
+            var numberInputList = document.querySelectorAll("[inputmode=numeric]");
+            for(var i =0 ; i < numberInputList.length; i++){
+                numberInputList[i].addEventListener("input", numberFilter);
+            }
+            document.querySelector("[name=lectureDuration]").addEventListener("blur", function(){
+            var duration = parseInt(this.value);
+                var valid = duration <= 300 && duration % 30 == 0 ;
+                this.classList.remove("success", "fail");
+                this.classList.add(valid? "success" : "fail");
+
+                state.lectureDurationValid = valid;
+            });
+            document.querySelector("[name=lecturePrice]").addEventListener("blur", function(){
+                var price = parseInt(this.value);
+                var valid = price >= 0 && price % 1000 == 0 ;
+                this.classList.remove("success", "fail");
+                this.classList.add(valid? "success" : "fail");
+
+                state.lecturePriceValid = valid;
+            });
+            document.querySelector("[name=lectureType]").addEventListener("input", function(){
+                var regex = /^(온라인|오프라인|혼합)$/;
+                var valid = regex.test(this.value);
+                this.classList.remove("success", "fail");
+                this.classList.add(valid? "success" : "fail");
+
+                state.lectureTypeValid = valid;
+            });
+
+            document.querySelector(".form-check").addEventListener("submit", function(e){
+
+                
+                var selectList = document.querySelectorAll("select[name]");
+                for(var i = 0 ; i < selectList.length; i++){
+                    selectList[i].dispatchEvent(new Event("input"));
+                }
+                var inputList = document.querySelectorAll("input[name]");
+                for(var i=0; i< inputList.length; i++){
+                    inputList[i].dispatchEvent(new Event("blur"));
+                }
+
+                if(state.ok() == false){
+                    e.preventDefault();
+                }
+            });
+            //유틸리티 함수
+            function numberFilter(){
+                var regex = /[^0-9]+/g;
+                var replacement = this.value.replace(regex, "");
+                this.value = parseInt(replacement || 0);
+            };
+            //(+추가) 파일 입력창에서 이벤트가 발생했을 때 이를 분석
+            document.querySelector("[name=attach]").addEventListener("input", function(){
+                //this == 파일선택창
+                //* 파일 입력창에는 files라는 내장항목이 있고, 파일을 고르거나 취소하면 결과가 담긴다. 
+                // console.log(this.files);
+                if(this.files.length > 0){
+                    console.log("파일선택");
+                    //미리보기를 구현할 경우 this.files에 담긴 이미지들을 img태그를 만들어서 ㄴ허고 화면에 추가
+                }
+                else{
+                    console.log("파일 선택 취소");
+                    //미리보기를 구현할 경우 기존에 만들어진 모든 미리보기들을 제거해야함
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <form action="" method="post" enctype="multipart/form-data" autocomplete="off" class="form-check">
+        <div class="container w-600 mt-50 mb-50">
+            <div class="cell center">
+                <h1>강의 정보 등록</h1>
+            </div>
+            <div class="cell">
+                <label>강의명<i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="lectureTitle" class="field w-100" placeholder="강좌명을 입력하세요">
+                <div class="fail-feedback">필수 항목입니다!</div>
+            </div>
+            <div class="cell">
+                <label>강의유형<i class="fa-solid fa-asterisk red"></i></label>
+                <select name="lectureCategory" class="field w-100">
+                    <option value="">선택하세요</option>
+                    <option>이론</option>
+                    <option>실습</option>
+                    <option>시험</option>
+                </select>
+                <div class="fail-feedback">필수 항목입니다!</div>
+            </div>
+            <div class="cell">
+                <label>강의시간<i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" inputmode="numeric" name="lectureDuration" class="field w-100" value="0">
+                <div class="success-feedback">올바른 형식입니다</div>
+                <div class="fail-feedback">강의시간은 30시간 단위로 작성하세요(300시간 이하)</div>
+            </div>
+            <div class="cell">
+                <label>강의료<i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" inputmode="numeric" name="lecturePrice" class="field w-100" value="0">
+                <div class="success-feedback">올바른 형식입니다</div>
+                <div class="fail-feedback">강의료는 1000원 단위로 작성하세요</div>
+            </div>
+            <div class="cell">
+                <label>강의형태<i class="fa-solid fa-asterisk red"></i></label>
+                <select name="lectureType" class="field w-100">
+                    <option value="">선택하세요</option>
+                    <option>온라인</option>
+                    <option>오프라인</option>
+                    <option>혼합</option>
+                </select>
+                <div class="success-feedback">올바른 형식입니다</div>
+                <div class="fail-feedback">필수 항목입니다!</div>
+            </div>
+            
+            <div class="cell mt-50">
+                <label>미리보기</label>
+                <input type="file" name="attach" accept=".png, .jpg" multiple class="field w-100">           
+            </div>
+            <div class="cell">
+                <button type="submit" class="btn btn-positive w-100">
+                    <i class="fa-solid fa-plus"></i>신규 개설하기
+                </button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
