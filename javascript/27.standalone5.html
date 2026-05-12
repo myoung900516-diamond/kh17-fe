@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>standalone</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        window.onload = function(){
+            //원래 app에 있던 코드들을 이곳에 작성 
+            var btn = document.querySelector(".btn");
+            btn.onclick = function(){
+                //changeColor의 코드를 이곳에 작성 
+                var target = document.querySelector(".target");
+                target.style.color = "red";
+                target.style.backgroundColor = "yellow";
+            };
+        };
+        //문제점 : 중복된 이벤트를 걸 수 없음 
+
+
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>독립형 자바스크립트</h1>
+        </div>
+        <div class="cell">
+            <button type="button" class="btn btn-positive w-100">색상변경</button>
+        </div>
+        <div class="cell">
+            <h2 class="target">Hello Javascript!</h2>
+        </div>
+
+    </div>
+</body>
+</html>
