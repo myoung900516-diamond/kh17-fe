@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>keypad
+    </title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+        .display-group {
+            font-size: 36px;
+            font-weight: bold;
+            display: flex;
+        }
+        .display-group > .display{
+            width: 16.6666%;
+            padding: 0.5em;
+            text-align: center;
+        }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        //1차 목표
+        window.addEventListener("load", function(){
+            //1차 목표 : 문자열에 저장된 비밀번호가 display에 나눠져서 표시되도록 처리 
+            var password = "321894";
+
+            //password의 값을 display에 하나씩 출력
+            var displayList = document.querySelectorAll(".display");
+
+            displayList[0].textContent = password[0]; //자바였으면 password.charAt(0); //자바스크립트에서는 문자열이 배열
+            displayList[1].textContent = password[1];
+            displayList[2].textContent = password[2];
+            displayList[3].textContent = password[3];
+            displayList[4].textContent = password[4];
+            displayList[5].textContent = password[5];
+
+
+        })
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>비밀번호입력</h1>
+        </div>
+        <!-- 설정된 비밀번호를 표시할 영역 -->
+        <div class="cell">
+            <div class="display-group">
+                <div class="display"></div>
+                <div class="display"></div>
+                <div class="display"></div>
+                <div class="display"></div>
+                <div class="display"></div>
+                <div class="display"></div>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html>
