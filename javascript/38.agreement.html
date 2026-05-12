@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>agreement</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        window.addEventListener("load", function(){
+            var checkAll = document.querySelector(".check-all");
+                checkAll.addEventListener("click", function(){
+                var checkItem = document.querySelectorAll(".check-item");
+                for(var i=0; i<checkItem.length; i++){
+                    checkItem[i].checked = checkAll.checked;
+                }
+            });
+
+            var checkRequired = document.querySelector(".check-required");
+                checkRequired.addEventListener("click", function(){
+                    var checkItemRequired = document.querySelectorAll(".check-item-required");
+                    for(var i=0; i<checkItemRequired.length;i++){
+                        checkItemRequired[i].checked = checkRequired.checked;
+                    }   
+                                     
+                });
+            var checkItem = document.querySelectorAll(".check-item");
+            for(var i=0; i < checkItem.length; i++){
+                checkItem[i].addEventListener("click", function(){
+                refreshCheckbox();
+                });
+            }
+
+            function refreshCheckbox(){
+
+                var checkItem =
+                    document.querySelectorAll(".check-item");
+
+                var checkItemRequired =
+                    document.querySelectorAll(".check-item-required");
+
+                var all = true;
+
+                for(var i=0; i < checkItem.length; i++){
+
+                    if(checkItem[i].checked == false){
+                all = false;
+                    }
+
+                }
+
+                checkAll.checked = all;
+
+                var required = true;
+
+                for(var i=0; i < checkItemRequired.length; i++){
+
+                    if(checkItemRequired[i].checked == false){
+                    required = false;
+                    }
+
+                }
+
+                checkRequired.checked = required;
+                }
+        });
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>이용약관 동의</h1>
+            <p>정상적인 사이트 이용을 위해 다음 이용약관에 동의해주세요</p>
+        </div>
+        <div class="cell mt-50">
+            <label>
+                <input type="checkbox" class="check-all">
+                <span>
+                    전체 이용약관에 동의합니다
+                </span>
+            </label>
+        </div>
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item check-required">
+                <span>
+                    필수 이용약관에 동의합니다
+                </span>
+            </label>
+        </div>
+        <hr>
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item check-item-required">
+                <span>
+                    (필수) 개인정보 취급방침에 동의합니다
+                </span>
+            </label>
+        </div>
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item check-item-required">
+                <span>
+                    (필수) 홈페이지 이용규정을 준수하겠습니다
+                </span>
+            </label>
+        </div>
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item">
+                <span>
+                    (선택) 이벤트성 정보 수신에 동의합니다
+                </span>
+            </label>
+        </div>
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item">
+                <span>
+                    (선택) 개인정보 제3자 제공의 동의합니다
+                </span>
+            </label>
+        </div>
+
+
+    </div>
+</body>
+</html>
