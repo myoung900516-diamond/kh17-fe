@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자기소개서</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+
+        window.addEventListener("load", function(){
+            for(var i = 0; i < q.length ; i++){
+                var q = document.querySelector("[name=q]");
+
+            }
+            q1.addEventListener("input", function(){
+                var count = document.querySelector(".count");
+                var length = q1.value.length;
+                count.textContent = length;
+                
+                if(length > 1000){
+                    count.style.color = "red";
+                }
+                else{
+                    count.style.color = "";
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>자기소개서</h1>
+        </div>
+
+        <div class="cell">
+            <span>
+                (Q)최근 가장 관심있게 본 IT소식은 무엇입니까?
+            </span>
+        </div>
+
+        <div class="cell">
+            <textarea name="q" rows="10" class="field w-100"></textarea>
+        </div>
+        <div class="cell right">
+            
+            <span class="count">0</span>
+            <span>/1000글자</span>
+        </div>
+        <div class="cell">
+            <span>
+                (Q)최근 가장 관심있게 본 IT소식은 무엇입니까?
+            </span>
+        </div>
+
+        <div class="cell">
+            <textarea name="q" rows="10" class="field w-100"></textarea>
+        </div>
+        <div class="cell right">
+            <span>0/1000글자</span>
+        </div>
+        <div class="cell">
+            <span>
+                (Q)최근 가장 관심있게 본 IT소식은 무엇입니까?
+            </span>
+        </div>
+
+        <div class="cell">
+            <textarea name="q" rows="10" class="field w-100"></textarea>
+        </div>
+        <div class="cell right">
+            <span>0/1000글자</span>
+        </div>
+
+
+    </div>
+</body>
+</html>

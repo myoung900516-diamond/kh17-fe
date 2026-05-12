@@ -42,9 +42,9 @@
 
     <!-- 자바스크립트 작성 영역 -->
     <script>
-        //1차 목표
+        
         window.addEventListener("load", function(){
-            var password = "";
+            var password = "";//상태변수, 상태메세지
             display();
             
             
@@ -63,6 +63,26 @@
                     //this == 클릭한 버튼
                     password += this.textContent;//비밀번호에 현재 클린한 버튼의 글자를 더해라 
                     display();
+
+                    //추가 : 현재 클릭한 버튼 + 아무버튼이나 한개의 색상을 변경
+                    // var index = r.nextInt(버튼개수);
+                    var index = parseInt(Math.random() * numberButtons.length);
+                    var button = this;
+                    button.style.backgroundColor = "black";
+                    button.style.color = "white";
+                    numberButtons[index].style.backgroundColor = "black";
+                    numberButtons[index].style.color = "white";
+
+                    //자바:Thread.sleep(100);
+                    //자바스크립트 : setTimeout(함수, 딜레이);
+
+                    setTimeout(function(){
+                        button.style.backgroundColor = "";
+                        button.style.color = "";
+
+                        numberButtons[index].style.backgroundColor = "";
+                        numberButtons[index].style.color = "";
+                    }, 100);
                 });
             }
             document.querySelector(".btn-delete").addEventListener("click", function(){
@@ -83,17 +103,17 @@
                 // numbers.sort(function(){
                 //     return Math.random() - 0.5;
                 // });
-                numbers.sort(()=>Math.random() -0.5);
+                numbers.sort(()=>Math.random() -0.5);//람다
                 
                 
                 var numberButtons = document.querySelectorAll(".btn-number");
-                for(var i = 0; numberButtons.length; i++){
+                for(var i = 0; i < numberButtons.length; i++){
                     numberButtons[i].textContent = numbers[i];
                     numberButtons[i].classList.remove("btn-neutral", "btn-positive");
                     numberButtons[i].classList.add(numbers[i].length==0? "btn-neutral" : "btn-positive");
                 }
             });
-
+            document.querySelector(".btn-shuffle").click();
         });
     </script>
 </head>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        window.addEventListener("load", function(){
+            // var countryNameValid = false;//필수항목은 시작할 때 무조건 false
+            // var countryCapitalValid = false;
+            
+            //상태 객체
+            var state = {
+                countryNameValid : false,
+                countryCapitalValid : false,
+                countryRegion : false,
+                countryPopulation : false,
+
+                ok : function(){
+                    return this.countryNameValid && this.countryCapitalValid && this.countryRegion && this.countryPopulation;
+                }
+            };
+
+            //목표: 입력창 검사
+            document.querySelector("[name=countryName]").addEventListener("blur", function(){
+
+                //this ==입력창
+                var regex = /^[가-힣]{1,10}$/;
+                var valid = regex.test(this.value);
+
+                this.classList.remove("success", "fail");
+                this.classList.add(valid? "success": "fail");
+
+                //return valid; //구조적으로 쓸 수 없는 의미없는 코드 //콜백때매 다 바뀌는 거거든요. 
+                state.countryNameValid = valid;//state에보관 
+            });
+            document.querySelector("[name=countryCapital]").addEventListener("blur", function(){
+                var valid = this.value.length > 0;
+                this.classList.remove("success", "fail");
+                this.classList.add(valid? "success": "fail");
+
+                state.countryCapitalValid = valid;//state에 보관
+            });
+            document.querySelector("[name=countryRegion]").addEventListener("blur", function(){
+                var valid = this.value.length > 0;
+                this.classList.remove("success", "fail");
+                this.classList.add(valid? "success": "fail");
+
+                state.countryCapitalValid = valid;//state에 보관
+            });
+            document.querySelector("[name=countryPopulation]").addEventListener("blur", function(){
+                var valid = this.value.length > 0;
+                this.classList.remove("success", "fail");
+                this.classList.add(valid? "success": "fail");
+
+                state.countryCapitalValid = valid;//state에 보관
+            });
+            //폼 검사
+            document.querySelector(".form-check").addEventListener("submit", function(e){
+                //검사는 잘 이루어지고 있는데.. 화면이 아무것도 표시되지 않아서 아쉬우니 강제로 이벤트 발생 
+                document.querySelector("[name=countryName]").dispatchEvent(new Event("blur"));
+                document.querySelector("[name=countryCapital]").dispatchEvent(new Event("blur"));
+                document.querySelector("[name=countryRegion]").dispatchEvent(new Event("blur"));
+                document.querySelector("[name=countryPopulation]").dispatchEvent(new Event("blur"));
+                //return false;
+                // if(countryNameValid == false){
+                    //     e.preventDefault();
+                    // }
+                    if(state.ok() == false){
+                        e.preventDefault();
+                    }
+                });
+                
+        });
+    </script>
+</head>
+<body>
+    <form action="" method="post" autocomplete="off" class="form-check">
+
+        <div class="container w-600 mt-50 mb-50">
+            <div class="cell center">
+                <h1>입력폼 검사</h1>
+            </div>
+            
+            <div class="cell">
+                <label>국가명 <i class="fa-solid fa-asterisk red"></i> </label>
+                <input type="text" name="countryName" class="field w-100">
+                <div class="success-feedback">올바른 형식의 이름입니다</div>
+                <div class="fail-feedback">한글로만 작성 가능합니다!</div>
+            </div>
+            <div class="cell">
+                <label>수도명 <i class="fa-solid fa-asterisk red"></i> </label>
+                <input type="text" name="countryCapital" class="field w-100">
+                <div class="fail-feedback">필수항목입니다!</div>
+            </div>
+            <div class="cell">
+                <label>나라명 <i class="fa-solid fa-asterisk red"></i> </label>
+                <input type="text" name="countryRegion" class="field w-100">
+                <div class="success-feedback">올바른 형식의 이름입니다</div>
+                <div class="fail-feedback">한글로만 작성 가능합니다!</div>
+            </div>
+            <div class="cell">
+                <label>인구수 <i class="fa-solid fa-asterisk red"></i> </label>
+                <input type="text" name="countryPopulation" class="field w-100">
+                <div class="success-feedback">올바른 형식의 이름입니다</div>
+                <div class="fail-feedback">한글로만 작성 가능합니다!</div>
+            </div>
+            <div class="cell mt-50">
+                <button type="submit" class="btn btn-positive w-100">등록하기</button>
+            </div>
+            
+            
+        </div>
+    </form>
+</body>
+</html>
