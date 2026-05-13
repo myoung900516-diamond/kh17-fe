@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 수업</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        $(function(){
+            //목표: 글자를 쓰면 글자수가 늘어난다 
+            $("[name=q]").on("input", function(){
+                //this == 쓰고 있는 텍스트에어리아
+                var count = $(this).val().length;
+                var span = $(this).parent(".cell").next(".cell").children(".count");
+                span.text(count);
+                //목표: 1000자가 넘으면 색상이 빨간색으로 변경된다
+
+                if(count > 1000){
+                    count = 1000;
+                    var origin = $(this).val();
+                    var cut = origin.substring(0, 1000);
+                    $(this).val(cut);
+                    span.css("color", "red");
+
+                }
+                else{
+                    span.css("color", "black");
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>자기소개서</h1>
+        </div>
+        <div class="cell">
+            <span>
+                (Q)과거 역경을 이겨낸 경험은?
+            </span>
+        </div>
+        <div class="cell">
+            <textarea name="q" rows="10" class="field w-100"></textarea>
+        </div>
+        <div class="cell right">
+            <span class="count">0</span><span>/1000글자</span>
+        </div>
+        <div class="cell">
+            <span>
+                (Q)과거 역경을 이겨낸 경험은?
+            </span>
+        </div>
+        <div class="cell">
+            <textarea name="q" rows="10" class="field w-100"></textarea>
+        </div>
+        <div class="cell right">
+            <span class="count">0</span><span>/1000글자</span>
+        </div>
+        <div class="cell">
+            <span>
+                (Q)과거 역경을 이겨낸 경험은?
+            </span>
+        </div>
+        <div class="cell">
+            <textarea name="q" rows="10" class="field w-100"></textarea>
+        </div>
+        <div class="cell right">
+            <span class="count">0</span><span>/1000글자</span>
+        </div>
+        <div class="cell">
+            <span>
+                (Q)과거 역경을 이겨낸 경험은?
+            </span>
+        </div>
+        <div class="cell">
+            <textarea name="q" rows="10" class="field w-100"></textarea>
+        </div>
+        <div class="cell right">
+            <span class="count">0</span><span>/1000글자</span>
+        </div>
+        <div class="cell">
+            <span>
+                (Q)과거 역경을 이겨낸 경험은?
+            </span>
+        </div>
+        <div class="cell">
+            <textarea name="q" rows="10" class="field w-100"></textarea>
+        </div>
+        <div class="cell right">
+            <span class="count">0</span><span>/1000글자</span>
+        </div>
+
+
+    </div>
+</body>
+</html>

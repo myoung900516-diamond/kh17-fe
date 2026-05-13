@@ -1,0 +1,12 @@
+/* 멀티페이지 구현을 위한 라이브러리 */
+
+.progressbar{
+height: 5px;
+}
+.progressbar > .gauge{
+    width: 0%;
+    height: 100%;
+    background: #020024;
+    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+    transition: width 0.1s ease-out;
+}

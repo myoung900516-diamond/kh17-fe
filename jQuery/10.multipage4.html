@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 수업</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="./multipage.css">
+    <style>
+        /* div{ box-shadow: 0 0 0 1px #cccccc;} */
+        .progressbar{
+            height: 5px;
+        }
+        .progressbar > .gauge{
+            width: 0%;
+            height: 100%;
+            background: #020024;
+            background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+            transition: width 0.1s ease-out;
+        }
+        
+        
+    </style>
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./multipage.js"></script>
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        $(function(){
+            
+            $(".page").hide().first().show();
+            calculateGauge();
+
+            $(".btn-next").on("click", function(){
+                $(this).closest(".page").hide().next(".page").show();
+                calculateGauge();
+            });
+            $(".btn-prev").on("click", function(){
+                $(this).closest(".page").hide().prev(".page").show();
+                calculateGauge();
+            });
+
+            //progressbar처리
+            //[1] 처음에 .gauge의 폭을 설정
+            // $(".progressbar > .gauge").css("width", "20%");
+            // $(".progressbar").find(".gauge").css("width", "20%");
+            // $(".progressbar").find(".gauge").css("width", 100/$(".page").length + "%");
+
+            //(+추가) 보여지는 페이지의 위치를 계산 
+            function calculateGauge(){
+                if($(".progressbar").length == 0) return;
+
+                var current = $(".page:visible");
+                var page = $(".page").index(current) + 1;
+                var percent = page * 100 / $(".page").length;
+                $(".progressbar").find(".gauge").css("width", percent + "%");
+            }
+        });
+
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>멀티페이지 문제</h1>
+        </div>
+<!-- 진행도를 나타내기 위한 progressbar -->
+        <div class="progressbar">
+            <div class="gauge"></div>
+        </div>
+        
+        <div class="cell page">
+            <div class="container">
+                <div class="cell center">
+                    <h1>1페이지</h1>
+                </div>
+                <div class="cell flex-area">
+                    <div class="w-100 left">
+                        <!-- <button type="button" class="btn btn-neutral btn-next">
+                        <span>다음</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                        </button> -->
+                    </div>
+                    <div class="w-100 right">
+                        <button type="button" class="btn btn-neutral btn-next">
+                            <span>다음</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="cell page">
+            <div class="container">
+                <div class="cell center">
+                    <h1>2페이지</h1>
+                </div>
+                <div class="cell flex-area">
+                    <div class="w-100 left">
+                        <button type="button" class="btn btn-neutral btn-prev">
+                        <span>이전</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                    </div>
+                    <div class="w-100 right">
+                        <button type="button" class="btn btn-neutral btn-next">
+                            <span>다음</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="cell page">
+            <div class="container">
+                <div class="cell center">
+                    <h1>3페이지</h1>
+                </div>
+                <div class="cell flex-area">
+                    <div class="w-100 left">
+                        <button type="button" class="btn btn-neutral btn-prev">
+                        <span>이전</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                    </div>
+                    <div class="w-100 right">
+                        <button type="button" class="btn btn-neutral btn-next">
+                            <span>다음</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="cell page">
+            <div class="container">
+                <div class="cell center">
+                    <h1>4페이지</h1>
+                </div>
+                <div class="cell flex-area">
+                    <div class="w-100 left">
+                        <button type="button" class="btn btn-neutral btn-prev">
+                        <span>이전</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                    </div>
+                    <div class="w-100 right">
+                        <button type="button" class="btn btn-neutral btn-next">
+                            <span>다음</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="cell page">
+            <div class="container">
+                <div class="cell center">
+                    <h1>5페이지</h1>
+                </div>
+                <div class="cell flex-area">
+                    <div class="w-100 left">
+                        <button type="button" class="btn btn-neutral btn-prev">
+                        <span>이전</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                    </div>
+                    <div class="w-100 right">
+                        <button type="button" class="btn btn-neutral btn-next">
+                            <span>다음</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="cell page">
+            <div class="container">
+                <div class="cell center">
+                    <h1>6페이지</h1>
+                </div>
+                <div class="cell flex-area">
+                    <div class="w-100 left">
+                        <button type="button" class="btn btn-neutral btn-prev">
+                        <span>이전</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                    </div>
+                    <div class="w-100 right">
+                        <button type="button" class="btn btn-neutral btn-next">
+                            <span>다음</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="cell page">
+            <div class="container">
+                <div class="cell center">
+                    <h1>7페이지</h1>
+                </div>
+                <div class="cell flex-area">
+                    <div class="w-100 left">
+                        <button type="button" class="btn btn-neutral btn-prev">
+                        <span>이전</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                    </div>
+                    <div class="w-100 right">
+                        <button type="button" class="btn btn-neutral btn-next">
+                            <span>다음</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="cell page">
+            <div class="container">
+                <div class="cell center">
+                    <h1>8페이지</h1>
+                </div>
+                <div class="cell flex-area">
+                    <div class="w-100 left">
+                        <button type="button" class="btn btn-neutral btn-prev">
+                        <span>이전</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                    </div>
+                    <div class="w-100 right">
+                        <button type="button" class="btn btn-neutral btn-next">
+                            <span>다음</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="cell page">
+            <div class="container">
+                <div class="cell center">
+                    <h1>9페이지</h1>
+                </div>
+                <div class="cell flex-area">
+                    <div class="w-100 left">
+                        <button type="button" class="btn btn-neutral btn-prev">
+                        <span>이전</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                    </div>
+                    <div class="w-100 right">
+                        <button type="button" class="btn btn-neutral btn-next">
+                            <span>다음</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="cell page">
+            <div class="container">
+                <div class="cell center">
+                    <h1>10페이지</h1>
+                </div>
+                <div class="cell flex-area">
+                    <div class="w-100 left">
+                        <button type="button" class="btn btn-neutral btn-prev">
+                        <span>이전</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                    </div>
+                    <div class="w-100 right">
+                        <!-- <button type="button" class="btn btn-neutral btn-next">
+                            <span>다음</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button> -->
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        
+    </div>
+</body>
+</html>

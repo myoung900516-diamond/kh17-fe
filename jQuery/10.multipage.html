@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 수업</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+        .inner{
+            background-color: rgb(19, 1, 19);
+            
+        }
+    </style>
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        $(function(){
+                var total = $(".page").length;
+                
+                var gauge = (1/(total-1))*100;
+                $(".inner").css("width", gauge+"%");
+            //다음 버튼을 누르면 바로 다음 화면이 show되고 나머지 화면들이 숨김처리된다. 
+            $(".btn-next").on("click", function(){
+                var currentPage = $(this).parent(".cell");
+                var nextPage = $(this).parent(".cell").next(".cell");
+                currentPage.hide();
+                nextPage.show();
+                //전체 페이지수
+                var total = $(".page").length;
+                //현재 페이지의 수
+                var index = $(".page").index(nextPage);
+                
+                var gauge = (index/(total-1))*100;
+                $(".inner").css("width", gauge+"%");
+            });
+            $(".btn-prev").on("click", function(){
+                var currentPage = $(this).parent(".cell");
+                var prevPage = $(this).parent(".cell").prev(".cell");
+                currentPage.hide();
+                prevPage.show();
+                var total = $(".page").length;
+                var index = $(".page").index(prevPage);
+                
+                var gauge = (index/(total-1))*100;
+                $(".inner").css("width", gauge+"%");
+        });
+        });
+
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>화면 넘기기</h1>
+        </div>
+        <div class="cell inner">
+            <h2 class="gauge" style="width: 60%;">gauge</h2>
+        </div>
+        <div class="cell page">
+            <h2>첫번째 화면</h2>
+            <button type="button" class="btn btn-neutral btn-next">다음</button>
+        </div>
+        <div class="cell page" style="display: none;">
+            <h2>두번째 화면</h2>
+            <button type="button" class="btn btn-neutral btn-prev">이전</button>
+            <button type="button" class="btn btn-neutral btn-next">다음</button>
+        </div>
+        <div class="cell page" style="display: none;">
+            <h2>3번째 화면</h2>
+            <button type="button" class="btn btn-neutral btn-prev">이전</button>
+            <button type="button" class="btn btn-neutral btn-next">다음</button>
+        </div>
+        <div class="cell page" style="display: none;">
+            <h2>4번째 화면</h2>
+            <button type="button" class="btn btn-neutral btn-prev">이전</button>
+            <button type="button" class="btn btn-neutral btn-next">다음</button>
+        </div>
+        <div class="cell page" style="display: none;">
+            <h2>5번째 화면</h2>
+            <button type="button" class="btn btn-neutral btn-prev">이전</button>
+            <button type="button" class="btn btn-neutral btn-next">다음</button>
+        </div>
+        <div class="cell page" style="display: none;">
+            <h2>6번째 화면</h2>
+            <button type="button" class="btn btn-neutral btn-prev">이전</button>
+            <button type="button" class="btn btn-neutral btn-next">다음</button>
+        </div>
+        <div class="cell page" style="display: none;">
+            <h2>7번째 화면</h2>
+            <button type="button" class="btn btn-neutral btn-prev">이전</button>
+            <button type="button" class="btn btn-neutral btn-next">다음</button>
+        </div>
+        <div class="cell page" style="display: none;">
+            <h2>8번째 화면</h2>
+            <button type="button" class="btn btn-neutral btn-prev">이전</button>
+            <button type="button" class="btn btn-neutral btn-next">다음</button>
+        </div>
+        <div class="cell page" style="display: none;">
+            <h2>9번째 화면</h2>
+            <button type="button" class="btn btn-neutral btn-prev">이전</button>
+            <button type="button" class="btn btn-neutral btn-next">다음</button>
+        </div>
+        <div class="cell page" style="display: none;">
+            <h2>10번째 화면</h2>
+            <button type="button" class="btn btn-neutral btn-prev">이전</button>
+            <button type="button" class="btn btn-neutral btn-next">다음</button>
+        </div>
+        <div class="cell page" style="display: none;">
+            <h2>11번째 화면</h2>
+            <button type="button" class="btn btn-neutral btn-prev">이전</button>
+        </div>
+    
+
+    </div>
+</body>
+</html>
