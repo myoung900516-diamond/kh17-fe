@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 수업</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        /* div{ box-shadow: 0 0 0 1px #cccccc;} */
+        .outer{
+            width: 10%;
+            padding: 2px;
+        }
+        .display{
+            font-size:  16px;
+            min-height:2.5em;
+            word-break: break-all;
+        }
+    </style>
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        $(function(){
+            
+            //버튼 누르면 그 값이 입력창에 들어가 계산된다.
+            $(".btn-number").on("click", function(){
+                //this == 클릭한 버튼
+                var money = parseInt($(this).data("number"));
+                var current = parseInt($(".target").val().replace(/,/g, "") || 0);
+                var result = money + current;
+                
+                var decimal = result.toLocaleString();
+                $(".target").val(decimal);
+                var content = $(".target").val();
+                $(".display").text(content);
+                
+            });
+            //입력창에 숫자가 입력되면 display에 그대로 복사된다.
+            // $(".target").on("input", function(){
+            //     var content = $(this).val();
+            //     $(".display").text(content);
+            // });
+
+            //지우기 버튼을 누르면 입력창에 값이 하나씩 줄어든다. 
+            $(".btn-clear").on("click", function(){
+                $(".target").val("");
+                var content = $(".target").val();
+                $(".display").text(content);
+            });
+
+            $(".btn-delete").on("click", function(){
+                var origin = $(".target").val();
+                var cut = origin.substring(0, origin.length-1);
+                $(".target").val(cut);
+                var content = $(".target").val();
+                $(".display").text(content);
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>계좌이체</h1>
+        </div>
+        <div class="cell mt-40">
+            <input type="text" class="field w-80 target right" placeholder="이체할 금액을 입력하세요" value="0">
+        </div>
+
+        <div class="cell flex-area" style="flex-wrap: wrap;">
+            <div class="field outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="10000000">천만</button>
+            </div>
+            <div class="field outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="1000000">백만</button>
+            </div>
+            <div class="field outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="100000">십만</button>
+            </div>
+            <div class="field outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="10000">만</button>
+            </div>
+            <div class="field outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="1000">천</button>
+            </div>
+            <div class="field outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="100">백</button>
+            </div>
+            <div class="field outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="10">십</button>
+            </div>
+            <div class="field outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="1">일</button>
+            </div>
+            <div class="field outer">
+                <button type="button" class="btn btn-negative w-100 btn-delete">
+                    <i class="fa-solid fa-delete-left"></i>
+                </button>
+            </div>
+            <div class="field outer">
+                <button type="button" class="btn btn-negative w-100 btn-clear">
+                    <i class="fa-solid fa-eraser"></i>
+                </button>
+            </div>
+        </div>
+            <div class="cell" style="font-size: 24px;">
+                이체하려는 금액은 총 <span class="display">0</span>원 입니다. 
+            </div>
+            
+            <div class="cell">
+                <div class="cell">이체하시려는 금액은 총</div>
+                <div class="display">1,000,000,000</div>
+                <div class="cell">원 입니다.</div>
+            </div>
+            
+
+    </div>
+</body>
+</html>

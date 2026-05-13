@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 수업</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        $(function(){
+            //check-all누르면 check-item이 모두 눌린다. 
+            $(".check-all").on("click", function(){
+                var checked = $(this).prop("checked");
+                $(".check-all").prop("checked", checked);
+                $(".check-item").prop("checked", checked);
+                //$(".check-item").prop("checked", $(this).prop("checked"));
+            });
+            //check-required누르면 check-item-required가 모두 눌린다. 
+            //check-item-required를 각각 모두 누르면 check-required가 눌린다. 
+            $(".check-item-required").on("click", function(){
+                // var checked = $(this).prop("checked");
+                $(".check-required").prop("checked", $(this).prop("checked"));
+            });
+            //check-item이 각각 모두 누르면 check-all이 눌린다. 
+        });
+
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>이용약관 동의</h1>
+            <p>정상적인 사이트 이용을 위해 다음 이용약관에 동의해주세요</p>
+        </div>
+        <div class="cell mt-50">
+            <label>
+                <input type="checkbox" class="check-all">
+                <span>
+                    전체 이용약관에 동의합니다
+                </span>
+            </label>
+        </div>
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-required">
+                <span>
+                    필수 이용약관에 동의합니다
+                </span>
+            </label>
+        </div>
+        <hr>
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item check-item-required">
+                <span>
+                    (필수) 개인정보 취급방침에 동의합니다
+                </span>
+            </label>
+        </div>
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item check-item-required">
+                <span>
+                    (필수) 홈페이지 이용규정을 준수하겠습니다
+                </span>
+            </label>
+        </div>
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item">
+                <span>
+                    (선택) 이벤트성 정보 수신에 동의합니다
+                </span>
+            </label>
+        </div>
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item">
+                <span>
+                    (선택) 개인정보 제3자 제공의 동의합니다
+                </span>
+            </label>
+        </div>
+        <hr>
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-all">
+                <span>
+                    전체 이용약관에 동의합니다
+                </span>
+            </label>
+        </div>
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-required">
+                <span>
+                    필수 이용약관에 동의합니다
+                </span>
+            </label>
+        </div>
+    </div>
+</body>
+</html>
