@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 수업</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        /*
+            window.addEventListener("load", functiom(){
+                document.querySelector(".btn").addEventListener("click", function(){
+                    document.querySelector(".target").style.color = "red";
+                });
+            });
+        */
+
+        //jQuery의 장점 
+            //1.짧고 간결하고 명확하다
+            //2. 갯수 제한이 없다(1개일 때와 여러개일 때의 코드가 같다)
+        
+        //jQuery는 무조건 $부터 시작($대신 jQuery라고 써도 됨)
+
+        //var $ = jQuery; 이렇게 만들어 놓음 
+        //문법 : $(대상) + 명령호출
+
+        //$(window).on("load", function(){});//화면로드 (화면만 로딩되었다고 쓸 수있는게 아님)
+        //$(document).on("ready", function(){});//화면 로드+ jQuery준비(jQuery가 만든 이벤트)
+        //$(document).ready(function(){});
+        //$().ready(function(){});
+        //$(function(){});//우리가 쓸 최종 형태
+
+        $(function(){
+            //$를 이용해서 class="btn"을 선택한 뒤 click이벤트 설정
+            //$("btn").on("click", function(){}); //click, blur, submit, input 을 다 사용할 수 있는 방법
+            //$("btn").click(function(){}); //우리는 쓰지 않음 왜냐하면 input은 이렇기 못쓰기 때문(input이 나중이 나와서 없음)
+
+            $(".btn").on("click", function(){
+
+
+                //$를 이용해서 class="target"을 선택한 뒤 css변경을 지시
+                //-css, value, textContent, attribute등 다양한 변경 지시가 가능
+                $(".target").css("color", "red");
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>jQuery 샘플</h1>
+        </div>
+
+        <div class="cell">
+            <button type="button" class="btn btn-positive w-100">click here</button>
+        </div>
+        <div class="cell">
+            <button type="button" class="btn btn-positive w-100">click here</button>
+        </div>
+        <div class="cell">
+            <button type="button" class="btn btn-positive w-100">click here</button>
+        </div>
+        <div class="cell">
+            <h2 class="target">Hello jQuery~!</h2>
+        </div>
+        <div class="cell">
+            <h2 class="target">Hello jQuery~!</h2>
+        </div>
+        <div class="cell">
+            <h2 class="target">Hello jQuery~!</h2>
+        </div>
+        <div class="cell">
+            <h2 class="target">Hello jQuery~!</h2>
+        </div>
+        <div class="cell">
+            <h2 class="target">Hello jQuery~!</h2>
+        </div>
+    
+
+
+    </div>
+</body>
+</html>

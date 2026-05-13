@@ -1,7 +1,6 @@
 //checkbox.js
 //-체크박스 관련된 자바스크립트 코드를 가지는 자바스크립트 전용 파일 
 //-pure javascript (VanillaJS)로 개발됨
-
 //지연 실행 코드
 window.addEventListener("load", function(){
     //전체 선택
@@ -16,7 +15,6 @@ window.addEventListener("load", function(){
             checkItem();
         });
     }
-
     //필수 선택
     var requiredCheckboxes = document.querySelectorAll(".check-required");
     for(var i=0; i < requiredCheckboxes.length; i++) {
@@ -29,7 +27,6 @@ window.addEventListener("load", function(){
             checkItem();
         });
     }
-
     //개별 항목
     var items = document.querySelectorAll(".check-item");
     for(var i=0; i < items.length; i++) {
