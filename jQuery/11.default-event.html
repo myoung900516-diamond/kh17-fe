@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 수업</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        $(function(){
+            //목표: .check-link를 클릭하면 확인창 출력 후 예를 누르면 진행, 아니요를 누르면 차단
+            $(".check-link").on("click", function(e){
+                // return false;//가능(inline script방식)
+                // e.preventDefault();//가능(독립형 자바스크립트 방식)
+
+                return confirm("정말 이동하시겠어요?");
+            });
+            //목표: .check-form를 전송하려고 하면 확인창 출력 후 예를 누르면 진행, 아니오를 누르면 차단 
+            $(".check-form").on("submit", function(e){
+                return confirm("sure?");
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>기본 이벤트의 재어</h1>
+        </div>
+        <!-- a, form 과 같이 태그에 내장된 이벤트가 존재하는 경우 이를 통제할 수 있어야 한다.  
+
+        -->
+        <div class="cell">
+            <a href="https://www.google.com" class="btn btn-neutral w-100 center check-link">google</a>
+        </div>
+
+        <div class="cell mt-40">
+            <form action="https://www.google.com" method="get" class="check-form">
+                <button type="submit" class="btn btn-neutral w-100">google</button>
+            </form> 
+
+        </div>
+
+    </div>
+</body>
+</html>
