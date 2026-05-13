@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 수업</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        $(function(){
+            //목표 :  btn-control누르면 target의 색상을 변경 
+
+            $(".btn-control").on("click", function(){
+
+                //DOM 탐색 명령(DOM: Document Object Model, 문서 객체 모델)
+                //.parent() : 상위 태그 선택(+선택자 추가 가능)
+                //.prev() : 같은 범위 내 앞 태그 선택(+선택자 추가 가능)
+                //.next() : 같은 범위 내 뒤 태그 선택(+선택자 추가 가능)
+                //.children() : 하위 태그 선택(+선택자 추가 가능)
+
+                //this == 누른 버튼 
+                //$(".target").css("color", "blue");//잘못된 대상이 선택됨
+                // $(this).parent().prev().children().css("color", "blue");//대상이 불분명 
+                // $(this).parent(".cell").prev(".cell").children(".target").css("color", "blue");//정보가 명확한게 좋음. 오해의 소지가 없게
+
+                //각종 태그 제어 명령들 
+
+                //클래스를 추가 , classList.add()
+                // $(this).parent(".cell").prev(".cell").children(".target").addClass("center");
+                //클래스 토글 
+                // $(this).parent(".cell").prev(".cell").children(".target").toggleClass("center");
+
+
+                // $(this).parent(".cell").prev(".cell").children(".target").empty();//태그 대상 내용이 지워짐 쓰레기통을 비우는 것
+                // $(this).parent(".cell").prev(".cell").children(".target").remove();//태그가 지워짐 쓰레기통을 버리는 것 
+
+                //숨기기
+                // $(this).parent(".cell").prev(".cell").children(".target").css("display", "none");//가장 일반적으로 생각하는 숨김
+                // $(this).parent(".cell").prev(".cell").children(".target").css("opacity", "0");
+                // $(this).parent(".cell").prev(".cell").children(".target").css("visibility", "hidden");
+                // $(this).parent(".cell").prev(".cell").children(".target").hide();//display=none처리 수행 (<-> show())
+                // $(this).parent(".cell").prev(".cell").children(".target").toggle();//hide() 와 show()를 왔다갔다
+                // $(this).parent(".cell").prev(".cell").children(".target").slideUp();//슬라이딩 애니메이션 숨김처리(<->slideDown())
+                // $(this).parent(".cell").prev(".cell").children(".target").slideToggle();//목차 접었다 폈다 할 때, 동의약관 접었다 폈다 할 때 
+                // $(this).parent(".cell").prev(".cell").children(".target").fadeOut();
+                // $(this).parent(".cell").prev(".cell").children(".target").fadeIn();
+                $(this).parent(".cell").prev(".cell").children(".target").fadeToggle();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>DOM 제어</h1>
+        </div>
+        <div class="cell mt-50">
+            <h2 class="target">제어당할 텍스트</h2>
+        </div>
+
+        <div class="cell">
+            <button type="button" class="btn btn-positive btn-control">제어할 버튼</button>
+        </div>
+        <div class="cell mt-50">
+            <h2 class="target">제어당할 텍스트</h2>
+        </div>
+
+        <div class="cell">
+            <button type="button" class="btn btn-positive btn-control">제어할 버튼</button>
+        </div>
+        <div class="cell mt-50">
+            <h2 class="target">제어당할 텍스트</h2>
+        </div>
+
+        <div class="cell">
+            <button type="button" class="btn btn-positive btn-control">제어할 버튼</button>
+        </div>
+        <div class="cell mt-50">
+            <h2 class="target">제어당할 텍스트</h2>
+        </div>
+
+        <div class="cell">
+            <button type="button" class="btn btn-positive btn-control">제어할 버튼</button>
+        </div>
+        <div class="cell mt-50">
+            <h2 class="target">제어당할 텍스트</h2>
+        </div>
+
+        <div class="cell">
+            <button type="button" class="btn btn-positive btn-control">제어할 버튼</button>
+        </div>
+
+
+    </div>
+</body>
+</html>

@@ -18,7 +18,7 @@
     <script>
         $(function(){
             //목표 : 잠금/잠금해제 버튼을 누르면 입력창에 readOnly를 설정 또는 해제
-
+            //[1] prop() 이 더 좋거나 
             $(".btn-lock").on("click", function(){
                 //document.querySelector(".target").readOnly = true;//JS
 
@@ -26,8 +26,10 @@
                 $(".target").prop("readonly", true);//readonly를 활성화시켜라!
             });
             $(".btn-unlock").on("click", function(){
-                $(".target").prop("readonly", false);
+                // $(".target").prop("readonly", false);
+                $(".target").removeAttr("readonly");
             });
+            //[2] attr(), prop()뭘 쓰든 동일한 경우 
             $(".btn-date").on("click", function(){
                 //$(".target").prop("type", "date");//똑같어
                 $(".target").attr("type", "date");//똑같어
@@ -35,6 +37,7 @@
             $(".btn-text").on("click", function(){
                 $(".target").prop("type", "text");
             });
+            //[3] attr()만 가능한 경우(흔치 않음... 기술 전체를 새롭게 만드는 경우 주로 사용)
             //attr은 현대 대상에 존재하지 않는 속성을 만들거나 불러올 수 있다.
             $(".btn-dataset").on("click", function(){
                 $(".target").attr("data-number", "5000");
