@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 수업</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+        .display{
+            font-size:  24px;
+            padding: 0.5em;
+            min-height:2.5em;
+            word-break: break-all;
+        }
+        .outer{
+            width: 33.3333%;
+            padding: 5px;
+        }
+        
+    </style>
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        $(function(){
+            //숫자버튼(여러개)
+            $(".btn-number").on("click", function(){
+                // var origin = 원래글자;
+                var origin = $(".display").text();//이렇게 불러오면 문자열
+                // var number = 클릭한숫자;
+                var number = $(this).data("number");//이렇게 불러오면 문자열
+                $(".display").text(origin + number);
+                //$(".display").text(원래글자 + 클릭한숫자);
+            });
+                
+                //한칸지우기(1개)
+
+                $(".btn-delete").on("click", function(){
+                    var origin = $(".display").text();
+                    var cut = origin.substring(0, origin.length-1);//기초문법을 똑같다
+                    $(".display").text(cut);
+                });
+                //전체지우기(1개)
+                $(".btn-clear").on("click", function(){
+                    $(".display").text("");
+                });
+
+        });
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>핸드폰 키패트 문제</h1>
+        </div>
+        <div class="cell center flex-area">
+            <div class="display"></div>
+        </div>
+
+        <div class="cell flex-area" style="flex-wrap: wrap;">
+            <div class="outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="7">
+                    <i class="fa-solid fa-7"></i>
+                </button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="8" >
+                    <i class="fa-solid fa-8"></i>
+                </button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="9" >
+                    <i class="fa-solid fa-9"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="cell flex-area" style="flex-wrap: wrap;">
+            <div class="outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="4" >
+                    <i class="fa-solid fa-4"></i>
+                </button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="5" >
+                    <i class="fa-solid fa-5"></i>
+                </button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="6" >
+                    <i class="fa-solid fa-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="cell flex-area" style="flex-wrap: wrap;">
+            <div class="outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="1" >
+                    <i class="fa-solid fa-1"></i>
+                </button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="2" >
+                    <i class="fa-solid fa-2"></i>
+                </button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="3" >
+                    <i class="fa-solid fa-3"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="cell flex-area" style="flex-wrap: wrap;">
+            <div class="outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="*" >
+                    <i class="fa-solid fa-asterisk"></i>
+                </button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="0" >
+                    <i class="fa-solid fa-0"></i>
+                </button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral w-100 btn-number" data-number="#" >
+                    <i class="fa-solid fa-hashtag"></i>
+                </button>
+            </div>
+        </div>
+        <div class="cell flex-area">
+            <button type="button" class="btn w-100 btn-delete" >
+                    <i class="fa-solid fa-delete-left" style="color: rgb(5, 5, 5);"></i>
+            </button>
+            <button type="button" class="btn btn-negative w-100 btn-clear" >clear all</button>
+        </div>
+    </div>
+</body>
+</html>
