@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 수업</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- 자바스크립트 작성 영역 -->
+    <script type="text/javascript">
+        $(function(){
+            //목표: .btn-create를 클릭하면 .create-area에 화면을 생성
+            $(".btn-create").on("click", function(){
+                // $(".create-area").text("hello");//단순 글자
+                // $(".create-area").html("<h1>Hello</h1>");//HTML태그
+                // $(".create-area").html("<div class=cellblrablrablra")
+
+                //글자로 화면을 만드는 방법(비추천)
+                // var content = "";
+                // content += "<div class='cell mt-50'>";
+                // content += "<h1>Hello</h1>";
+                // content += "</div>";
+                // $(".create-area").html(content);
+
+                //jQuery에서 태그를 생성해서 설정
+                // var div = $("<div>");
+                // div.addClass("cell mt-50");
+                // var div = $("<div>").addClass("cell mt-50");
+
+                // var h1 = $("<h1>");
+                // h1.text("hello");
+                // var h1 = $("<h1>").text("hello");
+                
+                // div.html(h1);
+                // $(".create-area").html(div);
+
+                //template을 불러와서 생성
+                var template = $("#html-template").text();
+                //$(".create-area").html(template);
+                var content = $.parseHTML(template);//문자열을 HTML로 해석하여 저장
+                $(content).find(".user").text("피카츄");
+                $(".create-area").html(content);
+            });
+
+           
+            $("[name=attach]").on("input", function(){
+                //목표: 태그 클릭 버튼을 누르면 미리보기 창에 이미지가 나타난다.
+
+                // var template = $("#html-template").text();
+                // var content = $.parseHTML(template);
+                var choice = URL.createObjectURL(this.files[0]);
+                // var preview = $(content).find("preview").attr("src", choice);
+                $(".add-area").append("<img src="+choice+">");
+
+            });
+            
+            $(".btn-empty").on("click", function(){
+                $(".add-area").empty();
+            });
+        });
+    </script>
+<!-- 화면에 나오지 않으면서 언제든지 불러서 쓸 소 있는 화면 조각(템플릿) -->
+    <script type="text/template" id="html-template">
+        <div class="cell mt-50">
+            <img class="preview" src="https://www.dummyimage.com/200x200?text=NO">
+        </div>
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>태그 생성 제어</h1>
+        </div>
+        <div class="cell mt-50">
+            <button type="button" class="btn btn-neutral btn-create">태그 만들기</button>
+        </div>
+        <div class="cell create-area"></div>
+
+        <div class="cell mt-50">
+            
+            <button type="button" class="btn btn-neutral btn-append">태그 추가(append)</button>
+            <br>
+            
+            <button type="button" class="btn btn-neutral btn-empty">비우기(empty)</button>
+
+        </div>
+        
+        
+        <div class="cell">
+            <label>표지</label>
+            <input type="file" name="attach" accept=".png, .jpg" 
+            multiple class="field w-100">
+            <div class="cell add-area">
+                <img src="https://www.dummyimage.com/200x200?text=NO">
+                <img src="https://www.dummyimage.com/200x200?text=NO">
+                <img src="https://www.dummyimage.com/200x200?text=NO">
+            </div>
+            <div class="success-feedback"></div>
+            <div class="fail-feedback"></div>
+        </div>
+
+    </div>
+</body>
+</html>
