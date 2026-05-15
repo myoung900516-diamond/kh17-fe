@@ -41,6 +41,10 @@
     <!-- jQuery CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="./preview.js"></script>
+    
+    <!-- kakao postapi CDN -->
+    <script src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
     <!-- 자바스크립트 작성 영역 -->
     <script>
         $(function(){
@@ -183,6 +187,44 @@
                         .attr("type", check? "text": "password");//체크되면 password, 아니면 text
             });
 
+            //주소 검색 서비스 추가를 위한 코드
+            $("[name=memberPost], [name=memberAddress1], .btn-address-search")
+                        .on("click", function(){
+                           new kakao.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                $("[name=memberPost]").val(data.zonecode);
+                $("[name=memberAddress1]").val(addr);
+
+                //지우기 버튼을 표시한다
+                $(".btn-address-clear").fadeIn();
+                // 커서를 상세주소 필드로 이동한다.
+                // $("[name=memberAddress2]").focus();
+                $("[name=memberAddress2]").trigger("focus");
+            }
+        }).open(); 
+        });
+        //주소 초기화 버튼
+        $(".btn-address-clear").on("click", function(){
+            $("[name=memberPost], [name=memberAddress1], [name=memberAddress2]")
+                    .val("").removeClass("success fail");
+            state.memberAddressValid = true;
+            $(this).fadeOut();
+        });
+
         });
     </script>
 </head>
@@ -249,14 +291,18 @@
             </div>
             <div class="cell flex-area">
                 <input type="text" name="memberPost" 
-                    class="field field-numeric" size="6" maxlength="6" placeholder="우편번호">
-                    <button type="button" class="btn btn-neutral ms-10">
+                    class="field field-numeric" size="6" maxlength="6" placeholder="우편번호" readonly>
+                    <button type="button" class="btn btn-neutral ms-10 btn-address-search">
                         <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                    <button type="button" class="btn btn-negative ms-10 btn-address-clear" 
+                                style="display: none;">
+                        <i class="fa-solid fa-xmark"></i>
                     </button>
             </div>
 
             <div class="cell">
-                <input type="text" name="memberAddress1" class="field w-100" placeholder="기본주소">
+                <input type="text" name="memberAddress1" class="field w-100" placeholder="기본주소" readonly>
             </div>
             <div class="cell">
                 <input type="text" name="memberAddress2" class="field w-100" placeholder="상세주소">
