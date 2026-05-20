@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>jQuery 수업</title>
     <link rel="icon" href="/kh.png" type="image/jpeg">
-    <link rel="stylesheet" 
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         type="text/css">
     <link rel="stylesheet" href="../css/commons.css" type="text/css">
     <style>
-        div{ box-shadow: 0 0 0 1px #cccccc;}
+        div {
+            box-shadow: 0 0 0 1px #cccccc;
+        }
     </style>
     <!-- jQuery CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -23,63 +25,64 @@
         // -모든 웹에서는 모든 통신을 AJAX로 처리
         // -화면을 유지하면서 처리가 가능하다는게 가장 큰 장점 
         //-쓸데없는 호출을 하면 안됨. 데이터 낭비 방지
-    $(function(){
-        //목표 : .btn-ajax를 누르면 다른 파일을 불러와서 .result에 표시
-        $(".btn-ajax").on("click", function(){
-            $.ajax({
-                // url : "통신 대상의 주소",
-                url: "./18.datepicker.html",
-                success : function(response){
-                    $(".result").text(response);
-                }
+        $(function () {
+            //목표 : .btn-ajax를 누르면 다른 파일을 불러와서 .result에 표시
+            $(".btn-ajax").on("click", function () {
+                $.ajax({
+                    // url : "통신 대상의 주소",
+                    url: "./18.datepicker.html",
+                    success: function (response) {
+                        $(".result").text(response);
+                    }
+                });
+            });
+            //목표 : btn-ajax2를 누르면 Spring Boot로 요청을 보내서 받은 결과를 .result2에 표시
+            $(".btn-ajax2").on("click", function () {
+                $.ajax({
+                    url: "http://localhost:8080/rest/test/hello",
+                    success: function (response) {
+                        $(".result2").text(response);
+                    }
+                })
+            });
+            //목표 : btn-ajax3를 누르면 Spring Boot로 요청을 보내서 덧셈을 하게하고 .result3에 표시
+            $(".btn-ajax3").on("click", function () {
+                $.ajax({
+                    // url : "http://localhost:8080/rest/test/plus?a=10&b=20",//GET 말안하면 get이 기본값
+                    url: "http://localhost:8080/rest/test/plus",//POST
+                    method: "post",
+                    data: { a: 10, b: 20 },
+                    success: function (response) {
+                        $(".result3").text(response);
+                    }
+                })
+            });
+            $(".btn-ajax4").on("click", function () {
+                //.field-ajax4에 있는 아이디를 불러와서 서버에 있냐고 물어본뒤 답을 받아서 출력
+                var memberId = $(".field-ajax4").val();
+
+                //(중요) ajax는 꼭 필요한 상황에만 사용해야 한다(즉, 불필요한 상황은 제거해야 함)
+                var regex = /^[a-z][a-z0-9]{4,19}$/;
+                var valid = regex.test(memberId);
+                if (valid == false) return;
+
+                $.ajax({
+                    //get
+                    url: "http://localhost:8080/rest/test/check?memberId=" + memberId,
+                    //post
+                    url: "http://localhost:8080/rest/test/check",
+                    method: "post",
+                    data: { memberId: memberId }, //왼쪽이 이름, 오른쪽이 데이터{ key : value }
+                    success: function (response) {
+                        $(".result4").text(response);
+                        console.log(response);
+                    }
+                })
             });
         });
-        //목표 : btn-ajax2를 누르면 Spring Boot로 요청을 보내서 받은 결과를 .result2에 표시
-        $(".btn-ajax2").on("click", function(){
-            $.ajax({
-                url : "http://localhost:8080/rest/test/hello",
-                success : function(response){
-                    $(".result2").text(response);
-                }
-            })
-        });
-        //목표 : btn-ajax3를 누르면 Spring Boot로 요청을 보내서 덧셈을 하게하고 .result3에 표시
-        $(".btn-ajax3").on("click", function(){
-            $.ajax({
-                // url : "http://localhost:8080/rest/test/plus?a=10&b=20",//GET 말안하면 get이 기본값
-                url : "http://localhost:8080/rest/test/plus",//POST
-                method : "post",
-                data : {a:10, b:20},
-                success : function(response){
-                    $(".result3").text(response);
-                }
-            })
-        });
-        $(".btn-ajax4").on("click", function(){
-            //.field-ajax4에 있는 아이디를 불러와서 서버에 있냐고 물어본뒤 답을 받아서 출력
-            var memberId = $(".field-ajax4").val();
-
-            //(중요) ajax는 꼭 필요한 상황에만 사용해야 한다(즉, 불필요한 상황은 제거해야 함)
-            var regex = /^[a-z][a-z0-9]{4,19}$/;
-            var valid = regex.test(memberId);
-            if(valid == false) return;
-
-            $.ajax({
-                //get
-                url : "http://localhost:8080/rest/test/check?memberId="+memberId,
-                //post
-                url : "http://localhost:8080/rest/test/check",
-                method : "post",
-                data : { memberId : memberId }, //왼쪽이 이름, 오른쪽이 데이터{ key : value }
-                success : function(response){
-                    $(".result4").text(response);
-                    console.log(response);
-                }
-            })
-        });
-    });
     </script>
 </head>
+
 <body>
     <div class="container w-600 mt-50 mb-50">
         <div class="cell center">
@@ -106,4 +109,5 @@
         </div>
     </div>
 </body>
+
 </html>

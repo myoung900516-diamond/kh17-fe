@@ -21,12 +21,11 @@
   <!-- 자바스크립트 작성 영역 -->
   <script>
     $(function () {
-      //시작하자마자 차트를 만들지 말고 서버에 물어본 뒤 받은 데이터로 차트를 생성
-
+      //ajax는 한번에 하나씩만 작게 여러번 하는게 좋다. 
       $.ajax({
-        url:"http://localhost:8080/rest/stat/country-region",
-        method:"post",
-        success : function(response){
+        url: "http://localhost:8080/rest/stat/country-region",
+        method: "post",
+        success: function (response) {
           const ctx = $(".custom-chart")[0];
           new Chart(ctx, {
             type: response.type,
@@ -36,7 +35,7 @@
                 {
                   data: response.values,
                   borderWidth: 1,
-                  backgroundColor :[
+                  backgroundColor: [
                     "rgba(214, 48, 49,0.5)",
                     "rgba(225, 112, 85,0.5)",
                     "rgba(253, 203, 110,0.5)",
@@ -45,7 +44,7 @@
                     "rgba(9, 132, 227,0.5)",
                     "rgba(108, 92, 231,0.5)"
                   ],
-                  borderColor:[
+                  borderColor: [
                     "rgba(214, 48, 49,1.0)",
                     "rgba(225, 112, 85,1.0)",
                     "rgba(253, 203, 110,1.0)",
@@ -64,8 +63,57 @@
                   beginAtZero: true
                 }
               },
-              plugins:{
-                legend:{display:false}//범례 제거
+              plugins: {
+                legend: { display: false }//범례 제거
+              }
+            }
+          });
+
+        }
+      });
+      $.ajax({
+        url: "http://localhost:8080/rest/stat/lecture-category",
+        method: "post",
+        success: function (response) {
+          const ctx = $(".custom-chart2")[0];
+          new Chart(ctx, {
+            type: response.type,
+            data: {
+              labels: response.titles,
+              datasets: [
+                {
+                  data: response.values,
+                  borderWidth: 1,
+                  backgroundColor: [
+                    "rgba(214, 48, 49,0.5)",
+                    "rgba(225, 112, 85,0.5)",
+                    "rgba(253, 203, 110,0.5)",
+                    "rgba(0, 184, 148,0.5)",
+                    "rgba(116, 185, 255,0.5)",
+                    "rgba(9, 132, 227,0.5)",
+                    "rgba(108, 92, 231,0.5)"
+                  ],
+                  borderColor: [
+                    "rgba(214, 48, 49,1.0)",
+                    "rgba(225, 112, 85,1.0)",
+                    "rgba(253, 203, 110,1.0)",
+                    "rgba(0, 184, 148,1.0)",
+                    "rgba(116, 185, 255,1.0)",
+                    "rgba(9, 132, 227,1.0)",
+                    "rgba(108, 92, 231,1.0)"
+                  ],
+
+                }
+              ]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              },
+              plugins: {
+                legend: { display: false }//범례 제거
               }
             }
           });
@@ -81,8 +129,18 @@
     <div class="cell center">
       <h1>차트다루기</h1>
     </div>
+    <div class="cell center">
+      <h2>대륙별 국가 현황</h2>
+    </div>
     <div class="cell">
       <canvas class="custom-chart"></canvas>
+    </div>
+
+    <div class="cell center">
+      <h2>카테고리별 강좌 현황</h2>
+    </div>
+    <div class="cell">
+      <canvas class="custom-chart2"></canvas>
     </div>
 
   </div>

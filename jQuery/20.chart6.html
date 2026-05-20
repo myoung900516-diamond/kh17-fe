@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery 수업</title>
+  <link rel="icon" href="/kh.png" type="image/jpeg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    type="text/css">
+  <link rel="stylesheet" href="../css/commons.css" type="text/css">
+  <style>
+    div {
+      box-shadow: 0 0 0 1px #cccccc;
+    }
+  </style>
+  <!-- chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- jQuery CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <!-- 자바스크립트 작성 영역 -->
+  <script>
+    $(function () {
+
+
+      //데이터를 불러와서 차트를 그리는 함수 
+
+      function createChart(endpoint, selector) {
+        $.ajax({
+          url: "http://localhost:8080/rest/stat/"+endpoint,
+          method: "post",
+          success: function (response) {
+            const ctx = $(selector)[0];
+            new Chart(ctx, {
+              type: response.type,
+              data: {
+                labels: response.titles,
+                datasets: [
+                  {
+                    data: response.values,
+                    borderWidth: 1,
+                    backgroundColor: [
+                      "rgba(214, 48, 49,0.5)",
+                      "rgba(225, 112, 85,0.5)",
+                      "rgba(253, 203, 110,0.5)",
+                      "rgba(0, 184, 148,0.5)",
+                      "rgba(116, 185, 255,0.5)",
+                      "rgba(9, 132, 227,0.5)",
+                      "rgba(108, 92, 231,0.5)"
+                    ],
+                    borderColor: [
+                      "rgba(214, 48, 49,1.0)",
+                      "rgba(225, 112, 85,1.0)",
+                      "rgba(253, 203, 110,1.0)",
+                      "rgba(0, 184, 148,1.0)",
+                      "rgba(116, 185, 255,1.0)",
+                      "rgba(9, 132, 227,1.0)",
+                      "rgba(108, 92, 231,1.0)"
+                    ],
+
+                  }
+                ]
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                },
+                plugins: {
+                  legend: { display: false }//범례 제거
+                }
+              }
+            });
+
+          }
+        });
+      }
+      
+      //createChart 함수를 불러서 차트를 생성하도록 지시 
+      createChart("country-region", ".custom-chart");
+      createChart("lecture-category", ".custom-chart2");
+      createChart("lecture-type", ".custom-chart3");
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container w-600 mt-50 mb-50">
+    <div class="cell center">
+      <h1>차트다루기</h1>
+    </div>
+    <div class="cell center">
+      <h2>대륙별 국가 현황</h2>
+    </div>
+    <div class="cell">
+      <canvas class="custom-chart"></canvas>
+    </div>
+
+    <div class="cell center">
+      <h2>카테고리별 강의 현황</h2>
+    </div>
+    <div class="cell">
+      <canvas class="custom-chart2"></canvas>
+    </div>
+
+    <div class="cell center">
+      <h2>유형별 강의 현황</h2>
+    </div>
+    <div class="cell">
+      <canvas class="custom-chart3"></canvas>
+    </div>
+
+  </div>
+</body>
+
+</html>
