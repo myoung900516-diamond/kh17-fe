@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dept-insert</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        $(function(){
+            var state = {
+                deptIdValid : false,
+                deptNameValid : false,
+                deptUseYNValid : true, 
+                ok : function(){
+                    return Object.values(this)
+                        .filter(v => typeof v === "boolean")
+                        
+                        .every(v => v === true); 
+                        
+                }
+            };
+            $("[name=deptId]").on("blur", function(){
+                var regex = /^[0-9]{1,10}$/;
+                var codeNumber = parseInt($(this).val());
+                var valid = regex.test(codeNumber);
+                $(this).val(codeNumber);
+                $(this).removeClass("success fail").addClass(valid? "success": "fail");
+                state.deptIdValid = valid;
+            });
+            $("[name=deptName]").on("blur", function(){
+                var regex = /^[가-힣]{1,20}$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid? "success": "fail");
+                state.deptNameValid = valid;
+            });
+            $("[name=deptUseYN]").on("input", function(){
+                var regex = /^(Y|N)$/;
+                var valid = regex.test($(this).val());
+                if(valid == false) return;
+
+                if($(this).prop("checked")){
+                    $(this).val("Y");
+                }
+                else{
+                    $(this).val("N");
+                }
+                // console.log($(this).val());
+
+                // $(this).addClass("success");
+
+                $(this).removeClass("success fail").addClass(valid? "success": "fail");
+                state.deptUseYNValid = valid;
+            });
+            $(".field.field-numeric").on("input", function(){
+                var regex = /[^0-9]+/g;
+                
+                var replacement = $(this).val().replace(regex, "");
+                $(this).val(replacement);
+            });
+            $(".form-check").on("submit", function(){
+                $(this).find("input[name]").trigger("blur");
+                $(this).find("input[name]").trigger("input");
+
+                return state.ok();
+            });
+        });
+    </script>
+</head>
+<body>
+    <form action="./add" method="post" autocomplete="off" class="form-check">
+
+        <div class="container w-600 mt-50 mb-50">
+            <div class="cell center">
+                <h1>부서등록</h1>
+            </div>
+            <div class="cell">
+                <label>부서코드<i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" inputmode="tel" name="deptId" class="field field-numeric w-100">
+                <div class="fail-feedback">숫자만 입력가능합니다(10자리이내)</div>
+            </div>
+            <div class="cell">
+                <label>부서명<i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="deptName" class="field w-100">
+                <div class="fail-feedback">한글 20자 이내로 입력해주세요</div>
+            </div>
+            <div class="cell">
+                <label>
+                    <input type="checkbox" name="deptUseYN" checked >
+                    <span>부서 활성화 여부</span>
+                </label>
+            </div>
+            <div class="cell right">
+                <button type="submit" class="btn btn-positive">등록하기<i class="fa-solid fa-plus"></i></button>
+            </div>
+            
+            
+        </div>
+    </form>
+</body>
+</html>

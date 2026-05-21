@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>emp-insert</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+    <!-- lightpick CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js"></script>
+
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        $(function(){
+            var state = {
+                empDeptValid : false,
+                empNameValid : false,
+                empEmailValid : false,
+                empPhoneValid : false,
+                empPositionValid : true,
+                empHireDateValid : true,
+                empUseYNValid : true, 
+                ok : function(){
+                    return Object.values(this)
+                        .filter(v => typeof v === "boolean")
+                        
+                        .every(v => v === true); 
+                        
+                }
+            };
+            $("[name=empName]").on("blur", function(){
+                var regex = /^[가-힣A-Za-z]{1,2}[가-힣A-Za-z]{1,5}$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid? "success": "fail");
+                state.deptNameValid = valid;
+            });
+            $("[name=empEmail]").on("blur", function(){
+                var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,}$/;
+                var empEmail = $(this).val();
+                var valid = regex.test(empEmail);
+
+                $(this).removeClass("success fail").addClass(valid? "success": "fail");
+                state.deptNameValid = valid;
+            });
+            $("[name=empPhone]").on("blur", function(){
+                var regex = /^010[1-9][0-9]{7}$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid? "success": "fail");
+                state.empPhoneValid = valid;
+            });
+            $("[name=empPosition]").on("input", function(){
+                var regex = /^(사원|대리|과장|차장|부장)$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid? "success": "fail");
+
+                state.empPositionValid = valid;
+            });
+            $("[name=empHireDate]").on("blur", function(){
+                var regex = /^([0-9]{4})-(((02)-(0[1-9]|1[0-9]|2[0-9]))|((0[469]|11)-(0[1-9]|1[0-9]|2[0-9]|30))|((0[13578]|1[02])-(0[1-9]|1[0-9]|2[0-9]|3[01])))$/;
+                var valid = $(this).val().length == 0 || regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid? "success": "fail");
+                state.empHireDateValid = valid;
+            });
+
+            $("[name=empUseYN]").on("input", function(){
+                var regex = /^(Y|N)$/;
+                var valid = regex.test($(this).val());
+                if(valid == false) return;
+
+                if($(this).prop("checked")){
+                    $(this).val("Y");
+                }
+                else{
+                    $(this).val("N");
+                }
+                // console.log($(this).val());
+
+                // $(this).addClass("success");
+
+                $(this).removeClass("success fail").addClass(valid? "success": "fail");
+                state.deptUseYNValid = valid;
+            });
+            $(".field.field-numeric").on("input", function(){
+                var regex = /[^0-9]+/g;
+                
+                var replacement = $(this).val().replace(regex, "");
+                $(this).val(replacement);
+            });
+            $(".form-check").on("submit", function(){
+                $(this).find("select[name]").trigger("input");
+                $(this).find("input[name]").trigger("blur");
+                $(this).find("input[name]").trigger("input");
+
+                return state.ok();
+            });
+            
+            
+            var datePicker = new Lightpick({ 
+                field : $("[name=empHireDate]")[0],
+                format : "YYYY-MM-DD",
+                firstDay : 7,
+                maxDate : moment(),
+            });
+        });
+        
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>사원 등록</h1>
+        </div>
+        <div class="cell">
+            <label>부서명<i class="fa-solid fa-asterisk red"></i></label>
+            <select name="empDept" class="field w-100">
+                <option value="">선택하세요</option>
+                <option class="dept-id"></option>
+            </select>
+            <div class="fail-feedback">필수 항목입니다.</div>
+        </div>
+        <div class="cell">
+            <label>사원이름<i class="fa-solid fa-asterisk red"></i></label>
+            <input type="text" name="empName" class="field w-100">
+            <div class="fail-feedback">필수 항목입니다</div>
+        </div>
+        <div class="cell">
+            <label>이메일<i class="fa-solid fa-asterisk red"></i></label>
+            <input type="text" name="empEmail" inputmode="email" class="field w-100">
+            <div class="fail-feedback">필수 항목입니다</div>
+        </div>
+        <div class="cell">
+            <label>연락처<i class="fa-solid fa-asterisk red"></i></label>
+            <input type="text" name="empPhone" inputmode="tel" class="field w-100">
+            <div class="fail-feedback">필수 항목입니다</div>
+        </div>
+        <div class="cell">
+            <label>직급</label>
+            <select name="empPosition" class="field w-100">
+                <option value="">선택하세요</option>
+                <option>사원</option>
+                <option>대리</option>
+                <option>과장</option>
+                <option>차장</option>
+                <option>부장</option>
+            </select>
+            <div class="success-feedback"></div>
+        </div>
+        <div class="cell">
+            <label>입사일</label>
+            <input type="text" name="empHireDate" class="field w-100">
+        </div>
+        <div class="cell">
+            <label>
+                <input type="checkbox" name="empUseYN" checked >
+                <span>부서 활성화 여부</span>
+            </label>
+        </div>
+        <div class="cell right">
+            <button type="submit" class="btn btn-positive">등록하기<i class="fa-solid fa-plus"></i></button>
+        </div>
+
+
+    </div>
+</body>
+</html>
