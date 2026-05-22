@@ -60,7 +60,7 @@
                 memberPasswordValid : false,
                 memberPasswordCheckValid : false, 
                 memberEmailValid : false,
-                memberEmailCertValid : false, 
+                memberEmailCertValid : false, //이제는 필요없는 값
                 memberNicknameValid : false,
                 memberBirthValid : true,
                 memberContactValid : true,
@@ -323,10 +323,7 @@
                 method:"post",
                 data:{certEmail:memberEmail},
                 success:function(){
-                    //console.log("이메일 발송 완료")
-                    var template = $("#cert-template").text();
-                    var content = $.parseHTML(template);
-                    $(".cert-area").html(content);
+                    window.alert("이메일 발송 완료 \n이메일을 확인해주세요");
                 },
                 error:function(){
                     window.alert("이메일 발송에 실패했습니다. \n잠시 후 다시 시도해보세요");
