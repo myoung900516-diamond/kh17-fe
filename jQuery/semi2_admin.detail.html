@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사원상세페이지(관리자)</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>[${empDto.empName}]사원 상세 정보</h1>
+        </div>
+        <div class="cell">
+            <img src="/emp/profile?empNo=${empDto.empNo}" width="100">
+        </div>
+        <div class="cell">
+            <span>사원번호 : ${empDto.empNo}</span>
+        </div>
+        <div class="cell">
+            <span>사원실명 : ${empDto.empName}</span>
+        </div>
+        <div class="cell">
+            <span>사원부서 : ${empDto.empDept}</span>
+        </div>
+        <div class="cell">
+            <span>사원직위 : ${empDto.empPosition}</span>
+        </div>
+        <div class="cell">
+            <span>담당사수 : ${empDto.empMentor}</span>
+        </div>
+        <div class="cell">
+            <span>사원아이디 : ${empDto.empId}</span>
+        </div>
+        <div class="cell">
+            <span>생년월일 : ${empDto.empBirth}</span>
+        </div>
+        <div class="cell">
+            <span>이메일주소 : ${empDto.empEmail}</span>
+        </div>
+        <div class="cell">
+            <span>연락처 : ${empDto.empContact}</span>
+        </div>
+        <div class="cell">
+            <span>주소 : [${empDto.empPost}]  ${empDto.empAddress1}  ${empDto.empAddress2}</span>
+        </div>
+        <div class="cell">
+            <span>권한 : ${empDto.empLevel}</span>
+        </div>
+        <div class="cell">
+            <span>활성화여부 : ${empDto.empUseYn}</span>
+        </div>
+        <div class="cell">
+            <span>입사일 :<fmt:formatDate value = "${empDto.empHireDate}" pattern="yyyy-MM-dd"/></span>
+        </div>
+        <div class="cell">
+            <span>퇴사일 :<fmt:formatDate value = "${empDto.empRetiredDate}" pattern="yyyy-MM-dd"/></span>
+        </div>
+        <div class="cell">
+            <span>등록일 :<fmt:formatDate value = "${empDto.empCreateAt}" pattern="yyyy-MM-dd"/></span>
+        </div>
+        <div class="cell">
+            <span>최종 비밀번호 변경일 :${empDto.empPwChange}</span>
+        </div>
+        <div class="cell">
+            <a href="./edit?empNo=${empDto.empNo}" class="btn btn-neutral">사원정보수정</a>
+            <a href="./list" class="btn btn-neutral">목록으로</a>
+        </div>
+        
+
+
+    </div>
+</body>
+</html>
