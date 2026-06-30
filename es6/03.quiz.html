@@ -1,0 +1,77 @@
+<script type="text/javascript">
+    //(Q) data에 들어 있는 값을 이용해서 다음 결과를 만들어 보세요
+    //1. 홀수만 필터링
+    //2. 1번에서 필터링된 결과 데이터를 각각 제곱
+    //3. 2번의 결과에서 20 이하면 필터링
+    //4. 3번의 결과를 출력
+
+    //추가로 알아야 할 함수 : map(검색해보세요)
+
+    const data = [5, 3, 2, 7, 8, 1, 6];
+
+    // console.log("1. ---------------------");
+
+    // const result = [];
+    // for(var i = 0; i < data.length; i++){
+    //     if(data[i] % 2 == 1){
+    //         result.push(data[i]);
+    //     }
+    // }
+    // console.log(result);
+
+    // data.filter((number) => (number)%2 ==1)
+    //     .forEach((number)=> console.log(number));
+
+    //2. 1번에서 필터링된 결과 데이터를 각각 제곱
+    // console.log("2.-------------------------");
+
+    // const square = [];
+    // for(var j = 0; j < result.length ; j++){
+    //     square.push(result[j]*result[j]);
+    // }
+    // console.log(square);
+
+    // data.map((number) => (number)**2).forEach((number)=> console.log(number));
+
+    //3. 2번의 결과에서 20 이하만 필터링
+    // console.log("3.----------------------------------");
+
+    // const result2 = [];
+
+    // for(var k = 0; k < square.length; k++){
+    //     if(square[k] <= 20){
+    //         result2.push(square[k]);
+    //     }
+    // }
+
+    //4. 3번의 결과를 출력
+    // console.log(result2);
+
+
+    data.filter(n=>n%2!=0)
+        .map(n=>n*n)
+        .filter(n=>n<=20)
+        .sort((a,b)=>a-b)
+        .forEach(n=>console.log(n));
+
+    console.log("--------------------------------");
+
+    //(Q) 만약 다음 배열에서 20을 지우려면?
+    const numbers = [10, 20, 30, 40, 50];
+
+    // numbers.filter(n=>n!=20).forEach(n=>console.log(n));
+
+    const index = numbers.indexOf(20);
+    numbers.splice(index, 1);
+
+    console.log(numbers);
+
+    //원본이 변경되면 안 좋은 방식이다. 
+
+    //사본을 만들어내는 방식 
+    //-slice는 원본 변경 없이 원하는 구간을 잘라서 사본을 만들어냄 
+    //- filter로 원하는 데이터만 빼고 검색하면 삭제 효과가 발생
+
+    const res = numbers.filter(n => n !== 20); //정확한 비교 해라. 
+    
+</script>
