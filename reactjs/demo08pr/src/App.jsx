@@ -35,7 +35,8 @@ const allValid = useMemo(()=>{
       </div>
       <div className="row mt-4">
         <p>(Q2)당신의 성장과정에 대해서 소개해주세요</p>
-        <textarea  className="form-control mt-2" rows={10} value={content2} onChange={e=>setContent2(e.target.value)}/>
+        <textarea  className="form-control mt-2" rows={10} value={content2} 
+              onChange={e=>setContent2(e.target.value)}/>
         <div className="text-end">
           <span className={`text-${color2}`}>{content2.length}/1000</span>글자
         </div>
