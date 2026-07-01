@@ -7,7 +7,7 @@ const [content, setContent] = useState(0);
   return (
     <>
       <h1>계좌이체</h1>
-      <input value={content}/>
+      <input value={content} readOnly/>
       <br/>
       <button onClick={()=>setContent(content+10000000)}>천만</button>
       <button onClick={()=>setContent(content+1000000)}>백만</button>
@@ -18,7 +18,7 @@ const [content, setContent] = useState(0);
       <button onClick={()=>setContent(content+10)}>십</button>
       <button onClick={()=>setContent(content+1)}>일</button>
       <button onClick={()=>setContent(0)}>reset</button>
-      <button onClick={()=>setContent()}>remove</button>
+      <button onClick={()=>setContent(parseInt(content/10))}>remove</button>
     </>
   )
 }
