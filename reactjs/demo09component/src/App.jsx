@@ -1,5 +1,6 @@
 import './App.css'
 import Exam01 from "./components/Exam01"
+import Exam02 from "./components/Exam02"
 
 function App() {
   
@@ -7,6 +8,7 @@ function App() {
     <div className="container my-5">
       <Exam01/>
       <hr/>
+      <Exam02/>
     </div>
   )
 }
