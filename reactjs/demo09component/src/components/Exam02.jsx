@@ -13,7 +13,7 @@ function Exam02(){
     math : "",
     }); 
     const changeStudent = useCallback(e=>{
-    const {name, value} = e. target;
+    const {name, value} = e.target;
 
     setStudent({
       ...student, 
