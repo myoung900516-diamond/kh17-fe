@@ -38,7 +38,7 @@ export default function Exam04(){
     }, [lecture]);
     const changeNumericValue = useCallback(e=>{
         const {name, value} = e.target;
-        const regex = /[^0-9]/g;
+        const regex = /[^0-9]+/g;
         const replacement = value.replace(regex, "");
 
         setLecture({

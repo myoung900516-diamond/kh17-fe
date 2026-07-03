@@ -45,7 +45,7 @@ export default function Exam03_1(){
 
     const changeNumericValue = useCallback(e=>{
       const {name, value} = e.target;
-      const regex = /[^0-9]/g;
+      const regex = /[^0-9]+/g;
       const replacement = value.replace(regex, "");
       const result = parseInt(replacement);
 

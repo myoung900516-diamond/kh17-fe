@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Jumbodtron from "./Jumbodtron";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { FaAsterisk, FaPlus } from "react-icons/fa";
+import {ClimbingBoxLoader} from "react-spinners";
 
 
 export default function Exam05(){
@@ -26,6 +28,8 @@ export default function Exam05(){
         bookCover : ""
     });
 
+    const [loading, setLoading] = useState(false);
+
     const valid = useMemo(()=>{
         if(result.bookTitle !== "is-valid") return false;
         if(result.bookAuthor !== "is-valid") return false;
@@ -47,7 +51,7 @@ export default function Exam05(){
     }, [book]);
     const changeNumericValue = useCallback(e=>{
         const {name, value} = e.target;
-        const regex = /[^0-9]/g;
+        const regex = /[^0-9]+/g;
         const replacement = value.replace(regex, "");
         const result = parseInt(replacement);
 
@@ -114,10 +118,13 @@ export default function Exam05(){
     }, [book.bookCover, result]);
 
     const send = useCallback(()=>{
+        //로딩 상태로 변경
+        setLoading(true);
+
         axios({
             url : "http://localhost:8080/api/book/insert",
             method : "post",
-            data : book,
+            data : book
 
         })
         .then(
@@ -129,7 +136,15 @@ export default function Exam05(){
                 confirmButtonText: '확인'
                 });
 
-                setBook({
+                
+
+                clear();
+            }
+        )
+        .finally(()=> setLoading(false));
+    }, [book]);
+    const clear = useCallback(()=>{
+        setBook({
                     bookTitle : "",
                     bookAuthor : "",
                     bookPublicationDate : "",
@@ -149,13 +164,10 @@ export default function Exam05(){
                     bookGenre : "",
                     bookCover : ""
                 })
-
-            }
-        )
-    }, [book]);
+    }, []);
     
     useEffect(()=>{
-        if(book.bookGenre === "" && result.bookGenre === "") return;
+        if(book.bookGenre === "" && result.bookGenre === null) return;
 
         checkBookGenre();
     }, [book.bookGenre, result.bookGenre]);
@@ -165,9 +177,10 @@ export default function Exam05(){
         <Jumbodtron title="도서등록" content="새로운 도서를 등록할 수 있습니다"/>
 
         <div className="row mt-5">
-            <label className="col-sm-3 col-form-label">도서명</label>
+            <label className="col-sm-3 col-form-label">도서명<FaAsterisk className="text-danger"/></label>
             <div className="col-sm-9">
-                <input type="text" name="bookTitle" className={`form-control ${result.bookTitle}`} 
+                <input type="text" name="bookTitle" autoComplete="off"
+                className={`form-control ${result.bookTitle}`} 
                 onChange={changeStringValue} onBlur={checkBookTitle}/>
                 <div className="valid-feedback"></div>
                 <div className="invalid-feedback"></div>
@@ -206,8 +219,6 @@ export default function Exam05(){
             <div className="col-sm-9">
                 <input type="text" name="bookPublisher" className={`form-control ${result.bookPublisher}`} 
                 onChange={changeStringValue}/>
-                <div className="valid-feedback"></div>
-                <div className="invalid-feedback"></div>
             </div>
         </div>
         <div className="row mt-5">
@@ -233,8 +244,7 @@ export default function Exam05(){
                     <option>추리소설</option>
                     <option>자기계발</option>
                 </select>
-                <div className="valid-feedback"></div>
-                <div className="invalid-feedback"></div>
+                <div className="invalid-feedback">필수 선택사항입니다</div>
             </div>
         </div>
         <div className="row mt-5">
@@ -250,9 +260,22 @@ export default function Exam05(){
         <div className="row mt-5">
             <div className="col">
             <button className="btn btn-lg btn-success w-100" disabled={valid===false} 
-            onClick={send} >등록하기</button>
+            onClick={send} ><FaPlus className="ms-2"/>등록하기</button>
             </div>
         </div>
+        {/* 로딩상태(loading === true)일 때 보여질 화면 */}
+        {/* { loading === true? <h1>로딩중</h1> : false } */}
+        {/* { loading === true && <h1>로딩중</h1>} */}
+        {loading === true && (
+            <div className="position-fixed top-0 
+                start-0 w-100 h-100 bg-dark bg-opacity-25 
+                d-flex justify-content-center align-items-center">
+            <div className="d-flex flex-column text-center">
+            <ClimbingBoxLoader loading={loading}/>
+            <p className="mt-2">등록중</p>
+            </div>
+            </div>
+        )}
         </>
     );
 
