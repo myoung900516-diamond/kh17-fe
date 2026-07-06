@@ -38,7 +38,7 @@ export default function Exam12(){
             <Jumbodtron title="도서 목록"/>
             <div className="row mt-4">
             <div className="col">
-                <select value={size} onChange={e=>setSize(parseInt(e.target.value))}>
+                <select value={size} className="form-select-sm" onChange={e=>setSize(parseInt(e.target.value))}>
                     <option value="5">5개씩</option>
                     <option value="10">10개씩</option>
                     <option value="20">20개씩</option>
