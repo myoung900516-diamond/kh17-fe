@@ -5,7 +5,7 @@ import axios from "axios";
 import { Button, Col, Row } from "react-bootstrap";
 import { FaList, FaTrash, FaPenToSquare } from "react-icons/fa6";
 import Swal from "sweetalert2";
-import { toast, error } from "react-toastify";
+import { toast } from "react-toastify";
 
 
 export default function CountryDetail() {
@@ -55,7 +55,7 @@ export default function CountryDetail() {
                 }
             })
             .then(() => {
-                toast.error("done");
+                toast.success("done");
                 navigate("/country/list");
             });
     }, [country, navigate]);
