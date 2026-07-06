@@ -4,8 +4,8 @@ import Header from "./templates/Header"
 import Menu from "./templates/Menu"
 import Body from "./templates/Body"
 import Footer from "./templates/Footer"
-import Container from "react-bootstrap/esm/Container"
-import { Row, Col } from "react-bootstrap"
+import {Bounce, ToastContainer} from "react-toastify";
+import { Row, Col, Container } from "react-bootstrap";
 
 export default function App() {
 
@@ -14,25 +14,39 @@ export default function App() {
     <Container fluid>
       <Row className=" d-none d-md-block my-4">
         <Col className="py-2">
-          <Header/>
+          <Header />
         </Col>
       </Row>
 
-      <Menu/>
-      <Row className="mt-40" style={
-        { 
-          minHeight : 450
+      <Menu />
+      <Row className="my-4" style={
+        {
+          minHeight: 450
         }
       }>
         <Col>
-          <Body/>
+          <Body />
         </Col>
       </Row>
       <Row className="mt-4">
         <Col>
-          <Footer/>
+          <Footer />
         </Col>
       </Row>
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Bounce}
+      />
     </Container>
   )
 }

@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import Jumbotron from "../../templates/Jumbotron";
 import axios from "axios";
-import { FaArrowDown } from "react-icons/fa";
+import { FaArrowDown, FaPlus } from "react-icons/fa";
 import { ClimbingBoxLoader } from "react-spinners";
 import { Row, Col, Form, Button, Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 
 export default function CountryList() {
@@ -43,13 +44,23 @@ export default function CountryList() {
             <Jumbotron title="국가목록" content="등록된 국가들의 목록을 확인하세요" />
 
             <Row className="mt-4">
-                <Col>
+                <Col xs={6}>
                     <Form.Select className="w-auto" value={size} onChange={e => setSize(parseInt(e.target.value))}>
                         <option value="5">5개씩</option>
                         <option value="10">10개씩</option>
                         <option value="20">20개씩</option>
                         <option value="50">50개씩</option>
                     </Form.Select>
+                </Col>
+                <Col xs={6} className="text-end">
+                {/* <Link to="/country/add" className="btn btn-success">
+                <FaPlus/>
+                <span className="ms-2">신규등록</span>
+                </Link> */}
+                <Button as={Link} to="/country/add" variant="success">
+                    <FaPlus/>
+                    <span className="ms-2">신규등록</span>
+                </Button>
                 </Col>
             </Row>
 
@@ -68,7 +79,11 @@ export default function CountryList() {
                             {countryList.map((country) => (
                                 <tr key={country.countryNo}>
                                     <td>{country.countryNo}</td>
-                                    <td>{country.countryName}</td>
+                                    <td>
+                                        <Link to={`/country/detail/${country.countryNo}`}>
+                                        {country.countryName}
+                                        </Link>
+                                        </td>
                                     <td>{country.countryRegion}</td>
                                     <td>{country.countryCapital}</td>
                                     <td className="text-end">{country.countryPopulation}</td>
