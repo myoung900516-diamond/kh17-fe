@@ -27,17 +27,14 @@ export default function CountryDetail() {
     const [country, setCountry] = useState(null);
 
     useEffect(() => {
-        axios({
-            url: "http://localhost:8080/api/country/detail",
-            method: "get",
-            params: { countryNo: countryNo }
-        })
-            .then(response => {
-                setCountry(response.data);
-            });
+        loadData();
     }, []);
-    const deleteCountry = useCallback(() => {
-        Swal.fire({
+    const loadData = useCallback(async ()=>{
+        const response = await axios.get(`http://localhost:8080/api/country/${countryNo}`)
+        setCountry(response.data);
+    }, []);
+    const deleteCountry = useCallback(async () => {
+        const result = await Swal.fire({
             title: "sure?",
             text: "no back again",
             icon: "warning",
@@ -45,20 +42,13 @@ export default function CountryDetail() {
             confirmButtonText: "delete",
             cancelButtonText: "candel"
         })
-            .then(result => {
-                if (result.isConfirmed) {
-                    axios({
-                        url: "http://localhost:8080/api/country/delete",
-                        method: "get",
-                        params: { countryNo: countryNo }
-                    });
-                }
-            })
-            .then(() => {
-                toast.success("done");
-                navigate("/country/list");
-            });
-    }, [country, navigate]);
+        if (result.isConfirmed ===false) return;
+        
+        const response =await axios.delete(`http://localhost:8080/api/country/${countryNo}`)
+        toast.error("done");
+        navigate("/country/list");
+        
+    }, [countryNo]);
     return (<>
         <Jumbotron title="국가 상세 정보" content={`${countryNo}번 국가의 상세 정보 화면입니다.`} />
         {/* 상태를 나누어서 출력 */}

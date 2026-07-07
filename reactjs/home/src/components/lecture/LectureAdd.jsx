@@ -96,25 +96,15 @@ export default function LectureAdd(){
     }, [lecture.lectureType, result.lectureType]);
 
     //데이터전송(등록)
-    const send=useCallback(()=>{
-        
-        axios({
-            url : "http://localhost:8080/api/lecture/insert",
-            method : "post",
-            data : lecture,
-
-        })
-        .then(
-            response=>{
-                
-                Swal.fire({
-                title: 'Success!',
-                text: '강좌등록이 완료되었습니다.',
-                icon: 'success',
-                confirmButtonText: '확인'
-                })
-                 navigate("/lecture/list");
-                });
+    const send=useCallback(async ()=>{
+        const response = await axios.post(`http://localhost:8080/api/lecture/insert`,lecture);
+        const result = await Swal.fire({
+            title: 'Success!',
+            text: '강좌등록이 완료되었습니다.',
+            icon: 'success',
+            confirmButtonText: '확인'
+        });
+            navigate(`/lecture/detail/${response.data.lectureNo}`);
     }, [lecture]);
     useEffect(()=>{
         if(lecture.lectureCategory === "" && result.lectureCategory === "") return;

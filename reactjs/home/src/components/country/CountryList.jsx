@@ -19,25 +19,22 @@ export default function CountryList() {
 
         loadMoreList();
     }, []);
-    const loadMoreList = useCallback(() => {
+    const loadMoreList = useCallback(async () => {
         setLoading(true);
         const dataSize = countryList.length;
         const lastCountryNo = dataSize === 0 ? 0 : countryList[dataSize - 1].countryNo;
 
-        axios({
 
-            url: "http://localhost:8080/api/country/listForReact",
-            method: "get",
-            params: {
-                lastCountryNo: lastCountryNo,
-                size: size
-            }
-        })
-            .then(response => {
+        // const response = await axios.get(
+        //     `http://localhost:8080/api/country/lastCountryNo/${lastCountryNo}/size/${size}`
+        // )
+        const response = await axios.post(
+            `http://localhost:8080/api/country/list-more`, 
+            {lastNo : lastCountryNo, size : size}
+        )
                 setCountryList([...countryList, ...response.data.list]);
                 setLast(response.data.last);
-            })
-            .finally(() => setLoading(false));
+            setLoading(false);
     }, [countryList, size]);
     return (
         <>

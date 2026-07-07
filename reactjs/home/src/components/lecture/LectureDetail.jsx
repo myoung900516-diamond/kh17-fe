@@ -9,56 +9,88 @@ import { toast } from "react-toastify";
 
 
 export default function LectureDetail() {
-    //Route에 선언된 파라미터 변수를 읽으려면 useParams()를 사용해야 한다.
-    //<Route path="/country/detail/:countryNo">로 써있으면 구조분해할당으로 추출이 가능
+    //파라미터를 다 뽑아다 객체에 넣어줌 
     const { lectureNo } = useParams();
 
-    //만약 countryNo가 원치 않는 값(ex:숫자가 아닌 경우)을 가지면 다른 화면을 반환시켜야 한다
-    //스프링에서는 redirect라고 불렀는데... React에서는 어떻게 처리하느냐? 
-    //useNavigate()와 이용해서 처리가 가능한가? (불가능)
-    //-> 이런상황을 대비해서 화면이면서 이동이 가능한 태그를 제공 : <Navigate>
     if (/^[0-9]+$/.test(lectureNo) === false) {
         return <Navigate to="/lecture/list" replace />;
     }
 
     const navigate = useNavigate(() => { }, []);
 
-    //countryNo가 정상적인 숫자인 경우의 처리내용 작성
     const [lecture, setLecture] = useState(null);
 
     useEffect(() => {
-        axios({
-            url: "http://localhost:8080/api/lecture/detail",
-            method: "get",
-            params: { lectureNo: lectureNo }
-        })
-            .then(response => {
-                setLecture(response.data);
-            });
+        loadData();
+        // axios({
+        //     url: "http://localhost:8080/api/lecture/detail",
+        //     method: "get",
+        //     params: { lectureNo: lectureNo }
+        // })
+        //     .then(response => {
+        //         setLecture(response.data);
+        //     });
     }, []);
-    const deleteLecture = useCallback(() => {
-        Swal.fire({
+    //[1] 일반 함수에서 비동기 작업을 호출 : .then()으로 후속작업을 지정
+    // const loadData = useCallback(()=>{
+    //     axios({
+    //         url : `http://localhost:8080/api/lecture/detail`,
+    //         method : "get",
+    //         params : { lectureNo : lectureNo}
+    //     })
+    //     .then(response=>{
+    //         setLecture(response.data);
+    //     });
+    // }, []);
+    //[2] 비동기 함수를 사용
+    //-함수 앞에 async 키워드 추가
+    //-then대신 awail키워드 사용 가능 
+    const loadData = useCallback(async ()=> {
+        // const response = await axios({
+        //     url : `http://localhost:8080/api/lecture/detail/${lectureNo}`,
+        //     method : "get"
+        // });
+        const response = await axios.get(`http://localhost:8080/api/lecture/detail/${lectureNo}`)
+        setLecture(response.data);
+    }, []);
+    // const deleteLecture = useCallback(() => {
+
+    //     Swal.fire({
+    //         title: "sure?",
+    //         text: "no back again",
+    //         icon: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonText: "delete",
+    //         cancelButtonText: "candel"
+    //     })
+    //         .then(result => {
+    //             if (result.isConfirmed) {
+    //                 axios({
+    //                     url: "http://localhost:8080/api/lecture/delete",
+    //                     method: "get",
+    //                     params: { lectureNo: lectureNo }
+    //                 });
+    //             }
+    //         })
+    //         .then(() => {
+    //             toast.success("done");
+    //             navigate("/lecture/list");
+    //         });
+    // }, [lecture, navigate]);
+    const deleteLecture = useCallback(async ()=>{
+        const result = await Swal.fire({
             title: "sure?",
             text: "no back again",
             icon: "warning",
             showCancelButton: true,
             confirmButtonText: "delete",
             cancelButtonText: "candel"
-        })
-            .then(result => {
-                if (result.isConfirmed) {
-                    axios({
-                        url: "http://localhost:8080/api/lecture/delete",
-                        method: "get",
-                        params: { lectureNo: lectureNo }
-                    });
-                }
-            })
-            .then(() => {
-                toast.success("done");
-                navigate("/lecture/list");
-            });
-    }, [lecture, navigate]);
+        });
+        if(result.isConfirmed === false) return;
+        const response = await axios.get(`http://localhost:8080/api/lecture/delete/${lectureNo}`);
+        toast.success("done");
+        navigate("/lecture/list");
+    },[lectureNo]);
     return (<>
         <Jumbotron title="강의 상세 정보" content={`${lectureNo}번 강의의 상세 정보 화면입니다.`} />
         {/* 상태를 나누어서 출력 */}

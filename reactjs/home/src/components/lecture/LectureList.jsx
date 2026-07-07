@@ -16,24 +16,21 @@ export default function LectureList() {
 
         loadMoreList();
     }, []);
-    const loadMoreList = useCallback(() => {
+    const loadMoreList = useCallback(async () => {
         setLoading(true);
         const dataSize = lectureList.length;
         const lastLectureNo = dataSize === 0 ? 0 : lectureList[dataSize - 1].lectureNo;
 
-        axios({
-            url: "http://localhost:8080/api/lecture/listForReact",
-            method: "get",
+        const response = await axios.get(`http://localhost:8080/api/lecture/listForReact`,{
             params: {
                 lastLectureNo: lastLectureNo,
                 size: size
             }
         })
-            .then(response => {
-                SetLectureList([...lectureList, ...response.data.list]);
-                setLast(response.data.last);
-            })
-            .finally(() => setLoading(false));
+        
+        SetLectureList([...lectureList, ...response.data.list]);
+        setLast(response.data.last);
+        setLoading(false);
     }, [lectureList, size]);
 
     return (

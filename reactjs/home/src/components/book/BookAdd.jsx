@@ -5,6 +5,7 @@ import { FaAsterisk, FaPlus } from "react-icons/fa";
 import {ClimbingBoxLoader} from "react-spinners";
 import Jumbotron from "../../templates/Jumbotron";
 import { Col, Row, Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 
 export default function BookAdd(){
@@ -28,7 +29,7 @@ export default function BookAdd(){
         bookGenre : "",
         bookCover : ""
     });
-
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 
     const valid = useMemo(()=>{
@@ -136,6 +137,7 @@ export default function BookAdd(){
                 icon: 'success',
                 confirmButtonText: '확인'
                 });
+                
                 navigate("/book/list");
                 
 
@@ -143,31 +145,10 @@ export default function BookAdd(){
         )
         .finally(()=> setLoading(false));
     }, [book]);
-    const clear = useCallback(()=>{
-        setBook({
-                    bookTitle : "",
-                    bookAuthor : "",
-                    bookPublicationDate : "",
-                    bookPrice : 0,
-                    bookPublisher : "",
-                    bookPageCount : 0,
-                    bookGenre : "",
-                    bookCover : ""
-                })
-                setResult({
-                    bookTitle : "",
-                    bookAuthor : "",
-                    bookPublicationDate : "",
-                    bookPrice : "",
-                    bookPublisher : "is-valid",
-                    bookPageCount : "",
-                    bookGenre : "",
-                    bookCover : ""
-                })
-    }, []);
+    
     
     useEffect(()=>{
-        if(book.bookGenre === "" && result.bookGenre === null) return;
+        if(book.bookGenre === "" && result.bookGenre === "") return;
 
         checkBookGenre();
     }, [book.bookGenre, result.bookGenre]);
