@@ -32,7 +32,7 @@ export default function BookList() {
     }, [bookList, size]);
     return (
         <>
-            <Jumbotron title="도서 목록" />
+            <Jumbotron title="도서 목록" content="등록된 도서 목록을 확인할 수 있습니다"/>
             <Row className="mt-4">
                 <Col xs={6}>
                     <Form.Select className="w-auto" value={size}

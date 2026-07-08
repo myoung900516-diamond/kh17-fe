@@ -48,7 +48,7 @@ export default function BookEdit(){
         bookCover : ""
     });
     const [loading, setLoading] = useState(false);
-
+    const [validated, setValidated] = useState(false);
     const valid = useMemo(()=>{
         if(result.bookTitle !== "is-valid") return false;
         if(result.bookAuthor !== "is-valid") return false;
@@ -233,8 +233,11 @@ export default function BookEdit(){
                 <span>장르</span>
             </Form.Label>
             <Col sm={9}>
-                <Form.Select name="bookGenre" onChange={changeStringValue} 
-                className={result.bookGenre}>
+                <Form.Select name="bookGenre" onChange={e=>{
+                    changeStringValue(e);
+                    setValidated(true);
+                }} 
+                className={validated ? result.bookGenre : ""}>
                     <option value="">선택하세요</option>
                     <option>판타지</option>
                     <option>교양</option>

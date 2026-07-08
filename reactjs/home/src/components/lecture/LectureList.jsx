@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { FaArrowDown, FaPlus } from "react-icons/fa";
 import { ClimbingBoxLoader } from "react-spinners";
 import axios from "axios";
@@ -19,18 +19,22 @@ export default function LectureList() {
     const loadMoreList = useCallback(async () => {
         setLoading(true);
         const dataSize = lectureList.length;
-        const lastLectureNo = dataSize === 0 ? 0 : lectureList[dataSize - 1].lectureNo;
-
+        const lastLectureNo = dataSize === 0 ? 999999999 : lectureList[dataSize - 1].lectureNo;
         const response = await axios.post(`/api/lecture/list-more`, 
             {lastNo : lastLectureNo, size : size})
-        // console.log(response.data);
-        SetLectureList([...lectureList, ...response.data.list]);
-        setLast(response.data.last);
-        setLoading(false);
-    }, [lectureList, size]);
+            // console.log(response.data);
+            SetLectureList([...lectureList, ...response.data.list]);
+            setLast(response.data.last);
+            setLoading(false);
+        }, [lectureList, size]);
+    // const ListLength = useMemo(()=>{
+    //     const listLength = lectureList.length;
+    //     console.log(listLength);
+    // },[lectureList]);
 
     return (
         <>
+        <Jumbodtron title="강의 목록" content="등록된 강의 목록을 확인 할 수 있습니다"/>
             <Row className="mt-4">
                 <Col xs={6}>
                     <Form.Select className="w-auto" value={size} onChange={e => setSize(parseInt(e.target.value))}>

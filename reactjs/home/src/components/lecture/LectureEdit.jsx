@@ -27,7 +27,7 @@ export default function LectureEdit() {
     useEffect(() => {
         loadData();
     }, []);
-
+    const [validated, setValidated] = useState(false);
     const loadData = useCallback(async () => {
         const response = await axios.get(`/api/lecture/${lectureNo}`)
         setLecture(response.data);
@@ -150,8 +150,11 @@ export default function LectureEdit() {
                 <span>강의유형</span>
             </Form.Label>
             <Col sm={9}>
-                <Form.Select name="lectureCategory" className={result.lectureCategory}
-                    value={lecture.lectureCategory} onChange={changeStringValue} >
+                <Form.Select name="lectureCategory" className={validated ? result.lectureCategory : ""}
+                    value={lecture.lectureCategory} onChange={e=>{
+                        changeStringValue(e);
+                        setValidated(true);
+                    }} >
                     <option value="">선택하세요</option>
                     <option>이론</option>
                     <option>실습</option>
@@ -189,8 +192,11 @@ export default function LectureEdit() {
                 <span>강의형태</span>
             </Form.Label>
             <Col sm={9}>
-                <Form.Select name="lectureType" className={result.lectureType}
-                    value={lecture.lectureType} onChange={changeStringValue} >
+                <Form.Select name="lectureType" className={validated ? result.lectureType : ""}
+                    value={lecture.lectureType} onChange={e=>{
+                        changeStringValue(e);
+                        setValidated(true);
+                    }} >
                     <option value="">선택하세요</option>
                     <option>온라인</option>
                     <option>오프라인</option>

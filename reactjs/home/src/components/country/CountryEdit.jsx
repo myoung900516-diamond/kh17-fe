@@ -30,13 +30,14 @@ export default function CountryEdit(){
         const response = await axios.get(`/api/country/${countryNo}`)
         setCountry(response.data);
     }, []);
-
+    
     const [result, setResult] = useState({
         countryRegion: "",
         countryName: "",
         countryCapital: "",
         countryPopulation: ""
     });
+    const [validated, setValidated] = useState(false);
     const valid = useMemo(() => {
         if (result.countryRegion !== "is-valid") return false;
         if (result.countryName !== "is-valid") return false;
@@ -121,9 +122,12 @@ export default function CountryEdit(){
                     <FaAsterisk className="text-danger" />
                 </Form.Label>
                 <Col sm={9}>
-                    <Form.Select name="countryRegion" className={result.countryRegion}
+                    <Form.Select name="countryRegion" className={validated ? result.countryRegion : ""}
                         value={country.countryRegion}
-                        onChange={changeStringValue}>
+                        onChange={e=>{
+                            changeStringValue(e);
+                            setValidated(true);
+                        }}>
                         <option value="">선택하세요</option>
                         <option>아시아</option>
                         <option>아프리카</option>
