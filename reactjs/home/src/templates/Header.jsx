@@ -9,7 +9,7 @@ export default function Header(){
             <div className="w-25 text-start"></div>
             <div className="w-50 text-center">
                 <h1>
-                    <span as={Link} to="/">KH정보교육원</span>
+                    <Link to="/" className="text-decoration-none text-dark">KH정보교육원</Link>
                 </h1>
             </div>
             <div className="w-25 text-end"></div>
