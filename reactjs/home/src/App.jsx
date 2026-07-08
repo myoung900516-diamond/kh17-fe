@@ -36,14 +36,14 @@ export default function App() {
 
       <ToastContainer
         position="bottom-right"
-        autoClose={5000}
+        autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
-        closeOnClick={false}
+        closeOnClick={true}
         rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
+        // pauseOnFocusLoss
+        // draggable
+        // pauseOnHover
         theme="colored"
         transition={Bounce}
       />

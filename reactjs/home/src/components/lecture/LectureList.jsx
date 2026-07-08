@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { FaArrowDown, FaPlus } from "react-icons/fa";
 import { ClimbingBoxLoader } from "react-spinners";
 import axios from "axios";
-import Jumbodtron from "../../templates/Jumbotron";
+import Jumbodtron from "@templates/Jumbotron";
 import { Col, Row, Form, Button, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -21,7 +21,7 @@ export default function LectureList() {
         const dataSize = lectureList.length;
         const lastLectureNo = dataSize === 0 ? 0 : lectureList[dataSize - 1].lectureNo;
 
-        const response = await axios.get(`http://localhost:8080/api/lecture/listForReact`,{
+        const response = await axios.get(`/api/lecture/listForReact`,{
             params: {
                 lastLectureNo: lastLectureNo,
                 size: size

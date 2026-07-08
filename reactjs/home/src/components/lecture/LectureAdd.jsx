@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from 'axios';
 import { toast, Bounce } from "react-toastify";
 import Swal from 'sweetalert2';
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -97,7 +97,7 @@ export default function LectureAdd(){
 
     //데이터전송(등록)
     const send=useCallback(async ()=>{
-        const response = await axios.post(`http://localhost:8080/api/lecture/insert`,lecture);
+        const response = await axios.post(`/api/lecture/insert`,lecture);
         const result = await Swal.fire({
             title: 'Success!',
             text: '강좌등록이 완료되었습니다.',

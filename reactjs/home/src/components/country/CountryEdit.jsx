@@ -1,24 +1,35 @@
-import { useEffect, useState } from "react";
-import { useCallback } from "react";
-import { useMemo } from "react";
-import Jumbotron from "@templates/Jumbotron";
-import { Col, Row, Form, Button } from "react-bootstrap";
-import { FaAsterisk, FaPlus } from "react-icons/fa";
 import axios from "axios";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Col, Row, Form, Button } from "react-bootstrap";
+import { FaAsterisk, FaList, FaPlus, FaSquarePen, FaXmark } from "react-icons/fa6";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import Jumbotron from "@templates/Jumbotron";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 
-export default function CountryAdd() {
+export default function CountryEdit(){
+    
+    const { countryNo } = useParams();
 
+    if (/^[0-9]+$/.test(countryNo) === false) {
+        return <Navigate to="/country/list" replace />;
+    }
 
+    const navigate = useNavigate();
 
     const [country, setCountry] = useState({
         countryRegion: "",
-        countryName: "",
-        countryCapital: "",
-        countryPopulation: 0
+        countryName : "",
+        countryCapital : "",
+        countryPopulation : 0
     });
+    useEffect(() => {
+        loadData();
+    }, []);
+    const loadData = useCallback(async ()=>{
+        const response = await axios.get(`/api/country/${countryNo}`)
+        setCountry(response.data);
+    }, []);
 
     const [result, setResult] = useState({
         countryRegion: "",
@@ -34,9 +45,6 @@ export default function CountryAdd() {
 
         return true;
     }, [result]);
-
-    //페이지이동도구(location 대신 사용)
-    const navigate = useNavigate();
 
 
     const changeStringValue = useCallback(e => {
@@ -97,20 +105,15 @@ export default function CountryAdd() {
 
     //데이터 전송
     const send = useCallback(async ()=>{
-        const response = await axios.post("/api/country/", country)
-            toast.success("국가 등록이 완료되었습니다.");
+        const response = await axios.put(
+            `/api/country/${countryNo}`, country);
+            toast.success("국가 정보가 변경되었습니다.");
 
-            //리앤트에서는 이동을 location.href로 할 수 없다(되는데 안하는게 좋음)
-            //상단에 useNavigate()를 이용해서 도구를 생성하고 그 도구를 사용하여 이동 
-            //navigate("이동할 페이지")
-            navigate("/country/list");
+            navigate(`/country/detail/${countryNo}`);
         
     }, [country]);
-
-    return (
-        <>
-
-            <Jumbotron title="국가정보" content="국가 정보를 등록합니다" />
+    return(<>
+    <Jumbotron title="국가정보" content="국가 정보를 수정합니다" />
 
             <Row className="mt-4">
                 <Form.Label sm={3}>
@@ -174,14 +177,19 @@ export default function CountryAdd() {
             </Row>
             <Row className="mt-5">
                 <Col>
-                    <Button type="button" variant="success" className="w-100"
+                <Button as={Link} to={"/country/list"} variant="secondary">
+                <FaList className="me-2"/>
+                목록으로</Button>
+                <Button as={Link} to={`/country/detail/${countryNo}`} 
+                className="ms-2" variant="danger">
+                <FaXmark className="me-2"/>
+                취소하기</Button>
+                    <Button type="button" variant="success" className="ms-2"
                         disabled={valid === false} onClick={send}>
-                        <FaPlus className="me-2" />
-                        등록하기</Button>
+                        <FaSquarePen className="me-2" />
+                        수정하기</Button>
                 </Col>
             </Row>
 
-        </>
-    );
-
-};
+    </>)
+}

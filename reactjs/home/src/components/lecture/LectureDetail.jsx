@@ -1,5 +1,5 @@
 import { Link, Navigate, useLinkClickHandler, useNavigate, useParams } from "react-router-dom";
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Col, Row } from "react-bootstrap";
@@ -50,7 +50,7 @@ export default function LectureDetail() {
         //     url : `http://localhost:8080/api/lecture/detail/${lectureNo}`,
         //     method : "get"
         // });
-        const response = await axios.get(`http://localhost:8080/api/lecture/detail/${lectureNo}`)
+        const response = await axios.get(`/api/lecture/detail/${lectureNo}`)
         setLecture(response.data);
     }, []);
     // const deleteLecture = useCallback(() => {
@@ -87,7 +87,7 @@ export default function LectureDetail() {
             cancelButtonText: "candel"
         });
         if(result.isConfirmed === false) return;
-        const response = await axios.get(`http://localhost:8080/api/lecture/delete/${lectureNo}`);
+        const response = await axios.get(`/api/lecture/delete/${lectureNo}`);
         toast.success("done");
         navigate("/lecture/list");
     },[lectureNo]);

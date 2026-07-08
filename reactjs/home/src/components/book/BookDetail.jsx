@@ -1,5 +1,5 @@
 import { Link, Navigate, useLinkClickHandler, useNavigate, useParams } from "react-router-dom";
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Col, Row } from "react-bootstrap";
@@ -28,7 +28,7 @@ export default function BookDetail() {
 
     useEffect(() => {
         axios({
-            url: "http://localhost:8080/api/book/detail",
+            url: "/api/book/detail",
             method: "get",
             params: { bookId: bookId }
         })
@@ -48,7 +48,7 @@ export default function BookDetail() {
             .then(result => {
                 if (result.isConfirmed) {
                     axios({
-                        url: "http://localhost:8080/api/book/delete",
+                        url: "/api/book/delete",
                         method: "get",
                         params: { bookId: bookId }
                     });

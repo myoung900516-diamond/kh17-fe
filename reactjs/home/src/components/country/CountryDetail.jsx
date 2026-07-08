@@ -1,5 +1,5 @@
 import { Link, Navigate, useLinkClickHandler, useNavigate, useParams } from "react-router-dom";
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Col, Row, Form } from "react-bootstrap";
@@ -31,7 +31,7 @@ export default function CountryDetail() {
         loadData();
     }, []);
     const loadData = useCallback(async ()=>{
-        const response = await axios.get(`http://localhost:8080/api/country/${countryNo}`)
+        const response = await axios.get(`/api/country/${countryNo}`)
         setCountry(response.data);
         setBackup(response.data);
     }, []);
@@ -46,7 +46,7 @@ export default function CountryDetail() {
         })
         if (result.isConfirmed ===false) return;
         
-        const response =await axios.delete(`http://localhost:8080/api/country/${countryNo}`)
+        const response =await axios.delete(`/api/country/${countryNo}`)
         toast.error("done");
         navigate("/country/list");
         
@@ -67,15 +67,39 @@ export default function CountryDetail() {
             [name]: value
         });
     }, [country]);
+    const changeNumericValue = useCallback(e=>{
+        const {name, value} = e.target;
+        const regex = /[^0-9]+/g;
+        const replacement = value.replace(regex, "");
+        const number = parseInt(replacement || 0);
+        setCountry({
+            ...country,
+            [name]:number
+        });
+    }, [country]);
 
     //국가명만 변경하는 함수
-    const updateCountryName = useCallback(async ()=>{
+    const updateCountry = useCallback(async (field)=>{
         const response = await axios.patch(
             `http://localhost:8080/api/country/${countryNo}` , 
-            {countryName : country.countryName});
-        setBackup({...backup, countryName:country.countryName});
-        setEditMode({...editMode, countryName:false});
+            //{countryName : country.countryName});
+            { [field] : country[field]}
+        );
+        //setBackup({...backup, countryName:country.countryName});
+        setBackup({...backup, [field]:country[field]});
+        //setEditMode({...editMode, countryName:false});
+        setEditMode({...editMode, [field]:false});
+        toast.success("정보가 변경되었습니다");
     }, [country, backup]);
+
+    const cancelUpdate = useCallback((field)=>{
+        setCountry({...country, [field] : backup[field]});
+        setEditMode({...editMode, [field]: false});
+        toast.error("취소 되었습니다")
+    },[country, backup, editMode]);
+    const startUpdate = useCallback((field)=>{
+        setEditMode({...editMode, [field] : true})
+    }, [editMode]);
     return (<>
         <Jumbotron title="국가 상세 정보" content={`${countryNo}번 국가의 상세 정보 화면입니다.`} />
         {/* 상태를 나누어서 출력 */}
@@ -91,17 +115,19 @@ export default function CountryDetail() {
                         {editMode.countryName !== true ? (<>
                             <span>{country.countryName}</span>
                             <FaSquarePen className="text-warning ms-2" 
-                            onClick={e=>{setEditMode({...editMode, countryName : true})}}/>
+                            //onClick={e=>{setEditMode({...editMode, countryName : true})}}
+                            onClickCapture={e=>startUpdate("countryName")}/>
                         </>) : (<>
                             <Form.Control type="text" className="w-auto d-inline-block" 
                             name="countryName" value={country.countryName} 
                             onChange={changeStringValue}/>
                             <FaCheck className="text-success ms-2" 
-                            onClick={updateCountryName}/>
+                            onClick={e=>updateCountry("countryName")}/>
                             <FaXmark className="test-danger ms-2" 
-                            onClick={e=>{
-                                setCountry({...country, countryName : backup.countryName})
-                                setEditMode({...editMode, countryName: false})}}/>
+                            // onClick={e=>{
+                            //     setCountry({...country, countryName : backup.countryName})
+                            //     setEditMode({...editMode, countryName: false})}}
+                            onClick={e=>cancelUpdate("countryName")}/>
                         </>)}
                         
                     </Col>
@@ -112,7 +138,26 @@ export default function CountryDetail() {
                         대륙
                     </Col>
                     <Col sm={9}>
-                        {country.countryRegion}
+                        {editMode.countryRegion !== true ? (<>
+                            <span>{country.countryRegion}</span>
+                            <FaSquarePen className="text-warning ms-2" 
+                            onClickCapture={e=>startUpdate("countryRegion")}/>
+                        </>) : (<>
+                            <Form.Select className="w-auto d-inline-block" 
+                            name="countryRegion" value={country.countryRegion} 
+                            onChange={changeStringValue}>
+                                <option>아시아</option>
+                                <option>아프리카</option>
+                                <option>북아메리카</option>
+                                <option>남아메리카</option>
+                                <option>유럽</option>
+                                <option>오세아니아</option>
+                            </Form.Select>
+                            <FaCheck className="text-success ms-2" 
+                            onClick={e=>updateCountry("countryRegion")}/>
+                            <FaXmark className="test-danger ms-2" 
+                            onClick={e=>cancelUpdate("countryRegion")}/>
+                        </>)}
                     </Col>
                 </Row>
                 <Row className="mt-4 fs-2">
@@ -120,7 +165,19 @@ export default function CountryDetail() {
                         수도
                     </Col>
                     <Col sm={9}>
-                        {country.countryCapital}
+                        {editMode.countryCapital !== true ? (<>
+                            <span>{country.countryCapital}</span>
+                            <FaSquarePen className="text-warning ms-2" 
+                            onClickCapture={e=>startUpdate("countryCapital")}/>
+                        </>) : (<>
+                            <Form.Control type="text" className="w-auto d-inline-block" 
+                            name="countryCapital" value={country.countryCapital} 
+                            onChange={changeStringValue}/>
+                            <FaCheck className="text-success ms-2" 
+                            onClick={e=>updateCountry("countryCapital")}/>
+                            <FaXmark className="test-danger ms-2" 
+                            onClick={e=>cancelUpdate("countryCapital")}/>
+                        </>)}
                     </Col>
                 </Row>
                 <Row className="mt-4 fs-2">
@@ -128,7 +185,19 @@ export default function CountryDetail() {
                         인구
                     </Col>
                     <Col sm={9}>
-                        {country.countryPopulation.toLocaleString()}명
+                        {editMode.countryPopulation !== true ? (<>
+                            <span>{country.countryPopulation.toLocaleString()} 명</span>
+                            <FaSquarePen className="text-warning ms-2" 
+                            onClickCapture={e=>startUpdate("countryPopulation")}/>
+                        </>) : (<>
+                            <Form.Control type="text" className="w-auto d-inline-block" 
+                            name="countryPopulation" value={country.countryPopulation.toLocaleString()} 
+                            onChange={changeNumericValue}/>
+                            <FaCheck className="text-success ms-2" 
+                            onClick={e=>updateCountry("countryPopulation")}/>
+                            <FaXmark className="test-danger ms-2" 
+                            onClick={e=>cancelUpdate("countryPopulation")}/>
+                        </>)}
                     </Col>
                 </Row>
                 <Row className="mt-5">
@@ -136,7 +205,7 @@ export default function CountryDetail() {
                         <Button as={Link} to="/country/list" className="ms-2" variant="secondary">
                             <FaList />
                             <span>목록으로</span></Button>
-                        <Button className="ms-2" variant="warning">
+                        <Button as={Link} to={`/country/edit/${countryNo}`} className="ms-2" variant="warning">
                             <FaPenToSquare />
                             <span>수정하기</span></Button>
                         <Button className="ms-2" variant="danger" onClick={deleteCountry}>

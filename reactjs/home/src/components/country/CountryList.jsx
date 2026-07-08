@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import axios from "axios";
 import { FaArrowDown, FaPlus } from "react-icons/fa";
 import { ClimbingBoxLoader } from "react-spinners";
 import { Row, Col, Form, Button, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
+
 
 
 export default function CountryList() {
@@ -29,7 +30,9 @@ export default function CountryList() {
         //     `http://localhost:8080/api/country/lastCountryNo/${lastCountryNo}/size/${size}`
         // )
         const response = await axios.post(
-            `http://localhost:8080/api/country/list-more`, 
+            // `http://localhost:8080/api/country/list-more`, 
+            // `${import.meta.env.VITE_SERVER_URL}/api/country/list-more`,
+            "/api/country/list-more",
             {lastNo : lastCountryNo, size : size}
         )
                 setCountryList([...countryList, ...response.data.list]);

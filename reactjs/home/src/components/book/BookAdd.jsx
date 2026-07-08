@@ -3,7 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { FaAsterisk, FaPlus } from "react-icons/fa";
 import {ClimbingBoxLoader} from "react-spinners";
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import { Col, Row, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -124,7 +124,7 @@ export default function BookAdd(){
         setLoading(true);
 
         axios({
-            url : "http://localhost:8080/api/book/insert",
+            url : "/api/book/insert",
             method : "post",
             data : book
 

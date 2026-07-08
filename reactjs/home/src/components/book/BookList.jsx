@@ -2,7 +2,7 @@ import { FaArrowDown, FaPlus } from "react-icons/fa";
 import { ClimbingBoxLoader } from "react-spinners";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import { Col, Row, Form, Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -22,7 +22,7 @@ export default function BookList() {
         const lastBookId = dataSize === 0 ? 0 : bookList[dataSize - 1].bookId;
 
         axios({
-            url: "http://localhost:8080/api/book/listForReact",
+            url: "/api/book/listForReact",
             method: "get",
             params: {
                 lastBookId: lastBookId,
