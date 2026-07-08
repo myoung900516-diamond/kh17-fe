@@ -16,24 +16,19 @@ export default function BookList() {
 
         loadMoreList();
     }, []);
-    const loadMoreList = useCallback(() => {
+    const loadMoreList = useCallback(async () => {
         setLoading(true);
         const dataSize = bookList.length;
         const lastBookId = dataSize === 0 ? 0 : bookList[dataSize - 1].bookId;
 
-        axios({
-            url: "/api/book/listForReact",
-            method: "get",
-            params: {
-                lastBookId: lastBookId,
-                size: size
-            }
-        })
-            .then(response => {
-                SetBookList([...bookList, ...response.data.list]);
-                setLast(response.data.last);
-            })
-            .finally(() => setLoading(false));
+        
+        const response = await axios.post(
+            "/api/book/list-more", {lastNo : lastBookId, size : size}
+        )
+        
+        SetBookList([...bookList, ...response.data.list]);
+        setLast(response.data.last);
+        setLoading(false);
     }, [bookList, size]);
     return (
         <>

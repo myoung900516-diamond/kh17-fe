@@ -97,7 +97,7 @@ export default function LectureAdd(){
 
     //데이터전송(등록)
     const send=useCallback(async ()=>{
-        const response = await axios.post(`/api/lecture/insert`,lecture);
+        const response = await axios.post(`/api/lecture/`,lecture);
         const result = await Swal.fire({
             title: 'Success!',
             text: '강좌등록이 완료되었습니다.',

@@ -21,13 +21,9 @@ export default function LectureList() {
         const dataSize = lectureList.length;
         const lastLectureNo = dataSize === 0 ? 0 : lectureList[dataSize - 1].lectureNo;
 
-        const response = await axios.get(`/api/lecture/listForReact`,{
-            params: {
-                lastLectureNo: lastLectureNo,
-                size: size
-            }
-        })
-        
+        const response = await axios.post(`/api/lecture/list-more`, 
+            {lastNo : lastLectureNo, size : size})
+        // console.log(response.data);
         SetLectureList([...lectureList, ...response.data.list]);
         setLast(response.data.last);
         setLoading(false);
@@ -56,6 +52,7 @@ export default function LectureList() {
                     <Table responsive hover striped className="text-nowrap">
                         <thead>
                             <tr>
+                                <th>번호</th>
                                 <th>강의명</th>
                                 <th>강의유형</th>
                                 <th>강의시간</th>
@@ -66,6 +63,7 @@ export default function LectureList() {
                         <tbody>
                             {lectureList.map((lecture) => (
                                 <tr key={lecture.lectureNo}>
+                                    <td>{lecture.lectureNo}</td>
                                     <td>
                                         <Link to={`/lecture/detail/${lecture.lectureNo}`}>
                                             {lecture.lectureTitle}

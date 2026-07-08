@@ -11,6 +11,8 @@ import CountryDetail from "@components/country/CountryDetail";
 import LectureAdd from "@components/lecture/LectureAdd";
 import LectureDetail from "@components/lecture/LectureDetail";
 import CountryEdit from "@components/country/CountryEdit";
+import BookEdit from "@components/book/BookEdit";
+import LectureEdit from "@components/lecture/LectureEdit";
 
 
 export default function Body(){
@@ -26,9 +28,11 @@ export default function Body(){
             <Route path="/lecture/list" element={<LectureList/>}></Route>
             <Route path="/lecture/add" element={<LectureAdd/>}></Route>
             <Route path="/lecture/detail/:lectureNo" element={<LectureDetail/>}></Route>
+            <Route path="/lecture/edit/:lectureNo" element={<LectureEdit/>}></Route>
             <Route path="/book/list" element={<BookList/>}></Route>
             <Route path="/book/add" element={<BookAdd/>}></Route>
             <Route path="/book/detail/:bookId" element={<BookDetail/>}></Route>
+            <Route path="/book/edit/:bookId" element={<BookEdit/>}></Route>
             <Route path="*" element={<NotFound/>}></Route>
         </Routes>
     )

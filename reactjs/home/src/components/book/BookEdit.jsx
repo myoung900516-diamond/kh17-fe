@@ -1,14 +1,24 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import Swal from "sweetalert2";
-import { FaAsterisk, FaPlus } from "react-icons/fa";
-import {ClimbingBoxLoader} from "react-spinners";
-import Jumbotron from "@templates/Jumbotron";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Col, Row, Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { FaAsterisk, FaList, FaPlus, FaSquarePen, FaXmark } from "react-icons/fa6";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import Jumbotron from "@templates/Jumbotron";
+import { toast } from "react-toastify";
+import { ClimbingBoxLoader } from "react-spinners";
+import Swal from "sweetalert2";
 
 
-export default function BookAdd(){
+
+export default function BookEdit(){
+    const { bookId } = useParams();
+
+    if (/^[0-9]+$/.test(bookId) === false) {
+        return <Navigate to="/book/list" replace />;
+    }
+
+    const navigate = useNavigate();
+
     const [book, setBook] = useState({
         bookTitle : "",
         bookAuthor : "",
@@ -19,6 +29,14 @@ export default function BookAdd(){
         bookGenre : "",
         bookCover : ""
     });
+    useEffect(() => {
+        loadData();
+    }, []);
+    const loadData = useCallback(async ()=>{
+        const response = await axios.get(`/api/book/${bookId}`)
+        setBook(response.data);
+    }, []);
+
     const [result, setResult] = useState({
         bookTitle : "",
         bookAuthor : "",
@@ -29,7 +47,6 @@ export default function BookAdd(){
         bookGenre : "",
         bookCover : ""
     });
-    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 
     const valid = useMemo(()=>{
@@ -119,19 +136,12 @@ export default function BookAdd(){
         });
     }, [book.bookCover, result]);
 
-    const send = useCallback( async ()=>{
+    const send = useCallback(async()=>{
         //로딩 상태로 변경
         setLoading(true);
-        const response = await axios.post("/api/book/", book)
-        
-        const result = await axios.Swal.fire({
-                title: 'Success!',
-                text: '도서등록이 완료되었습니다.',
-                icon: 'success',
-                confirmButtonText: '확인'
-                });
-                
-                navigate("/book/list");
+        const response = await axios.put(`/api/book/${bookId}`, book);
+        toast.success("도서 수정이 완료되었습니다");
+        navigate("/book/list");
         setLoading(false);
     }, [book]);
     
@@ -141,10 +151,9 @@ export default function BookAdd(){
 
         checkBookGenre();
     }, [book.bookGenre, result.bookGenre]);
-
-    return(
-        <>
-        <Jumbotron title="도서등록" content="새로운 도서를 등록할 수 있습니다"/>
+    
+    return(<>
+    <Jumbotron title="도서등록" content="새로운 도서를 등록할 수 있습니다"/>
 
         <Row className="mt-5">
             <Form.Label sm={3}>
@@ -229,6 +238,7 @@ export default function BookAdd(){
                     <option value="">선택하세요</option>
                     <option>판타지</option>
                     <option>교양</option>
+                    <option>교양</option>
                     <option>소설</option>
                     <option>역사</option>
                     <option>교양</option>
@@ -253,9 +263,16 @@ export default function BookAdd(){
         </Row>
         <Row className="mt-5">
             <Col>
+            <Button as={Link} to={"/book/list"} variant="secondary">
+                <FaList className="me-2"/>
+                목록으로</Button>
+                <Button as={Link} to={`/book/detail/${bookId}`} 
+                className="ms-2" variant="danger">
+                <FaXmark className="me-2"/>
+                취소하기</Button>
             <Button type="button" variant="success"
-            className="w-100" disabled={valid===false} 
-            onClick={send} ><FaPlus className="ms-2"/>등록하기</Button>
+            className="ms-2" disabled={valid===false} 
+            onClick={send} ><FaSquarePen className="me-2"/>수정하기</Button>
             </Col>
         </Row>
         
@@ -265,12 +282,9 @@ export default function BookAdd(){
                 d-flex justify-content-center align-items-center">
             <div className="d-flex flex-column text-center">
             <ClimbingBoxLoader loading={loading}/>
-            <p className="mt-2">등록중</p>
+            <p className="mt-2">수정중</p>
             </div>
             </div>
         )}
-        </>
-    );
-
-};
-
+    </>)
+}
