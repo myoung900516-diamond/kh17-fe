@@ -162,7 +162,7 @@ export default function BookEdit(){
             </Form.Label>
             <Col sm={9}>
                 <Form.Control type="text" name="bookTitle" autoComplete="off"
-                className={result.bookTitle} 
+                className={result.bookTitle} value={book.bookTitle}
                 onChange={changeStringValue} onBlur={checkBookTitle}/>
                 <div className="valid-feedback"></div>
                 <div className="invalid-feedback"></div>
@@ -176,7 +176,7 @@ export default function BookEdit(){
             </Form.Label>
             <Col sm={9}>
                 <Form.Control type="text" name="bookAuthor" 
-                className={result.bookAuthor}
+                className={result.bookAuthor} value={book.bookAuthor}
                 onChange={changeStringValue} onBlur={checkBookAuthor}/>
                 <div className="valid-feedback"></div>
                 <div className="invalid-feedback"></div>
@@ -188,7 +188,7 @@ export default function BookEdit(){
             </Form.Label>
             <Col sm={9}>
                 <Form.Control type="date" name="bookPublicationDate" 
-                className={result.bookPublicationDate} 
+                className={result.bookPublicationDate} value={book.bookPublicationDate} 
                 onChange={changeStringValue} onBlur={checkBookPublicationDate}/>
                 <div className="valid-feedback"></div>
                 <div className="invalid-feedback"></div>
@@ -201,7 +201,7 @@ export default function BookEdit(){
             <Col sm={9}>
                 <Form.Control type="text" inputMode="numeric" name="bookPrice" 
                 className={result.bookPrice} onChange={changeNumericValue} 
-                onBlur={checkBookPrice}/>
+                onBlur={checkBookPrice} value={book.bookPrice.toLocaleString()}/>
                 <div className="valid-feedback"></div>
                 <div className="invalid-feedback"></div>
             </Col>
@@ -212,7 +212,7 @@ export default function BookEdit(){
             </Form.Label>
             <Col sm={9}>
                 <Form.Control type="text" name="bookPublisher" 
-                className={result.bookPublisher} 
+                className={result.bookPublisher} value={book.bookPublisher} 
                 onChange={changeStringValue}/>
             </Col>
         </Row>
@@ -222,7 +222,7 @@ export default function BookEdit(){
             </Form.Label>
             <Col sm={9}>
                 <Form.Control type="text" name="bookPageCount" 
-                className={result.bookPageCount} 
+                className={result.bookPageCount} value={book.bookPageCount}
                 onChange={changeStringValue} onBlur={checkBookPageCount}/>
                 <div className="valid-feedback"></div>
                 <div className="invalid-feedback"></div>
@@ -236,7 +236,7 @@ export default function BookEdit(){
                 <Form.Select name="bookGenre" onChange={e=>{
                     changeStringValue(e);
                     setValidated(true);
-                }} 
+                }} value={book.bookGenre}
                 className={validated ? result.bookGenre : ""}>
                     <option value="">선택하세요</option>
                     <option>판타지</option>

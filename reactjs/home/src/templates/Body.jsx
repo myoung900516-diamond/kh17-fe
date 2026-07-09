@@ -13,6 +13,7 @@ import LectureDetail from "@components/lecture/LectureDetail";
 import CountryEdit from "@components/country/CountryEdit";
 import BookEdit from "@components/book/BookEdit";
 import LectureEdit from "@components/lecture/LectureEdit";
+import BookSpa from "@components/book/BookSpa";
 
 
 export default function Body(){
@@ -30,6 +31,7 @@ export default function Body(){
             <Route path="/lecture/detail/:lectureNo" element={<LectureDetail/>}></Route>
             <Route path="/lecture/edit/:lectureNo" element={<LectureEdit/>}></Route>
             <Route path="/book/list" element={<BookList/>}></Route>
+            <Route path="/book/spa" element={<BookSpa/>}></Route>
             <Route path="/book/add" element={<BookAdd/>}></Route>
             <Route path="/book/detail/:bookId" element={<BookDetail/>}></Route>
             <Route path="/book/edit/:bookId" element={<BookEdit/>}></Route>
