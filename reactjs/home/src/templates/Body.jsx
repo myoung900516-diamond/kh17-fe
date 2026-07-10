@@ -1,19 +1,20 @@
 import { Route, Routes } from "react-router-dom";
+import Home from "@components/Home";
 import BookList from "@components/book/BookList";
 import BookAdd from "@components/book/BookAdd";
 import BookDetail from "@components/book/BookDetail";
+import BookEdit from "@components/book/BookEdit";
+import BookSpa from "@components/book/BookSpa";
 import CountryList from "@components/country/CountryList";
-import LectureList from "@components/lecture/LectureList";
-import NotFound from "@error/NotFound";
-import Home from "@components/Home";
 import CountryAdd from "@components/country/CountryAdd";
 import CountryDetail from "@components/country/CountryDetail";
-import LectureAdd from "@components/lecture/LectureAdd";
-import LectureDetail from "@components/lecture/LectureDetail";
 import CountryEdit from "@components/country/CountryEdit";
-import BookEdit from "@components/book/BookEdit";
+import CountrySearch from "../components/country/CountrySearch";
+import LectureAdd from "@components/lecture/LectureAdd";
+import LectureList from "@components/lecture/LectureList";
+import LectureDetail from "@components/lecture/LectureDetail";
 import LectureEdit from "@components/lecture/LectureEdit";
-import BookSpa from "@components/book/BookSpa";
+import NotFound from "@error/NotFound";
 
 
 export default function Body(){
@@ -26,6 +27,7 @@ export default function Body(){
             {/* 제일 마지막에 적혀있는 값을 countryNo라는 이름으로 관리하겠다. */}
             <Route path="/country/detail/:countryNo" element={<CountryDetail/>}></Route>
             <Route path="/country/edit/:countryNo" element={<CountryEdit/>}></Route>
+            <Route path="/country/search" element={<CountrySearch/>}></Route>
             <Route path="/lecture/list" element={<LectureList/>}></Route>
             <Route path="/lecture/add" element={<LectureAdd/>}></Route>
             <Route path="/lecture/detail/:lectureNo" element={<LectureDetail/>}></Route>
