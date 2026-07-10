@@ -2,38 +2,37 @@ import Jumbotron from "@templates/Jumbotron";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { Col, Form, ListGroup, Row } from "react-bootstrap";
+import {throttle, debounce} from "lodash-es";
 
 export default function CountrySearch() {
     //state
     const [keyword, setKeyword] = useState("");
     const [searchList, setSearchList] = useState([]);
-    const [composition, setComposition] = useState(false);
-
-    //입력중인 값을 제거한 검색용 키워드
-    const [result, setResult] = useState("");
+    
 
     const changeKeyword = useCallback(e => {
-        if(e.data !== undefined){
-            const replacement = e.target.value.replace()
-        }
-        else{
+        
             setKeyword(e.target.value);
-        }
     }, []);
     //effect
     // - keyword가 변하면 ajax요청을 서버로 전송
-    // useEffect(()=>{
-    //     searchKeyword();
-    // }, [keyword]);
-    const searchKeyword = useCallback(async ()=>{
-        console.log(composition, keyword);
+    useEffect(()=>{
+        searchKeyword(keyword);
+    }, [keyword]);
+
+    //throttle, debounce설정 시 주의사항
+    //-throttle(함수, 실행주기) -> 새로운 함수가 생성됨
+    //-debounce(함수, 실행주기) -> 새로운 함수가 생성됨
+    //-(주의) 함수를 만들 때 연관항목을 설정하지 말아야 한다(함수가 재생성이 안되야 함)
+    //-일반적으로 실행주기는 250ms~350ms정도가 적당(1초에 3~4번)
+    const searchKeyword = useCallback(throttle(async (keyword)=>{
         if(keyword.length === 0) {
             setSearchList([]);
-            return
+            return;
         }
         const response = await axios.get(`/api/country/countryName/${keyword}`);
         setSearchList(response.data);
-    }, [keyword, composition]);
+    }, 350), []);
     return (<>
         <Jumbotron title="국가명 검색 샘플" />
 
@@ -44,9 +43,7 @@ export default function CountrySearch() {
                     <Form.Control placeholder="검색어입력" size="lg"
                         value={keyword} 
                         onChange={changeKeyword} 
-                        onCompositionStart={e=>setComposition(true)}
-                        onCompositionUpdate={changeKeyword}
-                        onCompositionEnd={e=>setComposition(false)}/>
+                        />
                     <ListGroup className="position-absolute start-0 end-0 top-100">
                         {searchList.map(country => (
                             <ListGroup.Item key={country.countryNo}>
