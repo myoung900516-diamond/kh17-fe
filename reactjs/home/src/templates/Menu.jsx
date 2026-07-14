@@ -40,8 +40,8 @@ export default function Menu(){
             </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link as={Link} to="/member/join">sign up</Nav.Link>
-            <Nav.Link as={Link} to="/member/login">sign in</Nav.Link>
+            <Nav.Link as={Link} to="/account/join">sign up</Nav.Link>
+            <Nav.Link as={Link} to="/account/login">sign in</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

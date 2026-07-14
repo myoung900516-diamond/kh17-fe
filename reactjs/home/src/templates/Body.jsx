@@ -19,7 +19,10 @@ import LectureAdd from "@components/lecture/LectureAdd";
 import LectureList from "@components/lecture/LectureList";
 import LectureDetail from "@components/lecture/LectureDetail";
 import LectureEdit from "@components/lecture/LectureEdit";
+
 import NotFound from "@error/NotFound";
+
+import AccountJoin from "@components/account/AccountJoin";
 
 
 export default function Body(){
@@ -46,6 +49,8 @@ export default function Body(){
             <Route path="/book/add" element={<BookAdd/>}></Route>
             <Route path="/book/detail/:bookId" element={<BookDetail/>}></Route>
             <Route path="/book/edit/:bookId" element={<BookEdit/>}></Route>
+            
+            <Route path="/account/join" element={<AccountJoin/>}></Route>
             
             <Route path="*" element={<NotFound/>}></Route>
         </Routes>

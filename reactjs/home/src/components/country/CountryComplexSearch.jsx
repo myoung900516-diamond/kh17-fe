@@ -22,7 +22,7 @@ export default function CountryComplexSearch(){
     });
 
     const [countryList, setCountryList] = useState([]);
-    const [last, setLast] = useState([true]);
+    const [last, setLast] = useState(true);
     
 
 
@@ -50,9 +50,9 @@ export default function CountryComplexSearch(){
         // if(copy.countryName === "") copy.countryName = null;
 
         const response = await axios.post("/api/country/complexSearch", condition);
-        // console.log(response.data)
         setCountryList(response.data.list);
-        setLast(response.data.list);
+        console.log(response.data.list);
+        setLast(response.data.last);
     }, [condition]);
 
     const lastCountryNo = useMemo(()=>{
@@ -65,8 +65,8 @@ export default function CountryComplexSearch(){
             {...condition, lastCountryNo : lastCountryNo}
         );
         setCountryList(prev=>[...prev, ...response.data.list]);//이어쓰기
-        setLast(response.data.list);
-    }, [condition]);
+        setLast(response.data.last);
+    }, [lastCountryNo, condition]);
 
     const checkCountryRegion = useCallback(e=>{
         //true면 추가 false면 제거 
@@ -90,7 +90,7 @@ export default function CountryComplexSearch(){
             "country_population asc",
             "country_capital asc",
             "country_capital desc"
-        ]
+        ];
     }, []);
 
     //선택가능한 목록 : orderList의 항목 중에 condition.orders에 없는 요소들만 검색하여 반환
