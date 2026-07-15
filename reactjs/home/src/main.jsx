@@ -28,11 +28,21 @@ axios.defaults.timeout = 10000;//통신의 최대 대기 시간(ms), 상황에 �
       - [단점] 사용자가 봤을 때 거부감이 있음(피싱사이트인가?)
    */
 
+//jotai에서 제공하는 개발도구(jotai-devtools)를 적용하기 위한 코드
+import { DevTools } from "jotai-devtools";
+import "jotai-devtools/styles.css";
+
+
 createRoot(document.getElementById('root')).render(
   // <StrictMode>
   <BrowserRouter>
   {/* <HashRouter> */}
     <App />
+
+{/* 개발모드일 때만 표시되도록 조건 설정, 포함하고 빌드할 때는 없어지게 조건을 걸어야함 */}
+{import.meta.env.DEV && (
+    <DevTools position="bottom-right"/>
+)}
   {/* </HashRouter> */}
   </BrowserRouter>
   // </StrictMode>

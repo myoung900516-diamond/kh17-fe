@@ -271,7 +271,7 @@ export default function AccountJoin() {
             accountEmail : {clazz : null, code : null}
         }));
         setCertNumberResult(null);
-        setCertNumber("");
+        // setCertNumber("");
         try {
             setSending(true);
             const response = await axios.post(
@@ -323,7 +323,7 @@ export default function AccountJoin() {
         if (result.accountId.clazz !== "is-valid") return false;
         if (result.accountPassword !== "is-valid") return false;
         if (result.accountPassword2 !== "is-valid") return false;
-        if (result.accountNickname !== "is-valid") return false;
+        // if (result.accountNickname !== "is-valid") return false;
         if (result.accountEmail.clazz !== "is-valid") return false;
         if (certNumberResult !== "is-valid")return false;
 
@@ -343,15 +343,16 @@ export default function AccountJoin() {
             // const copy = {...account};
             // delete copy.accountPassword2;
             const {accountPassword2, ...copy} = account;
-            const response = await axios.post("/api/account/", account);
+            const response = await axios.post("/api/account/", copy);
             toast.success("회원 가입이 완료되었습니다.");
-            //navigate(성공페이지)
+            navigate("/account/joinSuccess");
         }
         catch(e){
             toast.error("회원 가입 과정에서 오류가 발생했습니다.")
-            //navegate(오류페이지)
+            navegate("/account/joinFail");
         }
         //앤드포인트
+        // console.log(result);
     }, [account]);
     //view
     return (<>
@@ -476,7 +477,7 @@ export default function AccountJoin() {
             </Col>
         </Row>
         {/* 인증번호 입력화면은 발송이 완료된 경우 + 인증완료가 안된 상황에서만 나와야 함 */}
-        {(result.accountEmail.clazz !== "is-valid" && sending == false)  && (
+        {(certNumberResult !== "is-valid" && sending == false)  && (
 
             <Row className="mt-2">
                 <Col sm={{ span: 9, offset: 3 }}>
