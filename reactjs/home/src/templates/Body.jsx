@@ -25,9 +25,11 @@ import NotFound from "@error/NotFound";
 import AccountJoin from "@components/account/AccountJoin";
 import AccountJoinSuccess from "@components/account/AccountJoinSuccess";
 import AccountJoinFail from "@components/account/AccountJoinFail";
+import AccountLogin from "@components/account/AccountLogin";
+import MyPage from "@components/account/MyPage";
 
 import TestMain from "@components/session/TestMain";
-import AccountLogin from "@components/account/AccountLogin";
+import Private from "@guard/Private";
 
 
 export default function Body(){
@@ -59,6 +61,7 @@ export default function Body(){
             <Route path="/account/joinSuccess" element={<AccountJoinSuccess/>}></Route>
             <Route path="/account/joinFail" element={<AccountJoinFail/>}></Route>
             <Route path="/account/login" element={<AccountLogin/>}></Route>
+            <Route path="/account/mypage" element={<Private><MyPage/></Private>}></Route>
             
             
             <Route path="/session/test" element={<TestMain/>}></Route>
