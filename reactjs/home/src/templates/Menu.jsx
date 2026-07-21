@@ -8,7 +8,7 @@ import { loginUserState, logoutActionState, loginActionState } from "@utils/stor
 import { isLoginState } from "@utils/storage";
 import { isAdminState } from "@utils/storage";
 import { useCallback } from "react";
-import axios from "axios";
+import { authClient } from "@utils/reaxios";
 
 
 export default function Menu() {
@@ -23,7 +23,8 @@ export default function Menu() {
   //서버에 로그아웃 요청 및 jotai 저장소 초기화 요청을 수행하는 함수
   const logout = useCallback(async ()=>{
     try{
-      await axios.delete("/service/auth/logout");//쿠키 삭제 요청
+      // await axios.delete("/service/auth/logout");//쿠키 삭제 요청
+      await authClient.delete("/logout");//쿠키 삭제 요청
     }
     catch(e){}
     finally{
@@ -33,7 +34,8 @@ export default function Menu() {
 //토큰 갱신 요청을 보내는 연습용 함수
   const refresh = useCallback(async()=>{
     try{
-      const {data}= await axios.post("/service/auth/refresh");
+      // const {data}= await axios.post("/service/auth/refresh");
+      const {data}= await authClient.post("/refresh");
       loginAction(data);
       //갱신이 된 경우(200)
     }

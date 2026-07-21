@@ -6,7 +6,7 @@ import Jumbotron from "@templates/Jumbotron";
 import { useNavigate } from "react-router-dom";
 import { FaRightToBracket } from "react-icons/fa6";
 import { loginActionState } from "@utils/storage";
-import axios from "axios";
+import { authClient } from "@utils/reaxios";
 
 
 
@@ -39,7 +39,8 @@ export default function AccountLogin() {
         }
         try {
             // setLogin(data);
-            const { data } = await axios.post("/service/auth/login", account);
+            // const { data } = await axios.post("/service/auth/login", account);
+            const { data } = await authClient.post("/login", account);
             // console.log(data);
             loginAction(data);
             navigate("/");
