@@ -31,31 +31,42 @@ export const apiClient = axios.create({
 //-axios에는 interceptor 라는 기능이 존재 
 //-axios 공식 사이트에서 제공하는 interceptor 구문을 가져다가 수정
 // Add a request interceptor
-apiClient.interceptors.request.use(
-  function (config) {
-    console.log("api 요청발송전", config);
-    // Do something before request is sent
-    return config;
-  },
-  function (error) {
-    console.log("api 요청 에러 발생", error);
-    // Do something with request error
-    return Promise.reject(error);
-}
-);
+// apiClient.interceptors.request.use(
+//   function (config) {
+//     console.log("api 요청발송전", config);
+//     // Do something before request is sent
+//     return config;
+//   },
+//   function (error) {
+//     console.log("api 요청 에러 발생", error);
+//     // Do something with request error
+//     return Promise.reject(error);
+// }
+// );
 
-// Add a response interceptor
 apiClient.interceptors.response.use(
-    function (response) {
-      console.log("api 응답성공", response);
-      // Any status code that lie within the range of 2xx cause this function to trigger
-      // Do something with response data
-      return response;
-    },
+    // function (response) {
+    //   console.log("api 응답성공", response);
+    //   return response;
+    // },
+    response=>response,
+    //요청이 실패한 경우만 분석해서 재작업을 지시
     function (error) {
-      console.log("api 응답오류", error);
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    return Promise.reject(error);
-  }
+    console.log("api 응답오류", error);
+    //   console.log(Object.keys(error));//error 객체의 모든 필드명을 배열로 출력 
+    //   console.log(error.response);
+    //   console.log(error.config);
+    //   console.log(error.code);
+    //   console.log(error.response);
+    //   console.log(error?.response?.status);
+    if(error?.response?.status !== 401){
+        
+        return Promise.reject(error);
+    }
+    //401인 상황 (=나는 로그인되어 있다고 생각하는데 서버가 아니라고 하는 상황)
+    //->Refresh로 요청을 보내서 나온 결과로 갈아끼워서 응답을 완수시킨다.
+    console.log("액세스 토큰 만료됨 -> 갱신 요청 시작");
+    console.log(error.config);
+    return Promise.reject(error);   
+}
 );
