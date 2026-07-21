@@ -32,19 +32,19 @@ export default function Menu() {
     }
   }, []);
 //토큰 갱신 요청을 보내는 연습용 함수
-  const refresh = useCallback(async()=>{
-    try{
-      // const {data}= await axios.post("/service/auth/refresh");
-      const {data}= await authClient.post("/refresh");
-      loginAction(data);
-      //갱신이 된 경우(200)
-    }
-    catch(e){
-      //갱신이 안된경우(401unauthorized) 
-      logoutAction();
-    }
+  // const refresh = useCallback(async()=>{
+  //   try{
+  //     // const {data}= await axios.post("/service/auth/refresh");
+  //     const {data}= await authClient.post("/refresh");
+  //     loginAction(data);
+  //     //갱신이 된 경우(200)
+  //   }
+  //   catch(e){
+  //     //갱신이 안된경우(401unauthorized) 
+  //     logoutAction();
+  //   }
 
-  }, []);
+  // }, []);
 
   return (
     <>
@@ -97,7 +97,7 @@ export default function Menu() {
               <Nav.Link as={Link} to="/account/login">sign in</Nav.Link>
               </>)}
                 {/* 연습용 Refresh 버튼(향후 삭제가 필요) */}
-              <Nav.Link onClick={refresh}>refresh</Nav.Link>
+              {/* <Nav.Link onClick={refresh}>refresh</Nav.Link> */}
             </Nav>
           </Navbar.Collapse>
         </Container>

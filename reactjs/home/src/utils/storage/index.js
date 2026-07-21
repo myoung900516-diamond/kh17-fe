@@ -18,7 +18,8 @@ export const countState = atom(0);
 const localStorageWrapper = createJSONStorage(()=>window.localStroage);
 const sessionStorageWrapper = createJSONStorage(()=>window.sessionStorage);
 
-export const loginUserState = atomWithStorage("loginUserState", null, sessionStorageWrapper);
+export const loginUserState = atomWithStorage("loginUserState", null, localStorageWrapper);
+// export const loginUserState = atomWithStorage("loginUserState", null, sessionStorageWrapper);
 
 export const isLoginState = atom(get=>{
 
