@@ -6,9 +6,12 @@ import Body from "./templates/Body"
 import Footer from "./templates/Footer"
 import {Bounce, ToastContainer} from "react-toastify";
 import { Row, Col, Container } from "react-bootstrap";
+import { useAtomValue } from "jotai"
+import { loginUserState } from "@utils/storage"
 
 export default function App() {
-
+  const loginUser = useAtomValue(loginUserState);
+  console.log("loginUser", loginUser);
 
   return (
     <Container fluid>

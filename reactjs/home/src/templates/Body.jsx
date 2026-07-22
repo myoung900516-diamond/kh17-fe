@@ -63,7 +63,7 @@ export default function Body(){
             <Route path="/account/joinFail" element={<AccountJoinFail/>}></Route>
             <Route path="/account/login" element={<AccountLogin/>}></Route>
             <Route path="/account/mypage" element={<Private><MyPage/></Private>}></Route>
-            <Route path="/account/password" element={<AccountPassword/>}></Route>
+            <Route path="/account/password" element={<Private><AccountPassword/></Private>}></Route>
             
             
             <Route path="/session/test" element={<TestMain/>}></Route>
