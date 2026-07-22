@@ -1,10 +1,11 @@
 import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Col, Row } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { Button, Col, Row } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
 import { loginUserState } from "@utils/storage";
 import { useAtomValue } from "jotai";
 import { apiClient } from "@utils/reaxios";
+import { FaKey, FaPenToSquare } from "react-icons/fa6";
 
 export default function MyPage(){
     //jotai state에 저장된 내 정보를 가져와서 서버에 나머지 정보를 요청해야함 
@@ -22,6 +23,7 @@ export default function MyPage(){
         // const {data} = await axios.get("/api/account/me");
         const {data} = await apiClient.get("/account/me");
         setAccount(data);
+        // console.log(data);
     }, [accountId]);
 
     //주소를 완성해서 반환하는 메모
@@ -87,6 +89,18 @@ export default function MyPage(){
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">상태메세지</Col>
             <Col sm={9} className="text-secondary">{account?.accountMessage}</Col>
+        </Row>
+        <Row className="mt-5">
+            <Col className="text-center">
+                <Button as={Link} to="/account/password" variant="primary">
+                <FaKey/>
+                <span>비밀번호 변경</span>
+                </Button>
+                <Button variant="primary ms-2" >
+                    <FaPenToSquare/>
+                    <span>내정보수정</span>
+                    </Button>
+            </Col>
         </Row>
     </>)
 }

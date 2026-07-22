@@ -5,6 +5,7 @@ import axios from "axios";
 import Jumbotron from "@templates/Jumbotron";
 import { Col, Row, Form, Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { apiClient } from "@utils/reaxios";
 
 
 export default function BookList() {
@@ -22,8 +23,8 @@ export default function BookList() {
         const lastBookId = dataSize === 0 ? 0 : bookList[dataSize - 1].bookId;
 
         
-        const response = await axios.post(
-            "/api/book/list-more", {lastNo : lastBookId, size : size}
+        const response = await apiClient.post(
+            "/book/list-more", {lastNo : lastBookId, size : size}
         )
         
         SetBookList([...bookList, ...response.data.list]);

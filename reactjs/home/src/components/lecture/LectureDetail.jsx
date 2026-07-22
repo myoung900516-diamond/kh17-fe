@@ -6,6 +6,7 @@ import { Button, Col, Row, Form } from "react-bootstrap";
 import { FaList, FaTrash, FaPenToSquare, FaSquarePen, FaCheck, FaXmark } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import { apiClient } from "@utils/reaxios";
 
 
 export default function LectureDetail() {
@@ -24,7 +25,7 @@ export default function LectureDetail() {
         loadData();
     }, []);
     const loadData = useCallback(async () => {
-        const response = await axios.get(`/api/lecture/${lectureNo}`)
+        const response = await apiClient.get(`/lecture/${lectureNo}`)
         setLecture(response.data);
     }, []);
     const deleteLecture = useCallback(async () => {
@@ -37,7 +38,7 @@ export default function LectureDetail() {
             cancelButtonText: "candel"
         });
         if (result.isConfirmed === false) return;
-        const response = await axios.delete(`/api/lecture/${lectureNo}`);
+        const response = await apiClient.delete(`/lecture/${lectureNo}`);
         toast.success("done");
         navigate("/lecture/list");
     }, [lectureNo]);
@@ -67,8 +68,8 @@ export default function LectureDetail() {
         });
     }, [lecture]);
     const updateLecture = useCallback(async (field) => {
-        const response = await axios.patch(
-            `/api/lecture/${lectureNo}`,
+        const response = await apiClient.patch(
+            `/lecture/${lectureNo}`,
             { [field]: lecture[field] }
         );
         setBackup({ ...backup, [field]: lecture[field] });

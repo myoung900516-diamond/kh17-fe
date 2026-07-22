@@ -5,6 +5,7 @@ import { Button, Col, Form, Row, Table } from "react-bootstrap";
 import { FaArrowDown, FaMagnifyingGlass, FaPlus, FaXmark } from "react-icons/fa6";
 import { TbTilde } from "react-icons/tb";
 import { toast } from "react-toastify";
+import { apiClient } from "@utils/reaxios";
 
 export default function CountryComplexSearch(){
     //state
@@ -49,7 +50,7 @@ export default function CountryComplexSearch(){
         // if (copy.countryName === "") delete copy.countryName;
         // if(copy.countryName === "") copy.countryName = null;
 
-        const response = await axios.post("/api/country/complexSearch", condition);
+        const response = await apiClient.post("/country/complexSearch", condition);
         setCountryList(response.data.list);
         console.log(response.data.list);
         setLast(response.data.last);
@@ -61,7 +62,7 @@ export default function CountryComplexSearch(){
     }, [countryList]);
 
     const loadMoreList = useCallback(async ()=>{
-        const response = await axios.post("/api/country/complexSearch", 
+        const response = await apiClient.post("/country/complexSearch", 
             {...condition, lastCountryNo : lastCountryNo}
         );
         setCountryList(prev=>[...prev, ...response.data.list]);//이어쓰기

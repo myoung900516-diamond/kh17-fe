@@ -5,6 +5,7 @@ import axios from "axios";
 import Jumbodtron from "@templates/Jumbotron";
 import { Col, Row, Form, Button, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { apiClient } from "@utils/reaxios";
 
 
 export default function LectureList() {
@@ -20,7 +21,7 @@ export default function LectureList() {
         setLoading(true);
         const dataSize = lectureList.length;
         const lastLectureNo = dataSize === 0 ? 999999999 : lectureList[dataSize - 1].lectureNo;
-        const response = await axios.post(`/api/lecture/list-more`, 
+        const response = await apiClient.post(`/lecture/list-more`, 
             {lastNo : lastLectureNo, size : size})
             // console.log(response.data);
             SetLectureList([...lectureList, ...response.data.list]);

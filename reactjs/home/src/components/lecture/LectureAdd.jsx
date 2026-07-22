@@ -7,6 +7,7 @@ import Jumbotron from "@templates/Jumbotron";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { apiClient } from "@utils/reaxios";
 
 export default function LectureAdd(){
     const [lecture, setLecture] = useState({
@@ -97,7 +98,7 @@ export default function LectureAdd(){
 
     //데이터전송(등록)
     const send=useCallback(async ()=>{
-        const response = await axios.post(`/api/lecture/`,lecture);
+        const response = await apiClient.post(`/lecture/`,lecture);
         const result = await Swal.fire({
             title: 'Success!',
             text: '강좌등록이 완료되었습니다.',

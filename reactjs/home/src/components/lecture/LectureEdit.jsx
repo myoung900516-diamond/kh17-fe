@@ -6,6 +6,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Jumbotron from "@templates/Jumbotron";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { apiClient } from "@utils/reaxios";
 
 export default function LectureEdit() {
     const { lectureNo } = useParams();
@@ -29,7 +30,7 @@ export default function LectureEdit() {
     }, []);
     const [validated, setValidated] = useState(false);
     const loadData = useCallback(async () => {
-        const response = await axios.get(`/api/lecture/${lectureNo}`)
+        const response = await apiClient.get(`/lecture/${lectureNo}`)
         setLecture(response.data);
     }, []);
     const [result, setResult] = useState({
@@ -112,7 +113,7 @@ export default function LectureEdit() {
 
     //데이터전송(등록)
     const send = useCallback(async () => {
-        const response = await axios.post(`/api/lecture/`, lecture);
+        const response = await apiClient.post(`/lecture/`, lecture);
         const result = await Swal.fire({
             title: 'Success!',
             text: '강좌등록이 완료되었습니다.',

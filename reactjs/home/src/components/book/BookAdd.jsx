@@ -6,6 +6,7 @@ import {ClimbingBoxLoader} from "react-spinners";
 import Jumbotron from "@templates/Jumbotron";
 import { Col, Row, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { apiClient } from "@utils/reaxios";
 
 
 export default function BookAdd(){
@@ -122,7 +123,7 @@ export default function BookAdd(){
     const send = useCallback( async ()=>{
         //로딩 상태로 변경
         setLoading(true);
-        const response = await axios.post("/api/book/", book)
+        const response = await apiClient.post("/book/", book)
         
         const result = await axios.Swal.fire({
                 title: 'Success!',

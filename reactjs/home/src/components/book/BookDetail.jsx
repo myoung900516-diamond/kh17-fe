@@ -6,6 +6,7 @@ import { Button, Col, Row, Form } from "react-bootstrap";
 import { FaList, FaTrash, FaPenToSquare, FaSquarePen, FaCheck, FaXmark } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import { apiClient } from "@utils/reaxios";
 
 
 export default function BookDetail() {
@@ -30,7 +31,7 @@ export default function BookDetail() {
         loadData();
     }, []);
     const loadData = useCallback(async () => {
-        const response = await axios.get(`/api/book/${bookId}`);
+        const response = await apiClient.get(`/book/${bookId}`);
         setBook(response.data);
     }, []);
     const deleteBook = useCallback(async () => {
@@ -43,7 +44,7 @@ export default function BookDetail() {
             cancelButtonText: "candel"
         })
         if (result.isConfirmed === false) return;
-        const response = await axios.delete(`/api/book/${bookId}`)
+        const response = await apiClient.delete(`/book/${bookId}`)
         toast.success("done");
         navigate("/book/list");
     }, [book, navigate]);
@@ -76,8 +77,8 @@ export default function BookDetail() {
         });
     }, [book]);
     const updateBook = useCallback(async (field)=>{
-        const response = await axios.patch(
-            `/api/book/${bookId}` , 
+        const response = await apiClient.patch(
+            `/book/${bookId}` , 
             { [field] : book[field]}
         );
         setBackup({...backup, [field]:book[field]});

@@ -5,6 +5,7 @@ import { FaArrowDown, FaPlus } from "react-icons/fa";
 import { ClimbingBoxLoader } from "react-spinners";
 import { Row, Col, Form, Button, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { apiClient } from "@utils/reaxios";
 
 
 
@@ -29,10 +30,10 @@ export default function CountryList() {
         // const response = await axios.get(
         //     `http://localhost:8080/api/country/lastCountryNo/${lastCountryNo}/size/${size}`
         // )
-        const response = await axios.post(
+        const response = await apiClient.post(
             // `http://localhost:8080/api/country/list-more`, 
             // `${import.meta.env.VITE_SERVER_URL}/api/country/list-more`,
-            "/api/country/list-more",
+            "/country/list-more",
             {lastNo : lastCountryNo, size : size}
         )
                 setCountryList([...countryList, ...response.data.list]);

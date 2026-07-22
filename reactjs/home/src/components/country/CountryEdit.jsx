@@ -5,6 +5,7 @@ import { FaAsterisk, FaList, FaPlus, FaSquarePen, FaXmark } from "react-icons/fa
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Jumbotron from "@templates/Jumbotron";
 import { toast } from "react-toastify";
+import { apiClient } from "@utils/reaxios";
 
 
 export default function CountryEdit(){
@@ -27,7 +28,7 @@ export default function CountryEdit(){
         loadData();
     }, []);
     const loadData = useCallback(async ()=>{
-        const response = await axios.get(`/api/country/${countryNo}`)
+        const response = await apiClient.get(`/country/${countryNo}`)
         setCountry(response.data);
     }, []);
     
@@ -106,8 +107,8 @@ export default function CountryEdit(){
 
     //데이터 전송
     const send = useCallback(async ()=>{
-        const response = await axios.put(
-            `/api/country/${countryNo}`, country);
+        const response = await apiClient.put(
+            `/country/${countryNo}`, country);
             toast.success("국가 정보가 변경되었습니다.");
 
             navigate(`/country/detail/${countryNo}`);

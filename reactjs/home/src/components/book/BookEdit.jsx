@@ -7,6 +7,7 @@ import Jumbotron from "@templates/Jumbotron";
 import { toast } from "react-toastify";
 import { ClimbingBoxLoader } from "react-spinners";
 import Swal from "sweetalert2";
+import { apiClient } from "@utils/reaxios";
 
 
 
@@ -33,7 +34,7 @@ export default function BookEdit(){
         loadData();
     }, []);
     const loadData = useCallback(async ()=>{
-        const response = await axios.get(`/api/book/${bookId}`)
+        const response = await apiClient.get(`/book/${bookId}`)
         setBook(response.data);
     }, []);
 
@@ -139,7 +140,7 @@ export default function BookEdit(){
     const send = useCallback(async()=>{
         //로딩 상태로 변경
         setLoading(true);
-        const response = await axios.put(`/api/book/${bookId}`, book);
+        const response = await apiClient.put(`/book/${bookId}`, book);
         toast.success("도서 수정이 완료되었습니다");
         navigate("/book/list");
         setLoading(false);

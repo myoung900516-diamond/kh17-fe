@@ -7,6 +7,7 @@ import { FaList, FaTrash, FaPenToSquare, FaSquarePen, FaXmark } from "react-icon
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { FaCheck } from "react-icons/fa";
+import { apiClient } from "@utils/reaxios";
 
 
 export default function CountryDetail() {
@@ -31,7 +32,7 @@ export default function CountryDetail() {
         loadData();
     }, []);
     const loadData = useCallback(async ()=>{
-        const response = await axios.get(`/api/country/${countryNo}`)
+        const response = await apiClient.get(`/country/${countryNo}`)
         setCountry(response.data);
         setBackup(response.data);
     }, []);
@@ -46,7 +47,7 @@ export default function CountryDetail() {
         })
         if (result.isConfirmed ===false) return;
         
-        const response =await axios.delete(`/api/country/${countryNo}`)
+        const response =await apiClient.delete(`/country/${countryNo}`)
         toast.error("done");
         navigate("/country/list");
         
@@ -80,8 +81,8 @@ export default function CountryDetail() {
 
     //국가명만 변경하는 함수
     const updateCountry = useCallback(async (field)=>{
-        const response = await axios.patch(
-            `/api/country/${countryNo}` , 
+        const response = await apiClient.patch(
+            `/country/${countryNo}` , 
             //{countryName : country.countryName});
             { [field] : country[field]}
         );
@@ -201,7 +202,7 @@ export default function CountryDetail() {
                     </Col>
                 </Row>
                 <Row className="mt-5">
-                    <Col sm={3} className="text-end">
+                    <Col className="text-center">
                         <Button as={Link} to="/country/list" className="ms-2" variant="secondary">
                             <FaList />
                             <span>목록으로</span></Button>

@@ -7,6 +7,7 @@ import { FaAsterisk, FaPlus } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { apiClient } from "@utils/reaxios";
 
 
 export default function CountryAdd() {
@@ -97,7 +98,7 @@ export default function CountryAdd() {
 
     //데이터 전송
     const send = useCallback(async ()=>{
-        const response = await axios.post("/api/country/", country)
+        const response = await apiClient.post("/country/", country)
             toast.success("국가 등록이 완료되었습니다.");
 
             //리앤트에서는 이동을 location.href로 할 수 없다(되는데 안하는게 좋음)

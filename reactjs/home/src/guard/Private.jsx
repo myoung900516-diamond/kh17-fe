@@ -4,7 +4,7 @@
 //속성이 아니라 화면 코드가 내부로 전달될 수 있다(jquery에선... text()또는 html()이라 부른다. 내부컨텐츠)
 
 import { useAtomValue } from "jotai";
-import { isAdminState, isLoginState } from "../utils/storage";
+import { isAdminState, isLoginState } from "@utils/storage";
 import NotAuthorization from "@error/NotAuthorization";
 import NeedPermission from "@error/NeedPermission";
 
