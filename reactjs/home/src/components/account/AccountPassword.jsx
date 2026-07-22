@@ -10,11 +10,14 @@ import { FaAsterisk, FaEye, FaEyeSlash } from "react-icons/fa6";
 export default function accountPassword() {
     const { accountId, accountNickname, accountLevel } = useAtomValue(loginUserState);
     
+    const [accountPassword, setAccountPassword] = useState("");
+
     const [password, setPassword] = useState({
         password: "",
         password2: ""
     });
     const [result, setResult] = useState({
+        accountPassword:null,
         password: null,
         password2: null
     });
@@ -33,6 +36,21 @@ export default function accountPassword() {
         password: false,
         password2: false,
     });
+
+    const confirmPassword = useCallback(async()=>{
+        const {data} = await apiClient.get("/account/findPassword", {
+            params : {
+                accountPassword: accountPassword
+            }
+        });
+
+        console.log(data);
+        setResult(prev=>({
+            ...prev,
+            accountPassword : data? "is-valid": "is-invalid"
+        }));
+        
+    }, [accountPassword, result]);
 
 
     const checkPassword = useCallback(e => {
@@ -55,13 +73,18 @@ export default function accountPassword() {
         toast.success("비밀번호 변경이 완료되었습니다");
         navigate("/account/mypage");
     }, [accountPassword]);
+    
     return (<>
         <Jumbotron title="비밀번호변경하기" />
         <Row className="mt-4">
             <Col sm={3} >현재 비밀번호</Col>
             <Col sm={9}>
-                <Form.Control type="password" name="accountPassword" className="w-50"
-                placeholder="현재 비밀번호를 입력하세요." />
+                <Form.Control type="password" name="accountPassword" 
+                value={accountPassword} onChange={e => setAccountPassword(e.target.value)}
+                className={`${result.accountPassword} w-50`}
+                placeholder="현재 비밀번호를 입력하세요." onBlur={confirmPassword}/>
+                <div className="valid-feedback">비밀번호가 일치합니다.</div>
+                <div className="invalid-feedback">비밀번호가 일치하지 않습니다. </div>
             </Col>
         </Row>
         <Row className="mt-4">

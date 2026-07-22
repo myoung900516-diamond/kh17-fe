@@ -11,7 +11,7 @@ import { loginUserState } from "@utils/storage"
 
 export default function App() {
   const loginUser = useAtomValue(loginUserState);
-  console.log("loginUser", loginUser);
+  // console.log("loginUser", loginUser);
 
   return (
     <Container fluid>
