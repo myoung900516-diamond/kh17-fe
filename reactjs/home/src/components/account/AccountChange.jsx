@@ -1,26 +1,25 @@
 import Jumbotron from "@templates/Jumbotron";
-import { useCallback, useState, useMemo, useRef } from "react";
+import { useCallback, useState, useMemo, useRef, useEffect } from "react";
 import { Button, Col, Form, Row, Toast } from "react-bootstrap";
-import { FaAsterisk, FaCheck, FaEye, FaEyeSlash, FaMagnifyingGlass, FaPaperPlane, FaRotateRight, FaSpinner, FaUserPlus, FaXmark } from "react-icons/fa6";
+import { FaAsterisk, FaCheck, FaEye, FaEyeSlash, FaMagnifyingGlass, FaPaperPlane, FaRotateRight, FaSpinner, FaSquarePen, FaUserPlus, FaXmark } from "react-icons/fa6";
 import { useKakaoPostcodePopup } from 'react-daum-postcode';
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { apiClient } from "@utils/reaxios";
 import { certClient } from "@utils/reaxios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 
-
-export default function AccountJoin() {
+export default function accountChange(){
 
     //kakao post
     const open = useKakaoPostcodePopup("//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js");
 
     //state
     const [account, setAccount] = useState({
-        accountId: "",
         accountPassword: "",
-        accountPassword2: "",
         accountEmail: "",
         accountNickname: "",
         accountBirth: "",
@@ -30,11 +29,11 @@ export default function AccountJoin() {
         accountAddress2: "",
         accountMessage: "",
     });
+
+    const [backup, setBackup] = useState(null);
+
     const [result, setResult] = useState({
-        //accountId : null,
-        accountId: { clazz: null, code: null },
         accountPassword: null,
-        accountPassword2: null,
         accountEmail: {clazz:null, code:null},
         accountNickname: { clazz: null, code: null },
         accountBirth: null,
@@ -46,8 +45,57 @@ export default function AccountJoin() {
     });
     const [visible, setVisible] = useState({
         accountPassword: false,
-        accountPassword2: false,
     });
+
+    //effect 내 정보 불러오기 처음에 한 번만 
+    useEffect(()=>{
+        loadData();
+    },[]);
+
+    useEffect(()=>{
+        if(backup === null) return;
+
+        checkAccountNickname(); //null일 수 없음
+        checkAccountEmail(); //null일 수 없음
+        checkAccountBirth(); //null일 수 있음
+        checkAccountContact(); //null일 수 있음
+        checkAccountAddress();//null일 수 있음
+        checkAccountMessage();//null일 수 있음
+    }, [backup]);
+
+    //callback
+    const loadData = useCallback(async()=>{
+        const { data } = await apiClient.get("/account/me");
+
+        console.log(Object.keys(account));
+        const keyList = Object.keys(account);
+
+        //data에 존재하는 null을 모두""로변경한 뒤 설정
+        //-배열이 아니라 객체라서 배열 명령만으로는 처리가 어려움
+        const entry = Object.entries(data);
+        const replace = entry
+                        .filter(
+                            ([key, value]) => keyList.includes(key)
+                        )//keyList에 key가 있으면 이것만, 다른건 걸러라. 
+                        .map(( [key, value] )=>( [key, value ?? ""] )
+            // { console.log(item);
+            // return item;}
+    );
+        console.log(Object.entries(data));
+        console.log(entry);
+        console.log(replace);
+
+        const convert = Object.fromEntries(replace);//앤트리 배열을 객체로 되돌림
+        convert.accountPassword = "";
+
+        // console.table();
+
+        console.log(convert);
+        // setAccount(data);
+        // setBackup(data);
+        setAccount(convert);
+        setBackup(convert);
+    }, [account]);
     const changeStringValue = useCallback(e => {
         const { name, value } = e.target;
 
@@ -58,6 +106,9 @@ export default function AccountJoin() {
     }, []);
 
     const changeAccountEmail = useCallback(e=>{
+        
+
+
         //인증이 완료되었는데 입력을 또 한 경우 -> 인증완료를 없었던 일로 한다
         if(result.accountEmail.clazz === "is-valid"){
             setResult(prev=>({
@@ -73,48 +124,32 @@ export default function AccountJoin() {
 
 
     //-검사
-    const checkAccountId = useCallback(async e => {
-        const regex = /^[a-z][a-z0-9]{4,19}$/;
-        const valid = regex.test(account.accountId);
 
-        if (valid === false) {
-            setResult(prev => ({
-                ...prev,
-                accountId: { clazz: "is-invalid", code: "format" }
-
-            }));
-            return;
-        }
-        //형식 통과 
-        const response = await apiClient.get(`/account/check-id/${account.accountId}`);
-
-        const clazz = response.data === true ? "is-valid" : "is-invalid";
-        const code = response.data === true ? null : "duplicate";
-        setResult(prev => ({
-            ...prev,
-            accountId: { clazz: clazz, code: code }
-        }));
-
-    }, [account]);
 
     const checkAccountPassword = useCallback(e => {
-        const regex = /^(?=.*[A-Za-z])(?=.*[0-9])|(?=.*[A-Za-z])(?=.*[!@#$%^&*])|(?=.*[0-9])(?=.*[!@#$%^&*]).{8,16}$/;
-        const valid = regex.test(account.accountPassword);
+        const valid = account.accountPassword !== "";
         const clazz = valid ? "is-valid" : "is-invalid";
 
-        const valid2 = account.accountPassword.length > 0
-            && account.accountPassword === account.accountPassword2;
-        const clazz2 = valid2 ? "is-valid" : "is-invalid";
         setResult(prev => ({
             ...prev,
             accountPassword: clazz,
-            accountPassword2: clazz2
         }));
 
     }, [account]);
 
 
     const checkAccountEmail = useCallback(async e => {
+        //(+추가) 백업된 내 원래 정보의 이메일과 동일하면 검사를 중지한다
+        if(account.accountEmail === backup.accountEmail){
+            //통과 
+            setResult(prev=>({
+                ...prev,
+                accountEmail : {clazz : "is-valid", code : null}
+            }));
+            return;
+        }
+
+
         const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,}$/;
         const valid = regex.test(account.accountEmail);
         if(valid === false){
@@ -134,9 +169,20 @@ export default function AccountJoin() {
                 code : code
             },
         }));
-    }, [account]);
+    }, [account, backup]);
 
     const checkAccountNickname = useCallback(async e => {
+        //(+추가) 기존과 동일한 닉네임이면 검사를 통과
+        if(account.accountNickname === backup.accountNickname){
+            setResult(prev=>({
+                ...prev,
+                accountNickname : {clazz : "is-valid", code : null }
+            }));
+            return;
+        }
+
+
+
         const regex = /^[가-힣A-Za-z0-9]{1,10}$/;
         const valid = regex.test(account.accountNickname);
 
@@ -157,7 +203,7 @@ export default function AccountJoin() {
             ...prev,
             accountNickname: { clazz: clazz, code: code }
         }));
-    }, [account]);
+    }, [account, backup]);
 
     const checkAccountBirth = useCallback(e => {
         const regex = /^([0-9]{4})-(((02)-(0[1-9]|1[0-9]|2[0-9]))|((0[469]|11)-(0[1-9]|1[0-9]|2[0-9]|30))|((0[13578]|1[02])-(0[1-9]|1[0-9]|2[0-9]|3[01])))$/;
@@ -321,12 +367,13 @@ export default function AccountJoin() {
     //memo는 파생정보를 알아내는 
     //아날로그 시계를 만들면 memo연습용 
     const allValid = useMemo(() => {
-        if (result.accountId.clazz !== "is-valid") return false;
         if (result.accountPassword !== "is-valid") return false;
-        if (result.accountPassword2 !== "is-valid") return false;
-        // if (result.accountNickname !== "is-valid") return false;
+        if (result.accountNickname !== "is-valid") return false;
         if (result.accountEmail.clazz !== "is-valid") return false;
-        if (certNumberResult !== "is-valid")return false;
+        if(account.accountEmail !== backup.accountEmail){
+
+            if (certNumberResult !== "is-valid")return false;
+        }
 
         if (result.accountBirth === "is-invalid") return false;
         if (result.accountContact === "is-invalid") return false;
@@ -335,100 +382,42 @@ export default function AccountJoin() {
         if (result.accountAddress2 === "is-invalid") return false;
         if (result.accountMessage === "is-invalid") return false;
         return true;
-    }, [result, certNumberResult]);
+    }, [result, certNumberResult, backup, account]);
 
     //최종가입
     const navigate = useNavigate();
-    const sendJoin = useCallback(async()=>{
-        try{
-            // const copy = {...account};
-            // delete copy.accountPassword2;
-            const {accountPassword2, ...copy} = account;
-            const response = await apiClient.post("/account/", copy);
-            toast.success("회원 가입이 완료되었습니다.");
-            navigate("/account/joinSuccess");
+    const sendData = useCallback(async()=>{
+        try{//수정 시도를 했을 때
+            const copy = {...account};
+            const {data} = await apiClient.put("/account/", copy);
+            // console.log(data);
+            if(data.status === true){
+                toast.success(data.message);
+                // toast.success("회원 정보 수정이 완료되었습니다.");
+                navigate("/account/mypage");
+            }
+            toast.error(data.message);
+
+            
         }
-        catch(e){
-            toast.error("회원 가입 과정에서 오류가 발생했습니다.")
-            navegate("/account/joinFail");
+        catch(e){//자격이 없어서 오류가 났을 때 
+            console.error(e);
+            await Swal.fire({
+                title : "서버오류발생",
+                icon:"warning",
+                text:"잠시후 다시 시도해주세요",
+                confirmButtonText:"확인",
+            });
+
         }
         //앤드포인트
         // console.log(result);
     }, [account]);
-    //view
-    return (<>
-        <Jumbotron title="가입 정보 입력" content="부정확한 정보 입력이 확인된 경우 계정 이용이 제한될 수 있습니다. " />
-        <Row className="mt-4">
-            <Form.Label column sm={3}>
-                <span>아이디</span>
-                <FaAsterisk className="text-danger" />
-            </Form.Label>
-            <Col sm={9}>
-                <Form.Control type="text" name="accountId"
-                    value={account.accountId} onChange={changeStringValue}
-                    placeholder="알파벳 소문자 시작 숫자포함 5~20자이내"
-                    onBlur={checkAccountId} className={result.accountId.clazz} />
-                <div className="valid-feedback">아이디 설정이 완료되었습니다</div>
-                <div className="invalid-feedback">
-                    {result.accountId.code === "format" && (<>
-                        아이디는 영문소문자로 시작하며 숫자 포함 5~20글자로 작성해야 합니다
-                    </>)}
-                    {result.accountId.code === "duplicate" && (<>
-                        아이디가 이미 사용중입니다.
-                    </>)}
-                </div>
-            </Col>
-        </Row>
-        <Row className="mt-4">
-            <Form.Label column sm={3}>
-                <span>비밀번호</span>
-                <FaAsterisk className="text-danger" />
-                {visible.accountPassword === true ? (
-                    <FaEye className="text-danger ms-4" onClick={e => {
-                        setVisible(prev => ({ ...prev, accountPassword: false }));
-                    }} />
 
-                ) : (
-                    <FaEyeSlash className="text-info ms-4" onClick={e => {
-                        setVisible(prev => ({ ...prev, accountPassword: true }));
-                    }} />
-
-                )}
-            </Form.Label>
-            <Col sm={9}>
-                <Form.Control type={visible.accountPassword ? "text" : "password"} name="accountPassword"
-                    value={account.accountPassword} onChange={changeStringValue}
-                    onBlur={checkAccountPassword} className={result.accountPassword}
-                />
-                <div className="valid-feedback">비밀번호 설정이 완료되었습니다</div>
-                <div className="invalid-feedback">8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.</div>
-            </Col>
-        </Row>
-        <Row className="mt-4">
-            <Form.Label column sm={3}>
-                <span>비밀번호확인</span>
-                <FaAsterisk className="text-danger" />
-                {visible.accountPassword2 === true ? (
-                    <FaEye className="text-danger ms-4" onClick={e => {
-                        setVisible(prev => ({ ...prev, accountPassword2: false }));
-                    }} />
-
-                ) : (
-                    <FaEyeSlash className="text-info ms-4" onClick={e => {
-                        setVisible(prev => ({ ...prev, accountPassword2: true }));
-                    }} />
-
-                )}
-            </Form.Label>
-            <Col sm={9}>
-                <Form.Control type={visible.accountPassword2 ? "text" : "password"} name="accountPassword2"
-                    value={account.accountPassword2} onChange={changeStringValue}
-                    onBlur={checkAccountPassword} className={result.accountPassword2}
-                    placeholder="비밀번호를 한 번 더 입력하세요." />
-                <div className="valid-feedback">비밀번호가 일치합니다</div>
-                <div className="invalid-feedback">비밀번호를 입력하지 않았거나 일치하지 않습니다</div>
-            </Col>
-        </Row>
+    return(<>
+    
+        <Jumbotron title="회원 정보 변경"/>
+        
         {/* 이메일은 인증번호 처리가 추가로 필요 */}
         <Row className="mt-4">
             <Form.Label column sm={3}>
@@ -522,11 +511,22 @@ export default function AccountJoin() {
                 <span>생년월일</span>
             </Form.Label>
             <Col sm={9}>
-                <Form.Control type="date" name="accountBirth"
+            <DatePicker name="accountBirth"
+                        selected={account.accountBirth}
+                        onChange={(date)=>{
+                            //date가 우리가 원하는 형식이 아님(내일 변경 후 설정)
+                            setAccount(prev=>({...prev, accountBirth:date}))
+                        }}
+                        dateFormat={"yyyy-MM-dd"}
+                        customInput={<Form.Control/>}
+                        wrapperClassName="w-100"
+                        onBlur={checkAccountBirth}
+                        className={result.accountBirth} />
+                {/* <Form.Control type="date" name="accountBirth"
                     value={account.accountBirth} onChange={changeStringValue}
                     onBlur={checkAccountBirth} className={result.accountBirth}
-                    placeholder="2006-06-14" />
-                <div className="invalid-feedback">올바른 날짜 형식이 아닙니다</div>
+                    placeholder="2006-06-14" />*/}
+                {/* <div className="invalid-feedback">올바른 날짜 형식이 아닙니다</div> */}
             </Col>
         </Row>
         <Row className="mt-4">
@@ -557,7 +557,7 @@ export default function AccountJoin() {
                     <Button variant="success" className="ms-2"
                         onClick={addressSearch}>
                         <FaMagnifyingGlass />
-                        <span className="d-none d-md-inline-block">우편번호 검색</span>
+                        <span className="d-none d-lg-inline-block">우편번호 검색</span>
                     </Button>
                     {/* {inAddressWritten === true && (
                         <Button variant="danger" className="ms-2" onClick={clearAddress}>
@@ -579,7 +579,7 @@ export default function AccountJoin() {
                             }
                         }>
                         <FaXmark />
-                        <span className="d-none d-md-inline-block">작성내역 지우기</span>
+                        <span className="d-none d-lg-inline-block">작성내역 지우기</span>
                     </Button>
                 </div>
             </Col>
@@ -617,12 +617,40 @@ export default function AccountJoin() {
                     placeholder="자기소개" rows={5} />
             </Col>
         </Row>
+        {/* 비밀번호는 변경하는 항목이 아니라 검증을 위하여 한번 더 입력하는 값 */}
+        <Row className="mt-4">
+            <Form.Label column sm={3}>
+                <span>비밀번호 확인</span>
+                <FaAsterisk className="text-danger" />
+                {visible.accountPassword === true ? (
+                    <FaEye className="text-danger ms-4" onClick={e => {
+                        setVisible(prev => ({ ...prev, accountPassword: false }));
+                    }} />
+
+                ) : (
+                    <FaEyeSlash className="text-info ms-4" onClick={e => {
+                        setVisible(prev => ({ ...prev, accountPassword: true }));
+                    }} />
+
+                )}
+            </Form.Label>
+            <Col sm={9}>
+                <Form.Control type={visible.accountPassword ? "text" : "password"} name="accountPassword"
+                    value={account.accountPassword} onChange={changeStringValue}
+                    onBlur={checkAccountPassword} className={result.accountPassword}
+                    placeholder="확인용 비밀번호 입력"
+                />
+                <div className="invalid-feedback">비밀번호는 필수 항목입니다</div>
+            </Col>
+        </Row>
+        
         <Row className="mt-5">
             <Col>
                 <Button variant="success" size="lg" className="w-100"
-                    disabled={allValid === false} onClick={sendJoin}>
-                    <FaUserPlus />
-                    <span className="ms-2">회원 가입하기</span>
+                    disabled={allValid === false}
+                    onClick={sendData}>
+                    <FaSquarePen />
+                    <span className="ms-2">회원 수정하기</span>
                 </Button>
             </Col>
         </Row>

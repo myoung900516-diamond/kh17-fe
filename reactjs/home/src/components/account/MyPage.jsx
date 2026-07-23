@@ -90,13 +90,15 @@ export default function MyPage(){
             <Col sm={3} className="fw-bold text-info">상태메세지</Col>
             <Col sm={9} className="text-secondary">{account?.accountMessage}</Col>
         </Row>
+        {/* 각종 다른 기능으로 이동할 수 있는 링크들 */}
         <Row className="mt-5">
             <Col className="text-center">
                 <Button as={Link} to="/account/password" variant="primary">
-                <FaKey/>
-                <span>비밀번호 변경</span>
-                </Button>
-                <Button variant="primary ms-2" >
+                    <FaKey/>
+                    <span>비밀번호 변경</span>
+                    </Button>
+                <Button as={Link} to="/account/change"
+                 variant="warning" className="ms-2" >
                     <FaPenToSquare/>
                     <span>내정보수정</span>
                     </Button>
