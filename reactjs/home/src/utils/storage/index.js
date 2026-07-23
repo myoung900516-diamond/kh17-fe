@@ -15,7 +15,7 @@ export const countState = atom(0);
 // export const loginState = atom(null);
 
 //객체 데이터를 저장하면서 localStroage, sessionStrorage를 선택하고 싶다면 직렬화 도구를 직접 생성해야함
-const localStorageWrapper = createJSONStorage(()=>window.localStroage);
+const localStorageWrapper = createJSONStorage(()=>window.localStorage);
 const sessionStorageWrapper = createJSONStorage(()=>window.sessionStorage);
 
 export const loginUserState = atomWithStorage("loginUserState", null, localStorageWrapper);
