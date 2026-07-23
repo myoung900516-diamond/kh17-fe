@@ -7,6 +7,7 @@ import { useKakaoPostcodePopup } from 'react-daum-postcode';
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { apiClient } from "@utils/reaxios";
+import { certClient } from "@utils/reaxios";
 
 
 
@@ -275,8 +276,8 @@ export default function AccountJoin() {
         // setCertNumber("");
         try {
             setSending(true);
-            const response = await apiClient.post(
-                "/service/cert/send",
+            const response = await certClient.post(
+                "/send",
                 { certEmail: account.accountEmail }
             );
 
@@ -301,7 +302,7 @@ export default function AccountJoin() {
         setCertNumber(replacement);
     }, []);
     const checkCert = useCallback(async () => {
-        const { data } = await apiClient.post("/service/cert/check",
+        const { data } = await certClient.post("/check",
             {
                 certEmail: account.accountEmail,
                 certNumber: certNumber
