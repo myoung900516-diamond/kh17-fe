@@ -298,8 +298,15 @@ export default function AdminUsers() {
             <Row className="mt-4">
                 <Form.Label column sm={3}>차단여부</Form.Label>
                 <Col sm={9} className="d-flex">
-                    <Form.Check type="checkbox" label="Y" value={"Y"}></Form.Check>
-                    <Form.Check type="checkbox" label="N" value={"N"}></Form.Check>
+                    <Form.Check type="radio" label="전체" name="accountBlock" 
+                        value="" checked={account.accountBlock === ""} 
+                        onChange={e=>setAccount(prev=>({...prev, accountBlock:""}))}></Form.Check>
+                    <Form.Check type="radio" label="차단된 회원만" name="accountBlock" 
+                        value="Y" checked={account.accountBlock === "Y"} 
+                        onChange={e=>setAccount(prev=>({...prev, accountBlock:"Y"}))}></Form.Check>
+                    <Form.Check type="radio" label="차단되지 않은 회원만" name="accountBlock" 
+                        value="N" checked={account.accountBlock === "N"} 
+                        onChange={e=>setAccount(prev=>({...prev, accountBlock:"N"}))}></Form.Check>
                 </Col>
             </Row>
             <Row className="mt-5 text-end">
