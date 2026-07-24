@@ -7,8 +7,14 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { apiClient } from "@utils/reaxios";
 import { certClient } from "@utils/reaxios";
+
 import DatePicker from "react-datepicker";
+import {ko} from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
+
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
+dayjs.locale("ko");
 
 
 
@@ -206,9 +212,10 @@ export default function accountChange(){
     }, [account, backup]);
 
     const checkAccountBirth = useCallback(e => {
-        const regex = /^([0-9]{4})-(((02)-(0[1-9]|1[0-9]|2[0-9]))|((0[469]|11)-(0[1-9]|1[0-9]|2[0-9]|30))|((0[13578]|1[02])-(0[1-9]|1[0-9]|2[0-9]|3[01])))$/;
-        const valid = account.accountBirth.length === 0 || regex.test(account.accountBirth);
-        const clazz = valid ? "is-valid" : "is-invalid";
+        // const regex = /^([0-9]{4})-(((02)-(0[1-9]|1[0-9]|2[0-9]))|((0[469]|11)-(0[1-9]|1[0-9]|2[0-9]|30))|((0[13578]|1[02])-(0[1-9]|1[0-9]|2[0-9]|3[01])))$/;
+        // const valid = account.accountBirth.length === 0 || regex.test(account.accountBirth);
+        // const clazz = valid ? "is-valid" : "is-invalid";
+        const clazz = "is-valid";
         setResult(prev => ({ ...prev, accountBirth: clazz }));
     }, [account]);
 
@@ -512,21 +519,29 @@ export default function accountChange(){
             </Form.Label>
             <Col sm={9}>
             <DatePicker name="accountBirth"
+                        locale={ko}
                         selected={account.accountBirth}
                         onChange={(date)=>{
                             //date가 우리가 원하는 형식이 아님(내일 변경 후 설정)
-                            setAccount(prev=>({...prev, accountBirth:date}))
+                            //->day.js를 이용해서 "YYYY-MM-DD"형태로 변경
+                            const convertDate = dayjs(date).format("YYYY-MM-DD");
+                            // console.log("convertDate", convertDate);
+                            setAccount(prev=>({...prev, accountBirth:convertDate}))
                         }}
                         dateFormat={"yyyy-MM-dd"}
                         customInput={<Form.Control/>}
                         wrapperClassName="w-100"
                         onBlur={checkAccountBirth}
-                        className={result.accountBirth} />
+                        className={result.accountBirth} 
+                        showYearDropdown
+                        showMonthDropdown
+                        dropdownMode="select"
+                        />
                 {/* <Form.Control type="date" name="accountBirth"
                     value={account.accountBirth} onChange={changeStringValue}
                     onBlur={checkAccountBirth} className={result.accountBirth}
                     placeholder="2006-06-14" />*/}
-                {/* <div className="invalid-feedback">올바른 날짜 형식이 아닙니다</div> */}
+                <div className="invalid-feedback">올바른 날짜 형식이 아닙니다</div>
             </Col>
         </Row>
         <Row className="mt-4">

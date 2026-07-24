@@ -33,6 +33,9 @@ import MyPage from "@components/account/MyPage";
 import TestMain from "@components/session/TestMain";
 import Private from "@guard/Private";
 
+import AdminUsers from "@components/admin/AdminUsers";
+import Admin from "@guard/Admin";
+
 
 export default function Body(){
 
@@ -66,6 +69,9 @@ export default function Body(){
             <Route path="/account/mypage" element={<Private><MyPage/></Private>}></Route>
             <Route path="/account/password" element={<Private><AccountPassword/></Private>}></Route>
             <Route path="/account/change" element={<Private><AccountChange/></Private>}></Route>
+            
+            
+            <Route path="/admin/users" element={<Admin><AdminUsers/></Admin>}></Route>
             
             
             <Route path="/session/test" element={<TestMain/>}></Route>

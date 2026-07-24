@@ -170,7 +170,7 @@ export default function accountPassword() {
                     <FaLock/>
                     <span>변경하기</span>
                 </Button>
-                <Button as={Link} to="/account/mypage" variant="danger" 
+                <Button as={Link} to="/account/mypage" size="lg" variant="danger" 
                 className="w-md-auto">
                     <span>취소하기</span>
                 </Button>
