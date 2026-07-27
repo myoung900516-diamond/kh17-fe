@@ -4,6 +4,8 @@ import { Button, Col, Row } from "react-bootstrap";
 import { FaKey, FaLock, FaMagnifyingGlass, FaPenToSquare } from "react-icons/fa6";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { apiClient } from "@utils/reaxios";
+import { certClient } from "../../utils/reaxios";
+import { toast } from "react-toastify";
 
 
 export default function AdminDetail() {
@@ -41,6 +43,12 @@ export default function AdminDetail() {
         // navigate(0);
 
     }, [account]);
+
+    const tempPassword = useCallback(async()=>{
+        const {data} = await certClient.post(`/tempPassword/${accountId}`);
+        toast.success("임시비밀번호 발급 완료!");
+
+    }, [accountId]);
     return (<>
         <Jumbotron title="회원 상세 정보" />
 
@@ -104,14 +112,19 @@ export default function AdminDetail() {
         {/* 각종 다른 기능으로 이동할 수 있는 링크들 */}
         <Row className="mt-5">
             <Col className="text-center">
-                <Button as={Link} to="/admin/search" variant="primary">
-                    <FaMagnifyingGlass />
-                    <span>검색페이지로</span>
+                <Button type="button" onClick={tempPassword}
+                    variant="warning">
+                    <FaKey />
+                    <span>임시비밀번호발급</span>
                 </Button>
                 <Button type="button" onClick={changeBlock}
-                    variant="warning" className="ms-2" >
+                    variant="danger" className="ms-2" >
                     <FaLock />
                     <span>회원차단하기</span>
+                </Button>
+                <Button as={Link} to="/admin/search" variant="primary"  className="ms-2" >
+                    <FaMagnifyingGlass />
+                    <span>검색페이지로</span>
                 </Button>
             </Col>
         </Row>
