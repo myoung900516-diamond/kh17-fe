@@ -9,11 +9,15 @@ import dayjs from "dayjs";
 import "dayjs/locale/ko";
 dayjs.locale("ko");
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button, Col, Form, Row, Table } from "react-bootstrap";
 import { FaEraser, FaPlus, FaSearchengin } from "react-icons/fa6";
 import { TbTilde } from "react-icons/tb";
 import { apiClient } from "@utils/reaxios";
+import { throttle } from "lodash-es";
+
+import "./AdminUsersScroll.css";
+import { Link } from "react-router-dom";
 
 //등급을 미리 정의(갱신의 여지가 없고 화면의 변화와 관계가 없으므로 바깥에 만듦)
 //등급이 추가되거나 변하지 않을게 확실한 경우
@@ -24,7 +28,7 @@ const dataList = {
     fruits: ["딸기", "바나나", "사과"],
 };
 
-export default function AdminUsers() {
+export default function AdminUsersScroll() {
     const [account, setAccount] = useState({
         accountId: "",
         accountNickname: "",
@@ -46,7 +50,8 @@ export default function AdminUsers() {
 
 
     const [list, setList] = useState([]);
-    const [last, setLast] = useState(true);
+    // const [last, setLast] = useState(true);
+    const last = useRef(true);//연관항목없이도 아무데서나 접근 가능한 동기식 데이터
     const [size, setSize] = useState(10);
     const lastAccountId = useMemo(() => {
         if (list.length === 0) return null;
@@ -125,7 +130,13 @@ export default function AdminUsers() {
         }
     }, [account]);
 
+    
     const sendSearch = useCallback(async e => {
+        if(loading.current === true)return;//이미 로딩중이면 하지마! 
+
+        loading.current = true;//로딩시작했다. 
+
+
         e.preventDefault();//기본 form 전송 차단
         // const { data } = await apiClient.post("/account/search", account);
         // const copy = {...condition};
@@ -143,12 +154,18 @@ export default function AdminUsers() {
         // console.log("data", data);
         setList(data.list); //덮어쓰기
         // setList(prev=>[...prev, ...data.list])//이어쓰기
-        setLast(data.last);
-
+        // setLast(data.last);
+        last.current = data.last;
+        loading.current = false;
     }, [account, lastAccountId, size]);
 
-    
+
     const sendMore = useCallback(async e => {
+        console.log("더보기가 실행하려고 생각합니다");
+        if(loading.current === true)return;//이미 로딩중이면 하지마! 
+
+        loading.current = true;//로딩시작했다. 
+        console.log("더보기가 실행되었습니다");
 
         const { data } = await apiClient.post("/account/search", {
             ...account,
@@ -158,11 +175,88 @@ export default function AdminUsers() {
         });
         // console.log("data", data);
         // setList(data.list); //덮어쓰기
-        setList(prev=>[...prev, ...data.list])//이어쓰기
-        setLast(data.last);
+        setList(prev => [...prev, ...data.list])//이어쓰기
+        // setLast(data.last);
+        last.current = data.last;
+        loading.current = false;
 
     }, [account, lastAccountId, size]);
 
+    const getScrollPercent = useCallback(()=>{
+        //필요한 데이터들을 추출
+        const { scrollY } = window;
+        const { scrollTop, scrollHeight, clientHeight } = window.document.documentElement;
+        //콘텐츠가 창보자 작은 경우(스크롤이 없는 경우) 처리
+        if (scrollHeight <= clientHeight) return 0;
+        //현재 스크롤의 위치 확인
+        const current = scrollY || scrollTop;
+        //스크롤 가능한 최대 위치 계산 
+        const max = scrollHeight - clientHeight;
+        //부동소수점 방식에서 발생하는 오차를 제거 
+        if (max - current < 1) return 100;
+        //비율을 계산해서 반환
+        return current * 100 / max;
+    }, []);
+
+
+    //로딩중 상태를 표시하기 위한 값
+    // const [loading, setLoading] = useState(false); //실행빈도가 낮을 때 (비동기로 자유롭게 마트에서 사도 되는 상황)
+    //scroll처럼 발생빈도가 아주 높은 이벤트는 Ref로 처리 (동기로 마트에서 줄을 서야하는 상황)
+    const loading = useRef(false); //실행빈도가 매우 높을 때 (예: scroll, resize)
+
+
+
+
+
+
+    //화면이 시작되면 스크롤 이벤트를 설정 + 화면이 사라지면 스크롤 이벤트를 제거 
+    //→클린업 함수를 포함하여 useEffect 훅을 작성해야함
+    //
+
+
+    //문제발생 : 스크롤이벤트를 등록하는 시점의 sendMore에는 lastAccountNo = null, size = 10이다. 
+    //-갱신이 스스로 안된다. 
+    //-해결책1. 사용되는 데이터를 Ref로 변경(하책)
+    //-해결책2. 사용되는 함수를 Ref로 변경(상책...?)
+    //-해결책3. 
+
+    const sendMoreRef = useRef(null);
+    useEffect(()=>{
+        sendMoreRef.current = sendMore;
+    }, [sendMore]);
+
+    // 로딩플레그, 트로틀 
+    //스크롤이 너무 많이 발생해서 조절해줘야함
+
+    useEffect(()=>{
+        console.log("화면시작했다.");
+
+        const listner = throttle(()=>{
+            console.log("스크롤 움직였어!");
+            const percent = getScrollPercent();
+            console.log("현재 스크롤의 위치 : " + percent.toFixed(2) + "%");
+            // if(last === false && percent >= 99){
+            //     console.log("더보기 실행");
+            //     sendMore();
+            // }
+            //useRef로 만든 데이터는 연관항목에 없어도 마음대로 접근할 수 있다
+            if(last.current === false && percent >= 99){
+                if(sendMoreRef.current){
+                    // console.log("더보기 실행");
+                    sendMoreRef.current();
+                }
+                // console.log("더보기 실행");
+                // sendMore();
+            }
+        },[]);
+            window.addEventListener("scroll", listner);
+        
+        //클린업(clean-up)함수
+        return()=>{
+            console.log("화면 끝났다");
+            window.removeEventListener("scroll", listner);
+        }
+    }, []);
 
 
     return (<>
@@ -482,7 +576,11 @@ export default function AdminUsers() {
                     <tbody>
                         {list.map(account => (
                             <tr key={account.accountId}>
-                                <td>{account.accountId}</td>
+                                <td>
+                                    <Link to={`/admin/detail/${account.accountId}`}>
+                                    {account.accountId}
+                                    </Link>
+                                </td>
                                 <td>{account.accountNickname}</td>
                             </tr>
                         ))}
@@ -491,17 +589,7 @@ export default function AdminUsers() {
             </Col>
         </Row>
 
-        {/* 더보기 */}
-        {last === false && (
-            <Row className="mt-4">
-                <Col>
-                    <Button variant="info" size="lg"
-                        className="w-100" onClick={sendMore}>
-                        <FaPlus className="me-2"/>
-                        <span>더보기</span>
-                    </Button>
-                </Col>
-            </Row>
-        )}
+        
     </>)
 }
+

@@ -41,11 +41,20 @@ export default function AccountLogin() {
             // setLogin(data);
             // const { data } = await axios.post("/service/auth/login", account);
             const { data } = await authClient.post("/login", account);
-            // console.log(data);
+            console.log(data.needUpdate);
             loginAction(data);
+            if(data.needUpdate == true){
+                navigate("/account/needupdate");
+                return;
+            }
+            
             navigate("/");
         }
         catch (e) {
+            if (e.response?.status === 403) {
+                navigate("/account/block");
+                return;
+            }
             await Swal.fire("정보가 일치하지 않습니다.");
         }
     }, [account]);

@@ -34,7 +34,12 @@ import TestMain from "@components/session/TestMain";
 import Private from "@guard/Private";
 
 import AdminUsers from "@components/admin/AdminUsers";
+import AdminUsersScroll from "@components/admin/AdminUsersScroll";
+
 import Admin from "@guard/Admin";
+import AdminDetail from "@components/admin/AdminDetail";
+import AccountBlock from "@components/account/AccountBlock";
+import AccountNeedUpdate from "@components/account/AccountNeedUpdate";
 
 
 export default function Body(){
@@ -69,9 +74,13 @@ export default function Body(){
             <Route path="/account/mypage" element={<Private><MyPage/></Private>}></Route>
             <Route path="/account/password" element={<Private><AccountPassword/></Private>}></Route>
             <Route path="/account/change" element={<Private><AccountChange/></Private>}></Route>
+            <Route path="/account/block" element={<AccountBlock/>}></Route>
+            <Route path="/account/needupdate" element={<AccountNeedUpdate/>}></Route>
             
             
             <Route path="/admin/users" element={<Admin><AdminUsers/></Admin>}></Route>
+            <Route path="/admin/users2" element={<Admin><AdminUsersScroll/></Admin>}></Route>
+            <Route path="/admin/detail/:accountId" element={<Admin><AdminDetail/></Admin>}></Route>
             
             
             <Route path="/session/test" element={<TestMain/>}></Route>

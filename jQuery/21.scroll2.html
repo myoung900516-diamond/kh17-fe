@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 수업</title>
+    <link rel="icon" href="/kh.png" type="image/jpeg">
+    <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+    <style>
+        div{ box-shadow: 0 0 0 1px #cccccc;}
+        body{
+            height : 5000px;
+        }
+    </style>
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        $(function(){
+            //scroll, resize 등은 window에 설정해야함
+            $(window).on("scroll", function(){
+                const {scrollY } = window;
+                const {scrollTop, scrollHeight, clientHeight} = window.document.documentElement;
+                //콘텐츠가 창보자 작은 경우(스크롤이 없는 경우) 처리
+                if(scrollHeight <= clientHeight) return 0;
+                //현재 스크롤의 위치 확인
+                const current = scrollY || scrollTop;
+                //스크롤 가능한 최대 위치 계산 
+                const max = scrollHeight - clientHeight;
+                
+                console.log("scrollY: "+ scrollY);
+                console.log("scrollHeight: "+scrollHeight);
+                console.log("clientHeight: "+clientHeight);
+                console.log("max: "+max);
+                console.log(getScrollPercent());
+
+            });
+            //스크롤의 높이를 %로 반환하는 함수
+            function getScrollPercent(){
+                //필요한 데이터들을 추출
+                const {scrollY } = window;
+                const {scrollTop, scrollHeight, clientHeight} = window.document.documentElement;
+                //콘텐츠가 창보자 작은 경우(스크롤이 없는 경우) 처리
+                if(scrollHeight <= clientHeight) return 0;
+                //현재 스크롤의 위치 확인
+                const current = scrollY || scrollTop;
+                //스크롤 가능한 최대 위치 계산 
+                const max = scrollHeight - clientHeight;
+                //부동소수점 방식에서 발생하는 오차를 제거 
+                if(max - current < 1) return 100; 
+                //비율을 계산해서 반환
+                return current * 100/max;
+
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>제목</h1>
+        </div>
+
+
+    </div>
+</body>
+</html>
