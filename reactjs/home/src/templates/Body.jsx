@@ -22,6 +22,7 @@ import LectureEdit from "@components/lecture/LectureEdit";
 
 import NotFound from "@error/NotFound";
 
+import AccountBlock from "@error/AccountBlock";
 import AccountJoin from "@components/account/AccountJoin";
 import AccountJoinSuccess from "@components/account/AccountJoinSuccess";
 import AccountJoinFail from "@components/account/AccountJoinFail";
@@ -29,17 +30,15 @@ import AccountLogin from "@components/account/AccountLogin";
 import AccountPassword from "@components/account/AccountPassword";
 import AccountChange from "@components/account/AccountChange";
 import MyPage from "@components/account/MyPage";
+import AccountNeedUpdate from "@components/account/AccountNeedUpdate";
 
 import TestMain from "@components/session/TestMain";
 import Private from "@guard/Private";
 
 import AdminUsers from "@components/admin/AdminUsers";
 import AdminUsersScroll from "@components/admin/AdminUsersScroll";
-
 import Admin from "@guard/Admin";
 import AdminDetail from "@components/admin/AdminDetail";
-import AccountBlock from "@components/account/AccountBlock";
-import AccountNeedUpdate from "@components/account/AccountNeedUpdate";
 
 
 export default function Body(){
@@ -74,7 +73,6 @@ export default function Body(){
             <Route path="/account/mypage" element={<Private><MyPage/></Private>}></Route>
             <Route path="/account/password" element={<Private><AccountPassword/></Private>}></Route>
             <Route path="/account/change" element={<Private><AccountChange/></Private>}></Route>
-            <Route path="/account/block" element={<AccountBlock/>}></Route>
             <Route path="/account/needupdate" element={<AccountNeedUpdate/>}></Route>
             
             
@@ -82,6 +80,7 @@ export default function Body(){
             <Route path="/admin/users2" element={<Admin><AdminUsersScroll/></Admin>}></Route>
             <Route path="/admin/detail/:accountId" element={<Admin><AdminDetail/></Admin>}></Route>
             
+            <Route path="/account/block" element={<AccountBlock/>}></Route>
             
             <Route path="/session/test" element={<TestMain/>}></Route>
             

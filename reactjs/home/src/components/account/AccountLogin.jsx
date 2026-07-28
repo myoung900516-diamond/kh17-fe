@@ -41,9 +41,15 @@ export default function AccountLogin() {
             // setLogin(data);
             // const { data } = await axios.post("/service/auth/login", account);
             const { data } = await authClient.post("/login", account);
-            console.log(data.needUpdate);
-            loginAction(data);
-            if(data.needUpdate == true){
+            // console.log(data.needUpdate);
+            // loginAction(data);
+            //data에서 needUpdate와 나머지를 뽑아내서 나눠서 사용(구조분해할당)
+            const {needUpdate, ...userData} = data;
+            loginAction(userdata);
+
+            //로그인 성공시에도 경우가 나눠진다
+            //-data에 needUpdate항목의 값에 따라 이동하는 페이지가 달라진다.
+            if(needUpdate == true){
                 navigate("/account/needupdate");
                 return;
             }
@@ -51,11 +57,31 @@ export default function AccountLogin() {
             navigate("/");
         }
         catch (e) {
-            if (e.response?.status === 403) {
+            //로그인 실패가 경우가 나눠진다
+            //-404:정보 불일치
+            //-403:차단된 회원
+            //console.log(Object.keys(e));
+            //console.log(e.response);
+            //console.log(e.status);
+            //console.log(typeof e.status);//자료형 확인
+
+            // if (e.response?.status === 403) {
+            //     navigate("/account/block");
+            //     return;
+            // }
+            // await Swal.fire("정보가 일치하지 않습니다.");
+
+            if(e.status === 403){
                 navigate("/account/block");
                 return;
             }
-            await Swal.fire("정보가 일치하지 않습니다.");
+            else if(e.status === 404){
+                await Swal.fire("정보가 일치하지 않습니다.");
+            }
+            else{
+                await Swal.fire("일시적인 서버 오류입니다. \n잠시후 시도해 주세요.");
+
+            }
         }
     }, [account]);
     return (<>

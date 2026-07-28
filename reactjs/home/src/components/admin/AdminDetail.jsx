@@ -56,7 +56,7 @@ export default function AdminDetail() {
         const { data } = 
         await apiClient.patch(`/admin/block/${accountId}`);
         // await apiClient.get(`/admin/${accountId}`);
-        console.log(data);
+        // console.log(data);
         setAccount(data);
 
 
@@ -185,7 +185,7 @@ export default function AdminDetail() {
         <Row className="mt-5">
             <Col className="text-center">
                 <Button type="button" onClick={tempPassword}
-                    variant="warning" className="w-md-auto">
+                    variant="warning" className="w-100 w-md-auto mb-2 mb-md-auto me-md-2">
                     {sending === false && (<>
                     <FaKey />
                     <span>임시비밀번호발급</span>
@@ -197,7 +197,7 @@ export default function AdminDetail() {
                 </Button>
                 {/* 차단/해제 버튼 : account.accountBlock 상태에 따라 달라짐 */}
                 <Button type="button" onClick={changeBlock}
-                    variant="danger" className="w-md-auto" >
+                    variant="danger" className="w-100 w-md-auto mb-2 mb-md-auto me-md-2" >
                     {account?.accountBlock === "Y" ? (<>
                         {/* <FaUnLock /> */}
                         <span className="mx-2">차단 해제하기</span>
@@ -207,7 +207,7 @@ export default function AdminDetail() {
                     </>)}
                 </Button>
                 <Button as={Link} to="/admin/search" variant="primary"
-                    className="w-md-auto" >
+                    className="w-100 w-md-auto mb-2 mb-md-auto me-md-2" >
                     <FaMagnifyingGlass />
                     <span>검색페이지로</span>
                 </Button>
