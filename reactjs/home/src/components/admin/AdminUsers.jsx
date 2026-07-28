@@ -14,6 +14,7 @@ import { Button, Col, Form, Row, Table } from "react-bootstrap";
 import { FaEraser, FaPlus, FaSearchengin } from "react-icons/fa6";
 import { TbTilde } from "react-icons/tb";
 import { apiClient } from "@utils/reaxios";
+import { Link } from "react-router-dom";
 
 //등급을 미리 정의(갱신의 여지가 없고 화면의 변화와 관계가 없으므로 바깥에 만듦)
 //등급이 추가되거나 변하지 않을게 확실한 경우
@@ -134,7 +135,7 @@ export default function AdminUsers() {
         // const { data } = await apiClient.post("/account/search", copy);
 
 
-        const { data } = await apiClient.post("/account/search", {
+        const { data } = await apiClient.post("/admin/search", {
             ...account,
             //객체에 데이터를 추가할 때 이름을 적지 않으면 해당 변수명과 동일하게 생김
             size,
@@ -150,7 +151,7 @@ export default function AdminUsers() {
     
     const sendMore = useCallback(async e => {
 
-        const { data } = await apiClient.post("/account/search", {
+        const { data } = await apiClient.post("/admin/search", {
             ...account,
             //객체에 데이터를 추가할 때 이름을 적지 않으면 해당 변수명과 동일하게 생김
             size,
@@ -482,7 +483,11 @@ export default function AdminUsers() {
                     <tbody>
                         {list.map(account => (
                             <tr key={account.accountId}>
-                                <td>{account.accountId}</td>
+                                <td>
+                                    <Link to={`/admin/detail/${account.accountId}`}>
+                                    {account.accountId}
+                                    </Link>
+                                </td>
                                 <td>{account.accountNickname}</td>
                             </tr>
                         ))}

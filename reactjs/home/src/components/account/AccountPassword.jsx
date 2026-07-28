@@ -1,9 +1,10 @@
 import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import { apiClient } from "@utils/reaxios";
 import { Link, useNavigate } from "react-router-dom";
 import { FaAsterisk, FaEye, FaEyeSlash, FaLock } from "react-icons/fa6";
+import { toast } from "react-toastify";
 
 export default function accountPassword() {
     // const { accountId, accountNickname, accountLevel } = useAtomValue(loginUserState);
@@ -82,7 +83,7 @@ export default function accountPassword() {
     const [result, setResult] = useState(null); //서버에서 받은 메세지 
 
     const changeStringValue = useCallback(e=>{
-        const{name : value} = e.target;
+        const{name , value} = e.target;
         setAccount(prev=>({
             ...prev,
             [ name ] : value 
@@ -117,9 +118,9 @@ export default function accountPassword() {
         if(result === null) return;//검사전 pass
         if(result.result !== true) return;//변경 실패 pass
 
-        Toast.success("비밀번호가 변경되었습니다.");
+        toast.success("비밀번호가 변경되었습니다.");
         navigate("/account/mypage");
-    }, [result]);
+    }, [result, navigate]);
     return (<>
         <Jumbotron title="비밀번호변경하기" content="현재 비밀번호와 변경하실 비밀번호를 입력하세요."/>
         

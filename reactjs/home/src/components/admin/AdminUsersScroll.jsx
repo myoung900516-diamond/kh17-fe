@@ -145,7 +145,7 @@ export default function AdminUsersScroll() {
         // const { data } = await apiClient.post("/account/search", copy);
 
 
-        const { data } = await apiClient.post("/account/search", {
+        const { data } = await apiClient.post("/admin/search", {
             ...account,
             //객체에 데이터를 추가할 때 이름을 적지 않으면 해당 변수명과 동일하게 생김
             size,
@@ -167,7 +167,7 @@ export default function AdminUsersScroll() {
         loading.current = true;//로딩시작했다. 
         console.log("더보기가 실행되었습니다");
 
-        const { data } = await apiClient.post("/account/search", {
+        const { data } = await apiClient.post("/admin/search", {
             ...account,
             //객체에 데이터를 추가할 때 이름을 적지 않으면 해당 변수명과 동일하게 생김
             size,
