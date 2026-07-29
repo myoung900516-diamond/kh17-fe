@@ -150,8 +150,8 @@ export default function AdminSaleAdd() {
             saleStock: "",
 
         });
-        setThumbnail (null);
-
+        clearThumbnail();
+        clearDetailImages();
 
     }, [sale, discount, thumbnail, detailImages]);
 
