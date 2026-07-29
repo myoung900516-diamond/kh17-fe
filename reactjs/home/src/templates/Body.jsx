@@ -39,6 +39,7 @@ import AdminUsers from "@components/admin/AdminUsers";
 import AdminUsersScroll from "@components/admin/AdminUsersScroll";
 import Admin from "@guard/Admin";
 import AdminDetail from "@components/admin/AdminDetail";
+import AdminSaleAdd from "@components/admin/sale/AdminSaleAdd";
 
 
 export default function Body(){
@@ -79,6 +80,7 @@ export default function Body(){
             <Route path="/admin/users" element={<Admin><AdminUsers/></Admin>}></Route>
             <Route path="/admin/users2" element={<Admin><AdminUsersScroll/></Admin>}></Route>
             <Route path="/admin/detail/:accountId" element={<Admin><AdminDetail/></Admin>}></Route>
+            <Route path="/admin/saleadd" element={<Admin><AdminSaleAdd/></Admin>}></Route>
             
             <Route path="/account/block" element={<AccountBlock/>}></Route>
             
