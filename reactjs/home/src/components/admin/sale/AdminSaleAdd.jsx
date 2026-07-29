@@ -128,7 +128,9 @@ export default function AdminSaleAdd() {
 
         //같은 종류의 데이터가 여러개의 경우 같은 이름으로 계속 첨부(배열을 한번에 첨부하는게 아님)
         //→spring에서는 list로 받음
-        detailImages.forEach(img=>{
+        //FileList는 상황에 따라 배열 전용 명령이 없을 수 있으므로 정상적인 배열로 변환하여 쓰심시오
+        //-> Array.from(FileList)
+        Array.from(detailImages).forEach(img=>{
             form.append("detailImages", img);
         });
         
