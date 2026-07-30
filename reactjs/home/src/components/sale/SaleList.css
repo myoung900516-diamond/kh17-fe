@@ -1,0 +1,32 @@
+/* 기준을 컨테이너로 변경, 스크린이 아니라 컨테이너에 반응하는 반응형 크기조절 */
+
+.item-container{
+    container-type : inline-size;
+    container-name : item;
+
+    display: flex;
+    flex-wrap : wrap;
+}
+
+.item-container > .item{
+    width:100%;
+}
+
+/* 컨테이너별 크기 지정 breakpoint를 지정함 */
+
+
+@container item (min-width:576px){
+    .item-container > .item{
+        width: 50%;
+    }
+}
+@container item (min-width:768px){
+    .item-container > .item{
+        width: 33.3333%;
+    }
+}
+@container item (min-width:992px){
+    .item-container > .item{
+        width: 25%;
+    }
+}

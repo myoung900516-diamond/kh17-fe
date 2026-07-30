@@ -78,6 +78,7 @@ export default function Menu() {
                 <NavDropdown.Item as={Link} to="/book/spa">도서정보(SPA)</NavDropdown.Item>
               </NavDropdown>
                 <Nav.Link as={Link} to="/session/test">세션테스트</Nav.Link>
+                <Nav.Link as={Link} to="/sale/list">store</Nav.Link>
             </Nav>
             <Nav>
               {isLogin === true && (<>

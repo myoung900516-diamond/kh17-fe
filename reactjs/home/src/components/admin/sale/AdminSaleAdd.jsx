@@ -118,7 +118,7 @@ export default function AdminSaleAdd() {
         // form.append("thumbnail", thumbnail);
 
 
-        //[2] 2개의 파트를 전송함 
+        //[2] 각각의 파트를 전송함 
         const form = new FormData();
         form.append("sale", new Blob(
             [JSON.stringify(copy)],

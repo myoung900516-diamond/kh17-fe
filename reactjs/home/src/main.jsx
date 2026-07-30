@@ -51,4 +51,5 @@ createRoot(document.getElementById('root')).render(
     </Provider>
   </BrowserRouter>
   // </StrictMode>
+  //StrictMode는 개발자 모드를 원활히 하기 위해 두번 실행시킨 근데 비동기통신입장에서는 안좋음
 )
