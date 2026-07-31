@@ -45,7 +45,7 @@ export default function AccountLogin() {
             // loginAction(data);
             //data에서 needUpdate와 나머지를 뽑아내서 나눠서 사용(구조분해할당)
             const {needUpdate, ...userData} = data;
-            loginAction(userdata);
+            loginAction(userData);
 
             //로그인 성공시에도 경우가 나눠진다
             //-data에 needUpdate항목의 값에 따라 이동하는 페이지가 달라진다.
@@ -57,6 +57,7 @@ export default function AccountLogin() {
             navigate("/");
         }
         catch (e) {
+            // console.log(e);
             //로그인 실패가 경우가 나눠진다
             //-404:정보 불일치
             //-403:차단된 회원

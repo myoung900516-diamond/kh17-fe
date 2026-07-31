@@ -21,17 +21,17 @@ export default function Menu() {
   const logoutAction = useSetAtom(logoutActionState);
 
   //서버에 로그아웃 요청 및 jotai 저장소 초기화 요청을 수행하는 함수
-  const logout = useCallback(async ()=>{
-    try{
+  const logout = useCallback(async () => {
+    try {
       // await axios.delete("/service/auth/logout");//쿠키 삭제 요청
       await authClient.delete("/logout");//쿠키 삭제 요청
     }
-    catch(e){}
-    finally{
+    catch (e) { }
+    finally {
       logoutAction();//에러여부와 관계없이 화면상의 데이터는 삭제
     }
   }, []);
-//토큰 갱신 요청을 보내는 연습용 함수
+  //토큰 갱신 요청을 보내는 연습용 함수
   // const refresh = useCallback(async()=>{
   //   try{
   //     // const {data}= await axios.post("/service/auth/refresh");
@@ -77,32 +77,35 @@ export default function Menu() {
                 <NavDropdown.Item as={Link} to="/book/list">도서정보</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/book/spa">도서정보(SPA)</NavDropdown.Item>
               </NavDropdown>
-                <Nav.Link as={Link} to="/session/test">세션테스트</Nav.Link>
-                <Nav.Link as={Link} to="/sale/list">store</Nav.Link>
+              <Nav.Link as={Link} to="/session/test">세션테스트</Nav.Link>
+              <Nav.Link as={Link} to="/sale/list">store</Nav.Link>
+              <NavDropdown title="minigame" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/minigame/sudoku">스토쿠</NavDropdown.Item>
+              </NavDropdown>
             </Nav>
             <Nav>
               {isLogin === true && (<>
-              {isAdmin === true && (<>
-              
-              <NavDropdown title="관리메뉴" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/admin/users">회원관리</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/admin/users2">회원관리(스크롤)</NavDropdown.Item>
-                <NavDropdown.Divider/>
-              <NavDropdown.Item as={Link} to="/admin/saleadd">상품등록</NavDropdown.Item>
-              </NavDropdown>
-              </>)}
-              {isAdmin === false && (<>
-              <Nav.Link as={Link} to="/account/mypage">내정보</Nav.Link>
-              
-              </>)}
-              <Nav.Link onClick={logout}>로그아웃</Nav.Link>
+                {isAdmin === true && (<>
+
+                  <NavDropdown title="관리메뉴" id="basic-nav-dropdown">
+                    <NavDropdown.Item as={Link} to="/admin/users">회원관리</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/admin/users2">회원관리(스크롤)</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item as={Link} to="/admin/saleadd">상품등록</NavDropdown.Item>
+                  </NavDropdown>
+                </>)}
+                {isAdmin === false && (<>
+                  <Nav.Link as={Link} to="/account/mypage">내정보</Nav.Link>
+
+                </>)}
+                <Nav.Link onClick={logout}>로그아웃</Nav.Link>
               </>)}
               {isLogin !== true && (<>
-              
-              <Nav.Link as={Link} to="/account/join">sign up</Nav.Link>
-              <Nav.Link as={Link} to="/account/login">sign in</Nav.Link>
+
+                <Nav.Link as={Link} to="/account/join">sign up</Nav.Link>
+                <Nav.Link as={Link} to="/account/login">sign in</Nav.Link>
               </>)}
-                {/* 연습용 Refresh 버튼(향후 삭제가 필요) */}
+              {/* 연습용 Refresh 버튼(향후 삭제가 필요) */}
               {/* <Nav.Link onClick={refresh}>refresh</Nav.Link> */}
             </Nav>
           </Navbar.Collapse>

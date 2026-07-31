@@ -1,7 +1,7 @@
 import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { FaPlug, FaPlus, FaXmark } from "react-icons/fa6";
+import { FaPlus, FaXmark } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { apiClient } from "@utils/reaxios";
 import Editor from "react-simple-wysiwyg";

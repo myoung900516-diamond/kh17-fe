@@ -40,9 +40,12 @@ import AdminUsersScroll from "@components/admin/AdminUsersScroll";
 import Admin from "@guard/Admin";
 import AdminDetail from "@components/admin/AdminDetail";
 import AdminSaleAdd from "@components/admin/sale/AdminSaleAdd";
+import AdminSaleEdit from "@components/admin/sale/AdminSaleEdit";
 
 import SaleList from "@components/sale/SaleList";
 import SaleDetail from "@components/sale/SaleDetail";
+
+import Sudoku from "@components/minigame/Sudoku";
 
 
 export default function Body(){
@@ -84,9 +87,12 @@ export default function Body(){
             <Route path="/admin/users2" element={<Admin><AdminUsersScroll/></Admin>}></Route>
             <Route path="/admin/detail/:accountId" element={<Admin><AdminDetail/></Admin>}></Route>
             <Route path="/admin/saleadd" element={<Admin><AdminSaleAdd/></Admin>}></Route>
+            <Route path="/admin/sale/edit/:saleNo" element={<Admin><AdminSaleEdit/></Admin>}></Route>
             
             <Route path="/sale/list" element={<SaleList/>}></Route>
             <Route path="/sale/detail/:saleNo" element={<SaleDetail/>}></Route>
+            
+            <Route path="/minigame/sudoku" element={<Sudoku/>}></Route>
             
             <Route path="/account/block" element={<AccountBlock/>}></Route>
             

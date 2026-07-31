@@ -2,24 +2,31 @@ import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { apiClient } from "@utils/reaxios";
 import Col from "react-bootstrap/esm/Col";
 import Form from "react-bootstrap/esm/Form";
 import NoImage from "@assets/images/no-image.png";
 import Row from "react-bootstrap/esm/Row";
 import Badge from "react-bootstrap/esm/Badge";
-import { FaBagShopping } from "react-icons/fa6";
+import { FaBagShopping, FaList, FaMinus, FaSquarePen, FaTrash } from "react-icons/fa6";
 import { purifyHtml } from "@utils/purify";
+import { useAtomValue } from "jotai";
+import { isAdminState } from "@utils/storage";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 
 export default function SaleDetail() {
+    //관리자 권한 확인 
+    const isAdmin = useAtomValue(isAdminState);
 
     const { saleNo } = useParams();
 
     const [sale, setSale] = useState(null);
     const [thumbnail, setThumbnail] = useState(null);
     const [detailImages, setDetailImages] = useState([]);
+
 
     const loadData = useCallback(async () => {
         const { data } = await apiClient.get(`/sale/${saleNo}`);
@@ -35,6 +42,7 @@ export default function SaleDetail() {
 
 
 
+    const navigate = useNavigate();
 
 
     //썸네일 주소 계산
@@ -43,10 +51,29 @@ export default function SaleDetail() {
         return `${import.meta.env.VITE_SERVER_URL}/api/attach/${thumbnail.attachNo}`;
     }, [thumbnail]);
 
+    const deleteByAdmin = useCallback(async () => {
+        const result = await Swal.fire({
+            title: `정말 삭제하시겠습니까?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "실행하기",
+            confirmButtonColor: "#d63031",
+            cancelButtonText: "취소하기",
+            cancelButtonColor: "#b2bec3"
+        });
+        if (result.isConfirmed === false) return;
+
+        const { data } = await apiClient.delete(`/sale/${saleNo}`);
+        console.log(data);
+        toast.success("삭제 완료");
+        navigate("/sale/list");
+    }, []);
 
     if (sale === null) {
         return <h1>loading...</h1>
     }
+
+
 
     return (<>
         <Jumbotron title="상품상세정보" content="상품의 정보를 볼 수 있습니다." />
@@ -84,7 +111,7 @@ export default function SaleDetail() {
                 </div>
                 <div className="mt-2 d-flex">
                     <Form.Control type="number" className="d-inline-block"
-                        style={{ width: 80 }} value={1} />
+                        style={{ width: 80 }} value={1} readOnly />
                     <Button variant="success" className="ms-2">
                         구매
                     </Button>
@@ -121,17 +148,46 @@ export default function SaleDetail() {
                 <div dangerouslySetInnerHTML={
                     // { __html: sale.saleContent }
                     {
-                        __html:purifyHtml(sale.saleContent)
+                        __html: purifyHtml(sale.saleContent)
                     }
                 }>
                 </div>
             </Col>
         </Row>
-                {/* 
+        <Row>
+            <Col className="text-end">
+                <Button variant="info" className="w-md-auto">
+                    <FaList />
+                    <span className="ms-2">목록으로</span>
+                </Button>
+            </Col>
+        </Row>
+        {/* 
                     관리자만 볼 수 있는 삭제버튼 
                 */}
+        {isAdmin === true && (
 
-                
+
+            <Row className="mt-5">
+                <Col className="text-end">
+                    <Button variant="info" size="lg" as={Link} to={"/sale/list"}>
+                        <FaList />
+                        <span className="ms-2">목록으로</span>
+                    </Button>
+                    <Button variant="danger" size="lg" className="ms-2" onClick={deleteByAdmin}>
+                        <FaTrash />
+                        <span className="ms-2">삭제하기</span>
+                    </Button>
+                    {/* 수정링크 */}
+                    <Button variant="warning" size="lg"
+                        as={Link} to={`/admin/sale/edit/${saleNo}`}
+                        className="ms-2">
+                        <FaSquarePen />
+                        <span className="ms-2">상품 정보 수정</span>
+                    </Button>
+                </Col>
+            </Row>
+        )}
 
     </>)
 }
