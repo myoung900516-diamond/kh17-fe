@@ -237,6 +237,15 @@ export default function AdminSaleEdit() {
         return beforeDetailImages.reduce((acc, cur)=>acc && cur.choice, true);
     }, [beforeDetailImages]);
 
+    const deleteCheckedDetailImages = useCallback(()=>{
+        const detailNumbers = beforeDetailImages.filter(
+            attach => attach.choice === true //체크된 항목만 걸러라
+        ).map(
+            attach => attach.attachNo //전체 정보말고 번호만 추려라
+        );
+        
+    }, [beforeDetailImages]);
+
     //대기화면
     if (sale === null) {
         return <h1>loading...</h1>
@@ -427,6 +436,9 @@ export default function AdminSaleEdit() {
                     checked={isAllChecked}
                     onChange={checkAllDetailImages}
                 ></Form.Check>
+                <Button variant="danger" onClick={deleteCheckedDetailImages}>
+                    체크된 항목 삭제
+                </Button>
 
                 {/* 기존이미지 */}
                 <ListGroup>
