@@ -244,6 +244,9 @@ export default function AdminSaleEdit() {
             attach => attach.attachNo //전체 정보말고 번호만 추려라
         );
         
+        const {data} = await apiClient.post(`/sale/deleteDetailImages/${saleNo}`, detailNumbers);
+        //화면 갱신
+        
     }, [beforeDetailImages]);
 
     //대기화면
