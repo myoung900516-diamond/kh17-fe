@@ -138,8 +138,8 @@ export default function SaleDetail() {
         )}
         <Row className="mt-5">
             <Col>
-                {/* 추가 상세정보 출력 */}
-                {/* 모던 웹에서는 HTML 렌더링을 극도로 경계하며 이는 위험한 보안 문제가 발생할 수 있음 */}
+                {/* 추가 상세을정보 출력 */}
+                {/* 모던 웹에서는 HTML 렌더링 극도로 경계하며 이는 위험한 보안 문제가 발생할 수 있음 */}
                 {/* xss : cross site script 공격 */}
 
                 {/* 대안
