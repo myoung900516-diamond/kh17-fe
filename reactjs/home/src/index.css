@@ -3,7 +3,7 @@
 .w-md-25,
 .w-md-auto
 {
-  width: 100;
+  width: 100%;
 }
 
 @media screen and (min-width:768px) {
@@ -15,5 +15,24 @@
   }
   .w-md-auto{
     width : auto;
+  }
+}
+/* 반응형 폭 스타일 */
+.h-md-50,
+.h-md-25,
+.h-md-auto
+{
+  height: 50%;
+}
+
+@media screen and (min-height:900px) {
+  .h-md-50{
+    height: 50%;
+  }
+  .h-md-25{
+    height: 25%;
+  }
+  .h-md-auto{
+    height : auto;
   }
 }

@@ -237,7 +237,7 @@ export default function AdminSaleEdit() {
         return beforeDetailImages.reduce((acc, cur)=>acc && cur.choice, true);
     }, [beforeDetailImages]);
 
-    const deleteCheckedDetailImages = useCallback(()=>{
+    const deleteCheckedDetailImages = useCallback(async()=>{
         const detailNumbers = beforeDetailImages.filter(
             attach => attach.choice === true //체크된 항목만 걸러라
         ).map(

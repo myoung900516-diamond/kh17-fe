@@ -25,9 +25,13 @@ export default function App() {
       <Row className="my-4" style={
         {
           minHeight: 450
+          // minHeight : "30vh"
         }
       }>
-        <Col sm={{span:10, offset:1}} md={{span:8, offset:2}}>
+        <Col 
+        sm={{span:10, offset:1}} md={{span:8, offset:2}}
+        
+        >
           <Body />
         </Col>
       </Row>
