@@ -46,6 +46,7 @@ import SaleList from "@components/sale/SaleList";
 import SaleDetail from "@components/sale/SaleDetail";
 
 import Sudoku from "@components/minigame/Sudoku";
+import SudokuCopy from "@components/minigame/SudokuCopy";
 
 
 export default function Body(){
@@ -93,6 +94,7 @@ export default function Body(){
             <Route path="/sale/detail/:saleNo" element={<SaleDetail/>}></Route>
             
             <Route path="/minigame/sudoku" element={<Sudoku/>}></Route>
+            <Route path="/minigame/sudokuCopy" element={<SudokuCopy/>}></Route>
             
             <Route path="/account/block" element={<AccountBlock/>}></Route>
             
