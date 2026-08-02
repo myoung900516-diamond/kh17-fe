@@ -141,10 +141,36 @@ export default function Sudoku() {
     // }, []);
 
     // 1. 81개의 0으로 채워진 1차원 배열로 상태 관리 (0번 ~ 80번 방)
-    const [target, setTarget] = useState(Array(81).fill(0));
+    const [target, setTarget] = useState({});
+    // console.log("original:", target)
+
+    
 
     // 2. 1차원 배열 전용 규칙 검사 함수
-    const isValid = (currentTarget, index, num) => {
+    // const isValid = (currentTarget, index, num) => {
+    //     const row = Math.floor(index / 9); // 번호를 가로줄(0~8)로 환산
+    //     const col = index % 9;             // 번호를 세로줄(0~8)로 환산
+
+    //     for (let i = 0; i < 9; i++) {
+    //         // 가로줄 전체 검사 (row * 9는 해당 가로줄의 시작 인덱스)
+    //         if (currentTarget[row * 9 + i] === num) return false;
+    //         // 세로줄 전체 검사 (i * 9 + col은 세로로 9칸씩 건너뛰며 검사)
+    //         if (currentTarget[i * 9 + col] === num) return false;
+    //     }
+
+    //     // 3x3 작은 박스 검사
+    //     const startRow = Math.floor(row / 3) * 3;
+    //     const startCol = Math.floor(col / 3) * 3;
+    //     for (let i = 0; i < 3; i++) {
+    //         for (let j = 0; j < 3; j++) {
+    //             const checkIndex = (startRow + i) * 9 + (startCol + j);
+    //             if (currentTarget[checkIndex] === num) return false;
+    //         }
+    //     }
+    //     return true;
+    // };
+
+    const isValid = useCallback((currentTarget, index, num) => {
         const row = Math.floor(index / 9); // 번호를 가로줄(0~8)로 환산
         const col = index % 9;             // 번호를 세로줄(0~8)로 환산
 
@@ -165,7 +191,7 @@ export default function Sudoku() {
             }
         }
         return true;
-    };
+    }, []);
 
     // 3. 1~9 무작위 셔플 함수 (피셔-예이츠)
     const getShuffledNumbers = () => {
@@ -174,8 +200,11 @@ export default function Sudoku() {
             const j = Math.floor(Math.random() * (i + 1));
             [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
         }
+        // console.log(numbers.length);
         return numbers;
     };
+
+
 
     // 4. 1차원 번호(index)를 1씩 증가시키며 채우는 백트래킹 함수
     const fillTarget = (currentTarget, index = 0) => {
@@ -189,23 +218,50 @@ export default function Sudoku() {
 
                 // 다음 번호 칸(index + 1)으로 바톤 터치
                 if (fillTarget(currentTarget, index + 1)) return true;
-
-                currentTarget[index] = 0; // 실패 시 다시 0으로 지우기 (백트래킹)
+                else {
+                    currentTarget[index] = 0; // 실패 시 다시 0으로 지우기 (백트래킹)
+                }
             }
         }
         return false; // 1~9 다 찔러봐도 안 되면 후퇴
     };
 
-    // 5. 버튼 클릭 핸들러
-    const handleGenerate = () => {
-        const newTarget = Array(81).fill(0); // 새 빈 판 생성
-        fillTarget(newTarget);
 
 
-        setTarget(newTarget); // 리액트 화면 업데이트
+    // // 5. 버튼 클릭 핸들러
+    // const handleGenerate = () => {
+    //     const newTarget = Array(81).fill(0); // 새 빈 판 생성
+    //     fillTarget(newTarget);
 
-        
-    };
+    //     // console.log(newTarget[0]);
+    //     const blankPosition = Array.from({ length: 51 }, () => Math.floor(Math.random() * 81) + 1);
+
+    //     setTarget(newTarget);
+    //     // 리액트 화면 업데이트
+    //     for(i=0;i<blankPosition.length-1;i++){
+    //     setTarget(prev=>({
+    //         ...prev,
+    //             [`no${position[i]}`]: "",
+    //         })); 
+    //     }
+
+
+    // };
+
+    // const handleGenerate = () => {
+    //     // 1. 메모리 상에 81개짜리 빈 배열을 만들고 정답을 가득 채웁니다.
+    //     const newTarget = Array(81).fill(0);
+    //     fillTarget(newTarget);
+
+    //     const blankPosition = Array.from({ length: 51 }, () => Math.floor(Math.random() * 81) + 1);
+    //     console.log(blankPosition);
+
+    //     // if(blankPosition의 값과 newTarget의 index+1 값이 같으면 )newTarget(index+1) == ""해라. 
+
+    //     // 5. 모든 조리(정답 채우기 + 51칸 비우기)가 끝난 완성본 객체를 setTarget에 딱 한 번만 넣어줍니다.
+    //     setTarget(newTarget);
+    // };
+
 
 
     // const handleGenerate = () => {
@@ -236,6 +292,48 @@ export default function Sudoku() {
     //     // 5. 완성이 끝난 최종 객체를 setTarget에 한 번에 집어넣어 화면을 업데이트합니다.
     //     setTarget(nextTargetObj);
     // };
+
+    const handleGenerate = () => {
+        // 1. 메모리 상에 81개짜리 빈 배열을 만들고 정답을 가득 채웁니다.
+        const newTarget = Array(81).fill(0);
+        fillTarget(newTarget);
+        // console.log("정답판 확인:", newTarget);
+
+        // 2. 1부터 81까지의 랜덤한 칸 번호 51개를 뽑습니다.
+        const blankPosition = Array.from({ length: 51 }, () => Math.floor(Math.random() * 81) + 1);
+        // console.log(blankPosition);
+
+        // 3. 리액트 화면에 전달할 최종 객체 상자를 만듭니다.
+        const result = {};
+
+        // 4. [★핵심] 81개의 칸을 순회하며 질문자님의 조건문을 검사합니다!
+        for (let i = 0; i < 81; i++) {
+            const boxNo = i + 1; // 1번 칸부터 81번 칸까지의 번호
+
+            // 💡 주석으로 쓰신 조건문 자바스크립트 번역:
+            // "만약 blankPosition 배열 안에 현재 칸 번호(currentBoxNo)가 포함되어 있다면?"
+            if (blankPosition.includes(boxNo)) {
+                // 일치하면 해당 이름표의 값을 공백("")으로 만듭니다.
+                result[boxNo] = 0;
+            } else {
+                // 일치하지 않으면 원래 정답 숫자를 그대로 넣어줍니다.
+                result[boxNo] = newTarget[i];
+            }
+        }
+
+        // console.log("result :", result);
+
+        // 5. 모든 조리가 끝난 완성본 객체를 setTarget에 딱 한 번만 넣어줍니다.
+        setTarget(result);
+
+        // console.log("target", target);
+    };
+    // // 📹 target 값이 바뀔 때마다 자동으로 찰칵 찍어주는 감시 카메라
+    // useEffect(() => {
+    //     console.log("📸 리액트가 실제로 업데이트한 최종 target:", target);
+    //     // console.log("target[0]", target[0]);
+    //     // console.log("target.no1", target.no1);
+    // }, [target]); // target이 변할 때만 이 안의 코드가 실행됩니다.
 
 
     return (<>
@@ -603,8 +701,8 @@ export default function Sudoku() {
 
             </Row>
         </div>
-        <button onClick={handleGenerate}>
-            새로운 정답판 만들기
+        <button onClick={handleGenerate} className="mt-5">
+            새로운 스도쿠 만들기
         </button>
 
         {/* <div className="d-flex flex-wrap justify-content-center" style={{ width: 375, height: 375 }} >
