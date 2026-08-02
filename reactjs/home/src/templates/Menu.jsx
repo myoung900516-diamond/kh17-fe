@@ -81,7 +81,7 @@ export default function Menu() {
               <Nav.Link as={Link} to="/sale/list">store</Nav.Link>
               <NavDropdown title="minigame" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/minigame/sudoku">스토쿠</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/minigame/sudokuCopy">스토쿠2</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/minigame/sudoku2">스토쿠2</NavDropdown.Item>
               </NavDropdown>
             </Nav>
             <Nav>
