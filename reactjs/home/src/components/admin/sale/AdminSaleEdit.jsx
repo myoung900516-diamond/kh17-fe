@@ -244,8 +244,13 @@ export default function AdminSaleEdit() {
             attach => attach.attachNo //전체 정보말고 번호만 추려라
         );
         
-        const {data} = await apiClient.post(`/sale/deleteDetailImages/${saleNo}`, detailNumbers);
+        await apiClient.post(`/sale/deleteDetailImages/${saleNo}`, detailNumbers);
         //화면 갱신
+        //-loadData는 안되고 화면에서 요소를 직접 제거해야함(filter사용)
+        toast.success("이미지가 삭제되었습니다.");
+        setBeforeDetailImages(prev=>prev.filter(
+            attach => !detailNumbers.includes(attach.attachNo)// 지운 번호가 아닌 요소만 추출
+        ))
         
     }, [beforeDetailImages]);
 

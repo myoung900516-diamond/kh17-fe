@@ -17,10 +17,16 @@ import { RiNumber1, RiNumber2, RiNumber3, RiNumber4, RiNumber5, RiNumber6, RiNum
 
 export default function Sudoku() {
 
+    //현재 상태
     const [target, setTarget] = useState({});
+    //입력 숫자판
     const [pin, setPin] = useState({});
+    //선택한 스도쿠판의 index번호(=0~80번)
     const [input, setInput] = useState(null);
-    const [example, setExample] = useState();
+    //정답판
+    const [example, setExample] = useState({});
+    //빈칸이 있는 문제판
+    const [result, setResult] = useState({});
 
 
     const isValid = useCallback((currentTarget, index, num) => {
@@ -76,14 +82,16 @@ export default function Sudoku() {
     const handleGenerate = () => {
         const newTarget = Array(81).fill(0);
         fillTarget(newTarget);
-        setExample(newTarget);
+        // setExample(newTarget);
 
         const blankPosition = Array.from({ length: 51 }, () => Math.floor(Math.random() * 81) + 1);
 
         const result = {};
+        const example = {};
 
         for (let i = 0; i < 81; i++) {
             const boxNo = i + 1; // 1번 칸부터 81번 칸까지의 번호
+            example[`no${boxNo}`] = newTarget[i];
 
             if (blankPosition.includes(boxNo)) {
                 result[`no${boxNo}`] = 0;
@@ -93,7 +101,10 @@ export default function Sudoku() {
         }
 
         setTarget(result);
-        // console.log("result : ", result);
+        setResult(result);
+        setExample(example);
+        // console.log("example : ", example);
+
         // console.log("target : ", target);
         
     };
@@ -111,11 +122,21 @@ export default function Sudoku() {
     }, []);
 
 
+    // console.log(input);
+    // console.log(example[input]);
+
+
 
     const changeTarget = (number) => {
 
+        const position = Object.values(result);
         if (input === null) return;
+        // if(`result.no${input+1}` !== 0) return;
+        if(position[input] !== 0) return;
 
+        // console.log(input);
+        // console.log(position);
+        // console.log(result.no[input+1]);
         // setTarget(prev => {
         //     const newTarget = { ...prev };
         //     newTarget[input] = number;
@@ -132,7 +153,10 @@ export default function Sudoku() {
     };
 
     const deleteTarget = () => {
-        // if (input === null) return;
+        const position = Object.values(result);
+        if (input === null) return;
+        if(position[input] !== 0) return;
+        // if(`result.no${input+1}` !== 0) return;
         // setTarget(prev => {
         //     const newTarget = { ...prev };
         //     newTarget[input] = "";
@@ -148,6 +172,8 @@ export default function Sudoku() {
 
     useEffect(()=>{
         handleGenerate();
+        // console.log(example);
+        // setResult(result);
     }, []);
 
     const viewResult = ()=>{
@@ -155,16 +181,20 @@ export default function Sudoku() {
         // setTarget();
 
 
-        const result = {};
+        // const result = {};
 
-        for (let i = 0; i < 81; i++) {
-            const boxNo = i + 1; // 1번 칸부터 81번 칸까지의 번호
+        // for (let i = 0; i < 81; i++) {
+        //     const boxNo = i + 1; // 1번 칸부터 81번 칸까지의 번호
 
-                result[`no${boxNo}`] = example[i];
-            }
+        //         result[`no${boxNo}`] = example[i];
+        //     }
+        
+        if(Object.values(example) !== Object.values(target)){
+            //칸 배경을 빨간색으로 피드백처리 
+        }
         
 
-        setTarget(result);
+        setTarget(example);
         
         
     };
