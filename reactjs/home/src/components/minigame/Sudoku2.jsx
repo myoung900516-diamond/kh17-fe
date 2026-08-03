@@ -12,12 +12,12 @@ import { RiNumber1, RiNumber2, RiNumber3, RiNumber4, RiNumber5, RiNumber6, RiNum
 
 
 
-
+//입력한 숫자는 색이 달라야함. 그래야 정답 체크시 푼 칸을 알 수 있음. 
 
 
 export default function Sudoku() {
 
-    //현재 상태
+    //현재 상태(칸의 내용)
     const [target, setTarget] = useState({});
     //입력 숫자판
     const [pin, setPin] = useState({});
@@ -27,6 +27,8 @@ export default function Sudoku() {
     const [example, setExample] = useState({});
     //빈칸이 있는 문제판
     const [result, setResult] = useState({});
+    //채점판(=푼 답안지와 정답판을 비교해 맞은 것과 틀린 것을 피드백처리하기 위한 state)
+    const [correct, setCorrect] = useState([]);
 
 
     const isValid = useCallback((currentTarget, index, num) => {
@@ -84,7 +86,15 @@ export default function Sudoku() {
         fillTarget(newTarget);
         // setExample(newTarget);
 
-        const blankPosition = Array.from({ length: 51 }, () => Math.floor(Math.random() * 81) + 1);
+        const blankPosition = Array.from({ length: 81 }, (_, index) => index + 1)
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 51);
+
+
+
+        // const blankPosition = Array.from({ length: 51 }, () => Math.floor(Math.random() * 81) + 1);
+        // console.log("blankPosition.length : ", blankPosition.length);
+        // console.log("blankPosition : ", blankPosition);
 
         const result = {};
         const example = {};
@@ -103,12 +113,13 @@ export default function Sudoku() {
         setTarget(result);
         setResult(result);
         setExample(example);
-        // console.log("example : ", example);
+        setCorrect([]);
 
-        // console.log("target : ", target);
-        
+
     };
+    // console.log("example : ", example);
     // console.log("target : ", target);
+    // console.log("result : ", result);
     //스도쿠 판의 빈 칸을 입력창으로 변환하는 함수 
     const toInput = useCallback((index) => {
         // const pin = changeTarget();
@@ -132,7 +143,7 @@ export default function Sudoku() {
         const position = Object.values(result);
         if (input === null) return;
         // if(`result.no${input+1}` !== 0) return;
-        if(position[input] !== 0) return;
+        if (position[input] !== 0) return;
 
         // console.log(input);
         // console.log(position);
@@ -155,7 +166,7 @@ export default function Sudoku() {
     const deleteTarget = () => {
         const position = Object.values(result);
         if (input === null) return;
-        if(position[input] !== 0) return;
+        if (position[input] !== 0) return;
         // if(`result.no${input+1}` !== 0) return;
         // setTarget(prev => {
         //     const newTarget = { ...prev };
@@ -170,13 +181,13 @@ export default function Sudoku() {
         }));
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         handleGenerate();
         // console.log(example);
         // setResult(result);
     }, []);
 
-    const viewResult = ()=>{
+    const viewResult = () => {
         // console.log("example : ",example);
         // setTarget();
 
@@ -188,16 +199,30 @@ export default function Sudoku() {
 
         //         result[`no${boxNo}`] = example[i];
         //     }
-        
-        if(Object.values(example) !== Object.values(target)){
-            //칸 배경을 빨간색으로 피드백처리 
+
+        // if(Object.values(example) !== Object.values(target)){
+        //정답 버튼을 누르면 칸 내용과 정답이 틀릴 경우 칸 배경을 빨간색으로 변경시킨다. 
+        // }
+        const answer = Object.values(example);
+        // console.log("answer : ", answer);
+        const final = Object.values(target);
+        // console.log("final : ", final);
+
+        // const newInput = [];
+        for (var i = 0; i < 81; i++) {
+            if (answer[i] !== final[i]) {
+                // setInput(prev => [...prev, i]);
+                correct.push(i);
+            }
         }
-        
+        // setInput(newInput);
 
         setTarget(example);
-        
-        
+        setResult(example);
+        // console.log("correct : ", correct);
+
     };
+    // console.log("input.length : ", input.length);
 
 
     return (<>
@@ -217,7 +242,9 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 0 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(0)  ? '#e06973'  : input === 0 ? '#fff59d'  : '#fff'
+                            // input === 0 ? '#fff59d' : '#fff',
+                            // backgroundColor: correct.includes(0) ? '#ed2939' : '#fff'
                         }}>
                         <span className="fs-5" name="no1" data-value={target.no1}>{target.no1 !== 0 ? target.no1 : ''}</span>
                     </Col>
@@ -231,7 +258,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 1 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(1)  ? '#e06973'  : input === 1 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no2" data-value={target.no2}>{target.no2 !== 0 ? target.no2 : ''}</span>
                     </Col>
@@ -245,7 +272,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 2 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(2)  ? '#e06973'  : input === 2 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no3" data-value={target.no3}>{target.no3 !== 0 ? target.no3 : ''}</span>
                     </Col>
@@ -259,7 +286,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 3 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(3)  ? '#e06973'  : input === 3 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no4" data-value={target.no4}>{target.no4 !== 0 ? target.no4 : ''}</span>
                     </Col>
@@ -273,7 +300,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 4 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(4)  ? '#e06973'  : input === 4 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no5" data-value={target.no5}>{target.no5 !== 0 ? target.no5 : ''}</span>
                     </Col>
@@ -287,7 +314,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 5 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(5)  ? '#e06973'  : input === 5 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no6" data-value={target.no6}>{target.no6 !== 0 ? target.no6 : ''}</span>
                     </Col>
@@ -301,7 +328,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 6 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(6)  ? '#e06973'  : input === 6 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no7" data-value={target.no7}>{target.no7 !== 0 ? target.no7 : ''}</span>
                     </Col>
@@ -315,7 +342,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 7 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(7)  ? '#e06973'  : input === 7 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no8" data-value={target.no8}>{target.no8 !== 0 ? target.no8 : ''}</span>
                     </Col>
@@ -329,7 +356,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 8 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(8)  ? '#e06973'  : input === 8 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no9" data-value={target.no9}>{target.no9 !== 0 ? target.no9 : ''}</span>
                     </Col>
@@ -347,7 +374,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 9 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(9)  ? '#e06973'  : input === 9 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no10" data-value={target.no10}>{target.no10 !== 0 ? target.no10 : ''}</span>
                     </Col>
@@ -361,7 +388,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 10 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(10)  ? '#e06973'  : input === 10 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no11" data-value={target.no11}>{target.no11 !== 0 ? target.no11 : ''}</span>
                     </Col>
@@ -375,7 +402,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 11 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(11)  ? '#e06973'  : input === 11 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no12" data-value={target.no12}>{target.no12 !== 0 ? target.no12 : ''}</span>
                     </Col>
@@ -389,7 +416,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 12 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(12)  ? '#e06973'  : input === 12 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no13" data-value={target.no13}>{target.no13 !== 0 ? target.no13 : ''}</span>
                     </Col>
@@ -403,7 +430,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 13 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(13)  ? '#e06973'  : input === 13 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no14" data-value={target.no14}>{target.no14 !== 0 ? target.no14 : ''}</span>
                     </Col>
@@ -417,7 +444,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 14 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(14)  ? '#e06973'  : input === 14 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no15" data-value={target.no15}>{target.no15 !== 0 ? target.no15 : ''}</span>
                     </Col>
@@ -431,7 +458,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 15 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(15)  ? '#e06973'  : input === 15 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no16" data-value={target.no16}>{target.no16 !== 0 ? target.no16 : ''}</span>
                     </Col>
@@ -445,7 +472,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 16 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(16)  ? '#e06973'  : input === 16 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no17" data-value={target.no17}>{target.no17 !== 0 ? target.no17 : ''}</span>
                     </Col>
@@ -459,7 +486,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 17 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(17)  ? '#e06973'  : input === 17 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no18" data-value={target.no18}>{target.no18 !== 0 ? target.no18 : ''}</span>
                     </Col>
@@ -477,7 +504,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 18 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(18)  ? '#e06973'  : input === 18 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no19" data-value={target.no19}>{target.no19 !== 0 ? target.no19 : ''}</span>
                     </Col>
@@ -491,7 +518,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 19 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(19)  ? '#e06973'  : input === 19 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no20" data-value={target.no20}>{target.no20 !== 0 ? target.no20 : ''}</span>
                     </Col>
@@ -505,7 +532,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 20 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(20)  ? '#e06973'  : input === 20 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no21" data-value={target.no21}>{target.no21 !== 0 ? target.no21 : ''}</span>
                     </Col>
@@ -519,7 +546,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 21 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(21)  ? '#e06973'  : input === 21 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no22" data-value={target.no22}>{target.no22 !== 0 ? target.no22 : ''}</span>
                     </Col>
@@ -533,7 +560,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 22 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(22)  ? '#e06973'  : input === 22 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no23" data-value={target.no23}>{target.no23 !== 0 ? target.no23 : ''}</span>
                     </Col>
@@ -547,7 +574,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 23 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(23)  ? '#e06973'  : input === 23 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no24" data-value={target.no24}>{target.no24 !== 0 ? target.no24 : ''}</span>
                     </Col>
@@ -561,7 +588,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 24 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(24)  ? '#e06973'  : input === 24 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no25" data-value={target.no25}>{target.no25 !== 0 ? target.no25 : ''}</span>
                     </Col>
@@ -575,7 +602,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 25 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(25)  ? '#e06973'  : input === 25 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no26" data-value={target.no26}>{target.no26 !== 0 ? target.no26 : ''}</span>
                     </Col>
@@ -589,7 +616,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 26 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(26)  ? '#e06973'  : input === 26 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no27" data-value={target.no27}>{target.no27 !== 0 ? target.no27 : ''}</span>
                     </Col>
@@ -607,7 +634,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 27 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(27)  ? '#e06973'  : input === 27 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no28" data-value={target.no28}>{target.no28 !== 0 ? target.no28 : ''}</span>
                     </Col>
@@ -621,7 +648,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 28 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(28)  ? '#e06973'  : input === 28 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no29" data-value={target.no29}>{target.no29 !== 0 ? target.no29 : ''}</span>
                     </Col>
@@ -635,7 +662,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 29 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(29)  ? '#e06973'  : input === 29 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no30" data-value={target.no30}>{target.no30 !== 0 ? target.no30 : ''}</span>
                     </Col>
@@ -649,7 +676,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 30 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(30)  ? '#e06973'  : input === 30 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no31" data-value={target.no31}>{target.no31 !== 0 ? target.no31 : ''}</span>
                     </Col>
@@ -663,7 +690,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 31 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(31)  ? '#e06973'  : input === 31 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no32" data-value={target.no32}>{target.no32 !== 0 ? target.no32 : ''}</span>
                     </Col>
@@ -677,7 +704,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 32 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(32)  ? '#e06973'  : input === 32 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no33" data-value={target.no33}>{target.no33 !== 0 ? target.no33 : ''}</span>
                     </Col>
@@ -691,7 +718,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 33 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(33)  ? '#e06973'  : input === 33 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no34" data-value={target.no34}>{target.no34 !== 0 ? target.no34 : ''}</span>
                     </Col>
@@ -705,7 +732,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 34 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(34)  ? '#e06973'  : input === 34 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no35" data-value={target.no35}>{target.no35 !== 0 ? target.no35 : ''}</span>
                     </Col>
@@ -719,7 +746,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 35 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(35)  ? '#e06973'  : input === 35 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no36" data-value={target.no36}>{target.no36 !== 0 ? target.no36 : ''}</span>
                     </Col>
@@ -737,7 +764,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 36 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(36)  ? '#e06973'  : input === 36 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no37" data-value={target.no37}>{target.no37 !== 0 ? target.no37 : ''}</span>
                     </Col>
@@ -751,7 +778,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 37 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(37)  ? '#e06973'  : input === 37 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no38" data-value={target.no38}>{target.no38 !== 0 ? target.no38 : ''}</span>
                     </Col>
@@ -765,7 +792,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 38 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(38)  ? '#e06973'  : input === 38 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no39" data-value={target.no39}>{target.no39 !== 0 ? target.no39 : ''}</span>
                     </Col>
@@ -779,7 +806,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 39 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(39)  ? '#e06973'  : input === 39 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no40" data-value={target.no40}>{target.no40 !== 0 ? target.no40 : ''}</span>
                     </Col>
@@ -793,7 +820,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 40 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(40)  ? '#e06973'  : input === 40 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no41" data-value={target.no41}>{target.no41 !== 0 ? target.no41 : ''}</span>
                     </Col>
@@ -807,7 +834,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 41 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(41)  ? '#e06973'  : input === 41 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no42" data-value={target.no42}>{target.no42 !== 0 ? target.no42 : ''}</span>
                     </Col>
@@ -821,7 +848,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 42 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(42)  ? '#e06973'  : input === 42 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no43" data-value={target.no43}>{target.no43 !== 0 ? target.no43 : ''}</span>
                     </Col>
@@ -835,7 +862,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 43 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(43)  ? '#e06973'  : input === 43 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no44" data-value={target.no44}>{target.no44 !== 0 ? target.no44 : ''}</span>
                     </Col>
@@ -849,7 +876,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 44 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(44)  ? '#e06973'  : input === 44 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no45" data-value={target.no45}>{target.no45 !== 0 ? target.no45 : ''}</span>
                     </Col>
@@ -867,7 +894,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 45 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(45)  ? '#e06973'  : input === 45 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no46" data-value={target.no46}>{target.no46 !== 0 ? target.no46 : ''}</span>
                     </Col>
@@ -881,7 +908,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 46 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(46)  ? '#e06973'  : input === 46 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no47" data-value={target.no47}>{target.no47 !== 0 ? target.no47 : ''}</span>
                     </Col>
@@ -895,7 +922,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 47 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(47)  ? '#e06973'  : input === 47 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no48" data-value={target.no48}>{target.no48 !== 0 ? target.no48 : ''}</span>
                     </Col>
@@ -909,7 +936,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 48 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(48)  ? '#e06973'  : input === 48 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no49" data-value={target.no49}>{target.no49 !== 0 ? target.no49 : ''}</span>
                     </Col>
@@ -923,7 +950,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 49 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(49)  ? '#e06973'  : input === 49 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no50" data-value={target.no50}>{target.no50 !== 0 ? target.no50 : ''}</span>
                     </Col>
@@ -937,7 +964,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 50 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(50)  ? '#e06973'  : input === 50 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no51" data-value={target.no51}>{target.no51 !== 0 ? target.no51 : ''}</span>
                     </Col>
@@ -951,7 +978,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 51 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(51)  ? '#e06973'  : input === 51 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no52" data-value={target.no52}>{target.no52 !== 0 ? target.no52 : ''}</span>
                     </Col>
@@ -965,7 +992,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 52 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(52)  ? '#e06973'  : input === 52 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no53" data-value={target.no53}>{target.no53 !== 0 ? target.no53 : ''}</span>
                     </Col>
@@ -979,7 +1006,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 53 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(53)  ? '#e06973'  : input === 53 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no54" data-value={target.no54}>{target.no54 !== 0 ? target.no54 : ''}</span>
                     </Col>
@@ -997,7 +1024,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 54 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(54)  ? '#e06973'  : input === 54 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no55" data-value={target.no55}>{target.no55 !== 0 ? target.no55 : ''}</span>
                     </Col>
@@ -1011,7 +1038,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 55 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(55)  ? '#e06973'  : input === 55 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no56" data-value={target.no56}>{target.no56 !== 0 ? target.no56 : ''}</span>
                     </Col>
@@ -1025,7 +1052,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 56 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(56)  ? '#e06973'  : input === 56 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no57" data-value={target.no57}>{target.no57 !== 0 ? target.no57 : ''}</span>
                     </Col>
@@ -1039,7 +1066,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 57 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(57)  ? '#e06973'  : input === 57 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no58" data-value={target.no58}>{target.no58 !== 0 ? target.no58 : ''}</span>
                     </Col>
@@ -1053,7 +1080,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 58 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(58)  ? '#e06973'  : input === 58 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no59" data-value={target.no59}>{target.no59 !== 0 ? target.no59 : ''}</span>
                     </Col>
@@ -1067,7 +1094,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 59 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(59)  ? '#e06973'  : input === 59 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no60" data-value={target.no60}>{target.no60 !== 0 ? target.no60 : ''}</span>
                     </Col>
@@ -1081,7 +1108,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 60 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(60)  ? '#e06973'  : input === 60 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no61" data-value={target.no61}>{target.no61 !== 0 ? target.no61 : ''}</span>
                     </Col>
@@ -1095,7 +1122,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 61 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(61)  ? '#e06973'  : input === 61 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no62" data-value={target.no62}>{target.no62 !== 0 ? target.no62 : ''}</span>
                     </Col>
@@ -1109,7 +1136,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 62 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(62)  ? '#e06973'  : input === 62 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no63" data-value={target.no63}>{target.no63 !== 0 ? target.no63 : ''}</span>
                     </Col>
@@ -1127,7 +1154,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 63 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(63)  ? '#e06973'  : input === 63 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no64" data-value={target.no64}>{target.no64 !== 0 ? target.no64 : ''}</span>
                     </Col>
@@ -1141,7 +1168,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 64 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(64)  ? '#e06973'  : input === 64 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no65" data-value={target.no65}>{target.no65 !== 0 ? target.no65 : ''}</span>
                     </Col>
@@ -1155,7 +1182,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 65 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(65)  ? '#e06973'  : input === 65 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no66" data-value={target.no66}>{target.no66 !== 0 ? target.no66 : ''}</span>
                     </Col>
@@ -1169,7 +1196,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 66 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(66)  ? '#e06973'  : input === 66 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no67" data-value={target.no67}>{target.no67 !== 0 ? target.no67 : ''}</span>
                     </Col>
@@ -1183,7 +1210,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 67 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(67)  ? '#e06973'  : input === 67 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no68" data-value={target.no68}>{target.no68 !== 0 ? target.no68 : ''}</span>
                     </Col>
@@ -1197,7 +1224,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 68 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(68)  ? '#e06973'  : input === 68 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no69" data-value={target.no69}>{target.no69 !== 0 ? target.no69 : ''}</span>
                     </Col>
@@ -1211,7 +1238,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 69 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(69)  ? '#e06973'  : input === 69 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no70" data-value={target.no70}>{target.no70 !== 0 ? target.no70 : ''}</span>
                     </Col>
@@ -1225,7 +1252,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 70 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(70)  ? '#e06973'  : input === 70 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no71" data-value={target.no71}>{target.no71 !== 0 ? target.no71 : ''}</span>
                     </Col>
@@ -1239,7 +1266,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 71 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(71)  ? '#e06973'  : input === 71 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no72" data-value={target.no72}>{target.no72 !== 0 ? target.no72 : ''}</span>
                     </Col>
@@ -1257,7 +1284,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 72 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(72)  ? '#e06973'  : input === 72 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no73" data-value={target.no73}>{target.no73 !== 0 ? target.no73 : ''}</span>
                     </Col>
@@ -1271,7 +1298,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 73 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(73)  ? '#e06973'  : input === 73 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no74" data-value={target.no74}>{target.no74 !== 0 ? target.no74 : ''}</span>
                     </Col>
@@ -1285,7 +1312,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 74 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(74)  ? '#e06973'  : input === 74 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no75" data-value={target.no75}>{target.no75 !== 0 ? target.no75 : ''}</span>
                     </Col>
@@ -1299,7 +1326,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 75 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(75)  ? '#e06973'  : input === 75 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no76" data-value={target.no76}>{target.no76 !== 0 ? target.no76 : ''}</span>
                     </Col>
@@ -1313,7 +1340,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 76 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(76)  ? '#e06973'  : input === 76 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no77" data-value={target.no77}>{target.no77 !== 0 ? target.no77 : ''}</span>
                     </Col>
@@ -1327,7 +1354,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 77 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(77)  ? '#e06973'  : input === 77 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no78" data-value={target.no78}>{target.no78 !== 0 ? target.no78 : ''}</span>
                     </Col>
@@ -1341,7 +1368,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 78 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(78)  ? '#e06973'  : input === 78 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no79" data-value={target.no79}>{target.no79 !== 0 ? target.no79 : ''}</span>
                     </Col>
@@ -1355,7 +1382,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 79 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(79)  ? '#e06973'  : input === 79 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no80" data-value={target.no80}>{target.no80 !== 0 ? target.no80 : ''}</span>
                     </Col>
@@ -1369,7 +1396,7 @@ export default function Sudoku() {
                             alignItems: 'center',
                             border: '1px solid #ccc',
                             cursor: 'pointer',
-                            backgroundColor: input === 80 ? '#fff59d' : '#fff'
+                            backgroundColor: correct.includes(80)  ? '#e06973'  : input === 80 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no81" data-value={target.no81}>{target.no81 !== 0 ? target.no81 : ''}</span>
                     </Col>
