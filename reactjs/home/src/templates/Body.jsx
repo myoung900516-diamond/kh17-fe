@@ -48,6 +48,9 @@ import SaleDetail from "@components/sale/SaleDetail";
 import Sudoku from "@components/minigame/Sudoku";
 import Sudoku2 from "@components/minigame/Sudoku2";
 
+import KakaopayBuyVersion1 from "@components/pay/v1/KakaopayBuyVersion1";
+import KakaopayBuySuccessVersion1 from "@components/pay/v1/KakaopayBuySuccessVersion1";
+
 
 export default function Body(){
 
@@ -96,10 +99,14 @@ export default function Body(){
             <Route path="/minigame/sudoku" element={<Sudoku/>}></Route>
             <Route path="/minigame/sudoku2" element={<Sudoku2/>}></Route>
             
-            <Route path="/account/block" element={<AccountBlock/>}></Route>
             
             <Route path="/session/test" element={<TestMain/>}></Route>
             
+            <Route path="/pay/v1/buy" element={<KakaopayBuyVersion1/>}></Route>
+            <Route path="/pay/v1/buy/success" element={<KakaopayBuySuccessVersion1/>}></Route>
+            
+            <Route path="/account/block" element={<AccountBlock/>}></Route>
+
             <Route path="*" element={<NotFound/>}></Route>
         </Routes>
     )

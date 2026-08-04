@@ -78,7 +78,10 @@ export default function Menu() {
                 <NavDropdown.Item as={Link} to="/book/spa">도서정보(SPA)</NavDropdown.Item>
               </NavDropdown>
               <Nav.Link as={Link} to="/session/test">세션테스트</Nav.Link>
-              <Nav.Link as={Link} to="/sale/list">store</Nav.Link>
+              <NavDropdown title="store" id="basic-nav-dropdown">
+                <NavDropdown.Item as={Link} to="/sale/list">상품목록</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/pay/v1/buy">상품구매</NavDropdown.Item>
+              </NavDropdown>
               <NavDropdown title="minigame" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/minigame/sudoku">스토쿠</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/minigame/sudoku2">스토쿠2</NavDropdown.Item>
