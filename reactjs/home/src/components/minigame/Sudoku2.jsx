@@ -85,6 +85,7 @@ export default function Sudoku() {
         const newTarget = Array(81).fill(0);
         fillTarget(newTarget);
         // setExample(newTarget);
+        console.log(newTarget);
 
         const blankPosition = Array.from({ length: 81 }, (_, index) => index + 1)
             .sort(() => Math.random() - 0.5)
@@ -120,6 +121,7 @@ export default function Sudoku() {
     // console.log("example : ", example);
     // console.log("target : ", target);
     // console.log("result : ", result);
+
     //스도쿠 판의 빈 칸을 입력창으로 변환하는 함수 
     const toInput = useCallback((index) => {
         // const pin = changeTarget();
@@ -276,94 +278,6 @@ export default function Sudoku() {
                         }}>
                         <span className="fs-5" name="no3" data-value={target.no3}>{target.no3 !== 0 ? target.no3 : ''}</span>
                     </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(3)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(3)  ? '#e06973'  : input === 3 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no4" data-value={target.no4}>{target.no4 !== 0 ? target.no4 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(4)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(4)  ? '#e06973'  : input === 4 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no5" data-value={target.no5}>{target.no5 !== 0 ? target.no5 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(5)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(5)  ? '#e06973'  : input === 5 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no6" data-value={target.no6}>{target.no6 !== 0 ? target.no6 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(6)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(6)  ? '#e06973'  : input === 6 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no7" data-value={target.no7}>{target.no7 !== 0 ? target.no7 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(7)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(7)  ? '#e06973'  : input === 7 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no8" data-value={target.no8}>{target.no8 !== 0 ? target.no8 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(8)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(8)  ? '#e06973'  : input === 8 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no9" data-value={target.no9}>{target.no9 !== 0 ? target.no9 : ''}</span>
-                    </Col>
-
-                </Row>
-                <Row className="border border-dark d-flex m-0 p-0" style={{ width: "33.3333%", height: 125, aspectRatio: "1/1" }}>
-
                     <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(9)}
                         style={{
                             width: "33.3333%",
@@ -405,6 +319,94 @@ export default function Sudoku() {
                             backgroundColor: correct.includes(11)  ? '#e06973'  : input === 11 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no12" data-value={target.no12}>{target.no12 !== 0 ? target.no12 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(18)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(18)  ? '#e06973'  : input === 18 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no19" data-value={target.no19}>{target.no19 !== 0 ? target.no19 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(19)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(19)  ? '#e06973'  : input === 19 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no20" data-value={target.no20}>{target.no20 !== 0 ? target.no20 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(20)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(20)  ? '#e06973'  : input === 20 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no21" data-value={target.no21}>{target.no21 !== 0 ? target.no21 : ''}</span>
+                    </Col>
+
+                </Row>
+                <Row className="border border-dark d-flex m-0 p-0" style={{ width: "33.3333%", height: 125, aspectRatio: "1/1" }}>
+
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(3)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(3)  ? '#e06973'  : input === 3 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no4" data-value={target.no4}>{target.no4 !== 0 ? target.no4 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(4)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(4)  ? '#e06973'  : input === 4 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no5" data-value={target.no5}>{target.no5 !== 0 ? target.no5 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(5)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(5)  ? '#e06973'  : input === 5 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no6" data-value={target.no6}>{target.no6 !== 0 ? target.no6 : ''}</span>
                     </Col>
                     <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(12)}
                         style={{
@@ -448,94 +450,6 @@ export default function Sudoku() {
                         }}>
                         <span className="fs-5" name="no15" data-value={target.no15}>{target.no15 !== 0 ? target.no15 : ''}</span>
                     </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(15)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(15)  ? '#e06973'  : input === 15 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no16" data-value={target.no16}>{target.no16 !== 0 ? target.no16 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(16)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(16)  ? '#e06973'  : input === 16 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no17" data-value={target.no17}>{target.no17 !== 0 ? target.no17 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(17)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(17)  ? '#e06973'  : input === 17 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no18" data-value={target.no18}>{target.no18 !== 0 ? target.no18 : ''}</span>
-                    </Col>
-
-                </Row>
-                <Row className="border border-dark d-flex m-0 p-0" style={{ width: "33.3333%", height: 125, aspectRatio: "1/1" }}>
-
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(18)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(18)  ? '#e06973'  : input === 18 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no19" data-value={target.no19}>{target.no19 !== 0 ? target.no19 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(19)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(19)  ? '#e06973'  : input === 19 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no20" data-value={target.no20}>{target.no20 !== 0 ? target.no20 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(20)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(20)  ? '#e06973'  : input === 20 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no21" data-value={target.no21}>{target.no21 !== 0 ? target.no21 : ''}</span>
-                    </Col>
                     <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(21)}
                         style={{
                             width: "33.3333%",
@@ -577,6 +491,94 @@ export default function Sudoku() {
                             backgroundColor: correct.includes(23)  ? '#e06973'  : input === 23 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no24" data-value={target.no24}>{target.no24 !== 0 ? target.no24 : ''}</span>
+                    </Col>
+
+                </Row>
+                <Row className="border border-dark d-flex m-0 p-0" style={{ width: "33.3333%", height: 125, aspectRatio: "1/1" }}>
+
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(6)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(6)  ? '#e06973'  : input === 6 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no7" data-value={target.no7}>{target.no7 !== 0 ? target.no7 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(7)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(7)  ? '#e06973'  : input === 7 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no8" data-value={target.no8}>{target.no8 !== 0 ? target.no8 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(8)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(8)  ? '#e06973'  : input === 8 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no9" data-value={target.no9}>{target.no9 !== 0 ? target.no9 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(15)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(15)  ? '#e06973'  : input === 15 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no16" data-value={target.no16}>{target.no16 !== 0 ? target.no16 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(16)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(16)  ? '#e06973'  : input === 16 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no17" data-value={target.no17}>{target.no17 !== 0 ? target.no17 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(17)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(17)  ? '#e06973'  : input === 17 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no18" data-value={target.no18}>{target.no18 !== 0 ? target.no18 : ''}</span>
                     </Col>
                     <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(24)}
                         style={{
@@ -666,94 +668,6 @@ export default function Sudoku() {
                         }}>
                         <span className="fs-5" name="no30" data-value={target.no30}>{target.no30 !== 0 ? target.no30 : ''}</span>
                     </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(30)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(30)  ? '#e06973'  : input === 30 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no31" data-value={target.no31}>{target.no31 !== 0 ? target.no31 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(31)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(31)  ? '#e06973'  : input === 31 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no32" data-value={target.no32}>{target.no32 !== 0 ? target.no32 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(32)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(32)  ? '#e06973'  : input === 32 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no33" data-value={target.no33}>{target.no33 !== 0 ? target.no33 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(33)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(33)  ? '#e06973'  : input === 33 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no34" data-value={target.no34}>{target.no34 !== 0 ? target.no34 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(34)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(34)  ? '#e06973'  : input === 34 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no35" data-value={target.no35}>{target.no35 !== 0 ? target.no35 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(35)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(35)  ? '#e06973'  : input === 35 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no36" data-value={target.no36}>{target.no36 !== 0 ? target.no36 : ''}</span>
-                    </Col>
-
-                </Row>
-                <Row className="border border-dark d-flex m-0 p-0" style={{ width: "33.3333%", height: 125, aspectRatio: "1/1" }}>
-
                     <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(36)}
                         style={{
                             width: "33.3333%",
@@ -795,6 +709,94 @@ export default function Sudoku() {
                             backgroundColor: correct.includes(38)  ? '#e06973'  : input === 38 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no39" data-value={target.no39}>{target.no39 !== 0 ? target.no39 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(45)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(45)  ? '#e06973'  : input === 45 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no46" data-value={target.no46}>{target.no46 !== 0 ? target.no46 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(46)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(46)  ? '#e06973'  : input === 46 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no47" data-value={target.no47}>{target.no47!== 0 ? target.no47 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(47)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(47)  ? '#e06973'  : input === 47 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no48" data-value={target.no48}>{target.no48 !== 0 ? target.no48 : ''}</span>
+                    </Col>
+
+                </Row>
+                <Row className="border border-dark d-flex m-0 p-0" style={{ width: "33.3333%", height: 125, aspectRatio: "1/1" }}>
+
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(30)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(30)  ? '#e06973'  : input === 30 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no31" data-value={target.no31}>{target.no31 !== 0 ? target.no31 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(31)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(31)  ? '#e06973'  : input === 31 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no32" data-value={target.no32}>{target.no32 !== 0 ? target.no32 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(32)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(32)  ? '#e06973'  : input === 32 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no33" data-value={target.no33}>{target.no33 !== 0 ? target.no33 : ''}</span>
                     </Col>
                     <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(39)}
                         style={{
@@ -838,94 +840,6 @@ export default function Sudoku() {
                         }}>
                         <span className="fs-5" name="no42" data-value={target.no42}>{target.no42 !== 0 ? target.no42 : ''}</span>
                     </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(42)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(42)  ? '#e06973'  : input === 42 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no43" data-value={target.no43}>{target.no43 !== 0 ? target.no43 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(43)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(43)  ? '#e06973'  : input === 43 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no44" data-value={target.no44}>{target.no44 !== 0 ? target.no44 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(44)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(44)  ? '#e06973'  : input === 44 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no45" data-value={target.no45}>{target.no45 !== 0 ? target.no45 : ''}</span>
-                    </Col>
-
-                </Row>
-                <Row className="border border-dark d-flex m-0 p-0" style={{ width: "33.3333%", height: 125, aspectRatio: "1/1" }}>
-
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(45)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(45)  ? '#e06973'  : input === 45 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no46" data-value={target.no46}>{target.no46 !== 0 ? target.no46 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(46)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(46)  ? '#e06973'  : input === 46 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no47" data-value={target.no47}>{target.no47 !== 0 ? target.no47 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(47)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(47)  ? '#e06973'  : input === 47 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no48" data-value={target.no48}>{target.no48 !== 0 ? target.no48 : ''}</span>
-                    </Col>
                     <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(48)}
                         style={{
                             width: "33.3333%",
@@ -967,6 +881,94 @@ export default function Sudoku() {
                             backgroundColor: correct.includes(50)  ? '#e06973'  : input === 50 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no51" data-value={target.no51}>{target.no51 !== 0 ? target.no51 : ''}</span>
+                    </Col>
+
+                </Row>
+                <Row className="border border-dark d-flex m-0 p-0" style={{ width: "33.3333%", height: 125, aspectRatio: "1/1" }}>
+
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(33)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(33)  ? '#e06973'  : input === 33 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no34" data-value={target.no34}>{target.no34 !== 0 ? target.no34 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(34)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(34)  ? '#e06973'  : input === 34 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no35" data-value={target.no35}>{target.no35 !== 0 ? target.no35 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(35)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(35)  ? '#e06973'  : input === 35 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no36" data-value={target.no36}>{target.no36 !== 0 ? target.no36 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(42)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(42)  ? '#e06973'  : input === 42 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no43" data-value={target.no43}>{target.no43 !== 0 ? target.no43 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(43)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(43)  ? '#e06973'  : input === 43 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no44" data-value={target.no44}>{target.no44 !== 0 ? target.no44 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(44)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(44)  ? '#e06973'  : input === 44 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no45" data-value={target.no45}>{target.no45 !== 0 ? target.no45 : ''}</span>
                     </Col>
                     <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(51)}
                         style={{
@@ -1056,94 +1058,6 @@ export default function Sudoku() {
                         }}>
                         <span className="fs-5" name="no57" data-value={target.no57}>{target.no57 !== 0 ? target.no57 : ''}</span>
                     </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(57)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(57)  ? '#e06973'  : input === 57 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no58" data-value={target.no58}>{target.no58 !== 0 ? target.no58 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(58)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(58)  ? '#e06973'  : input === 58 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no59" data-value={target.no59}>{target.no59 !== 0 ? target.no59 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(59)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(59)  ? '#e06973'  : input === 59 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no60" data-value={target.no60}>{target.no60 !== 0 ? target.no60 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(60)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(60)  ? '#e06973'  : input === 60 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no61" data-value={target.no61}>{target.no61 !== 0 ? target.no61 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(61)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(61)  ? '#e06973'  : input === 61 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no62" data-value={target.no62}>{target.no62 !== 0 ? target.no62 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(62)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(62)  ? '#e06973'  : input === 62 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no63" data-value={target.no63}>{target.no63 !== 0 ? target.no63 : ''}</span>
-                    </Col>
-
-                </Row>
-                <Row className="border border-dark d-flex m-0 p-0" style={{ width: "33.3333%", height: 125, aspectRatio: "1/1" }}>
-
                     <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(63)}
                         style={{
                             width: "33.3333%",
@@ -1185,6 +1099,94 @@ export default function Sudoku() {
                             backgroundColor: correct.includes(65)  ? '#e06973'  : input === 65 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no66" data-value={target.no66}>{target.no66 !== 0 ? target.no66 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(72)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(72)  ? '#e06973'  : input === 72 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no73" data-value={target.no73}>{target.no73 !== 0 ? target.no73 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(73)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(73)  ? '#e06973'  : input === 73 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no74" data-value={target.no74}>{target.no74 !== 0 ? target.no74 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(74)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(74)  ? '#e06973'  : input === 74 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no75" data-value={target.no75}>{target.no75 !== 0 ? target.no75 : ''}</span>
+                    </Col>
+
+                </Row>
+                <Row className="border border-dark d-flex m-0 p-0" style={{ width: "33.3333%", height: 125, aspectRatio: "1/1" }}>
+
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(57)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(57)  ? '#e06973'  : input === 57 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no58" data-value={target.no58}>{target.no58 !== 0 ? target.no58 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(58)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(58)  ? '#e06973'  : input === 58 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no59" data-value={target.no59}>{target.no59 !== 0 ? target.no59 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(59)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(59)  ? '#e06973'  : input === 59 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no60" data-value={target.no60}>{target.no60 !== 0 ? target.no60 : ''}</span>
                     </Col>
                     <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(66)}
                         style={{
@@ -1228,94 +1230,6 @@ export default function Sudoku() {
                         }}>
                         <span className="fs-5" name="no69" data-value={target.no69}>{target.no69 !== 0 ? target.no69 : ''}</span>
                     </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(69)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(69)  ? '#e06973'  : input === 69 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no70" data-value={target.no70}>{target.no70 !== 0 ? target.no70 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(70)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(70)  ? '#e06973'  : input === 70 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no71" data-value={target.no71}>{target.no71 !== 0 ? target.no71 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(71)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(71)  ? '#e06973'  : input === 71 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no72" data-value={target.no72}>{target.no72 !== 0 ? target.no72 : ''}</span>
-                    </Col>
-
-                </Row>
-                <Row className="border border-dark d-flex m-0 p-0" style={{ width: "33.3333%", height: 125, aspectRatio: "1/1" }}>
-
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(72)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(72)  ? '#e06973'  : input === 72 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no73" data-value={target.no73}>{target.no73 !== 0 ? target.no73 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(73)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(73)  ? '#e06973'  : input === 73 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no74" data-value={target.no74}>{target.no74 !== 0 ? target.no74 : ''}</span>
-                    </Col>
-                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(74)}
-                        style={{
-                            width: "33.3333%",
-                            height: "33.3333%",
-                            flex: "0 0 33.3333%",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
-                            backgroundColor: correct.includes(74)  ? '#e06973'  : input === 74 ? '#fff59d'  : '#fff'
-                        }}>
-                        <span className="fs-5" name="no75" data-value={target.no75}>{target.no75 !== 0 ? target.no75 : ''}</span>
-                    </Col>
                     <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(75)}
                         style={{
                             width: "33.3333%",
@@ -1357,6 +1271,94 @@ export default function Sudoku() {
                             backgroundColor: correct.includes(77)  ? '#e06973'  : input === 77 ? '#fff59d'  : '#fff'
                         }}>
                         <span className="fs-5" name="no78" data-value={target.no78}>{target.no78 !== 0 ? target.no78 : ''}</span>
+                    </Col>
+
+                </Row>
+                <Row className="border border-dark d-flex m-0 p-0" style={{ width: "33.3333%", height: 125, aspectRatio: "1/1" }}>
+
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(60)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(60)  ? '#e06973'  : input === 60 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no61" data-value={target.no61}>{target.no61 !== 0 ? target.no61 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(61)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(61)  ? '#e06973'  : input === 61 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no62" data-value={target.no62}>{target.no62 !== 0 ? target.no62 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(62)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(62)  ? '#e06973'  : input === 62 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no63" data-value={target.no63}>{target.no63 !== 0 ? target.no63 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(69)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(69)  ? '#e06973'  : input === 69 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no70" data-value={target.no70}>{target.no70 !== 0 ? target.no70 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(70)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(70)  ? '#e06973'  : input === 70 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no71" data-value={target.no71}>{target.no71 !== 0 ? target.no71 : ''}</span>
+                    </Col>
+                    <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(71)}
+                        style={{
+                            width: "33.3333%",
+                            height: "33.3333%",
+                            flex: "0 0 33.3333%",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                            backgroundColor: correct.includes(71)  ? '#e06973'  : input === 71 ? '#fff59d'  : '#fff'
+                        }}>
+                        <span className="fs-5" name="no72" data-value={target.no72}>{target.no72 !== 0 ? target.no72 : ''}</span>
                     </Col>
                     <Col className="border d-flex justify-content-center align-items-center p-0" onClick={() => toInput(78)}
                         style={{
