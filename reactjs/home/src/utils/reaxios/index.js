@@ -53,7 +53,9 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use(
 
     config=> {
-        config.headers["X-Client-Page"]= window.location.href;
+        // config.headers["X-Client-Page"]= window.location.href;
+        const {origin, pathname} = window.location;
+        config.headers["X-Client-Page"]= origin + pathname;
         return config;
     },
     error=>error
