@@ -31,6 +31,7 @@ import AccountPassword from "@components/account/AccountPassword";
 import AccountChange from "@components/account/AccountChange";
 import MyPage from "@components/account/MyPage";
 import AccountNeedUpdate from "@components/account/AccountNeedUpdate";
+import AccountCart from "@components/account/AccountCart";
 
 import TestMain from "@components/session/TestMain";
 import Private from "@guard/Private";
@@ -58,6 +59,7 @@ import KakaopayBuySuccessVersion2 from "@components/pay/v2/KakaopayBuySuccessVer
 import KakaopayBuyCancelVersion2 from "@components/pay/v2/KakaopayBuyCancelVersion2";
 import KakaopayBuyFailVersion2 from "@components/pay/v2/KakaopayBuyFailVersion2";
 import KakaopayBuyDetailVersion2 from "@components/pay/v2/KakaopayBuyDetailVersion2";
+
 
 export default function Body(){
 
@@ -91,6 +93,7 @@ export default function Body(){
             <Route path="/account/mypage" element={<Private><MyPage/></Private>}></Route>
             <Route path="/account/password" element={<Private><AccountPassword/></Private>}></Route>
             <Route path="/account/change" element={<Private><AccountChange/></Private>}></Route>
+            <Route path="/account/cart" element={<Private><AccountCart/></Private>}></Route>
             <Route path="/account/needupdate" element={<AccountNeedUpdate/>}></Route>
             
             
@@ -107,7 +110,7 @@ export default function Body(){
             <Route path="/minigame/sudoku2" element={<Sudoku2/>}></Route>
             
             
-            <Route path="/session/test" element={<TestMain/>}></Route>
+            {/* <Route path="/session/test" element={<TestMain/>}></Route> */}
             
             <Route path="/pay/v1/buy" element={<KakaopayBuyVersion1/>}></Route>
             <Route path="/pay/v1/buy/success" element={<KakaopayBuySuccessVersion1/>}></Route>

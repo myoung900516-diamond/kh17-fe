@@ -12,7 +12,7 @@ import Badge from "react-bootstrap/esm/Badge";
 import { FaBagShopping, FaList, FaMinus, FaSquarePen, FaTrash } from "react-icons/fa6";
 import { purifyHtml } from "@utils/purify";
 import { useAtomValue } from "jotai";
-import { isAdminState } from "@utils/storage";
+import { isAdminState, isLoginState } from "@utils/storage";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 
@@ -26,7 +26,7 @@ export default function SaleDetail() {
     const [sale, setSale] = useState(null);
     const [thumbnail, setThumbnail] = useState(null);
     const [detailImages, setDetailImages] = useState([]);
-    const [quantity, setQuantity]= useState(1);
+    const [quantity, setQuantity] = useState(1);
 
 
     const loadData = useCallback(async () => {
@@ -35,7 +35,8 @@ export default function SaleDetail() {
         setSale(saleDto);
         setThumbnail(thumbnail);
         setDetailImages(detailImages);
-        console.log(data);
+        // console.log(data);
+
     }, []);
     useEffect(() => {
         loadData();
@@ -70,9 +71,55 @@ export default function SaleDetail() {
         navigate("/sale/list");
     }, []);
     //구매 확인 페이지로 주소를 잘 만들어서 전달
-    const purchase = useCallback(()=>{
+    const purchase = useCallback(() => {
         navigate(`/pay/v2/buy?sale=${saleNo}:${quantity}`);
     }, [saleNo, quantity]);
+
+
+    //장바구니 담기
+    const isLogin = useAtomValue(isLoginState);
+    const addCart = useCallback(async () => {
+        if (!isLogin) {
+            //로그인 해야 장바구니 담기가 가능합니다. 알림창
+            const result = await Swal.fire({
+                title: `로그인이 필요한 서비스 입니다`,
+                text: "확인을 누르면 로그인 페이지로 이동합니다",
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonText: "확인",
+                confirmButtonColor: "rgb(82, 94, 167)",
+                cancelButtonText: "취소",
+                cancelButtonColor: "rgb(236, 91, 56)",
+                showCancelButton: true,
+            });
+            if (result.isConfirmed === false) {
+                navigate("/account/login");
+            };
+            return;
+        }
+        const { data } = await apiClient.post("/cart/", {
+            item: saleNo,//상품번호
+            qty: quantity//구매수량
+        });
+        console.log(data);
+
+        //장바구니에 담겼습니다. 장바구니로 이동하시겠습니까? 알림창
+        const result = await Swal.fire({
+                title: `상품이 장바구니에 담겼습니다`,
+                icon: "success",
+                showCancelButton: true,
+                confirmButtonText: "장바구니로 이동",
+                confirmButtonColor: "rgb(168, 164, 146)",
+                cancelButtonText: "계속 쇼핑",
+                cancelButtonColor: "rgb(82, 70, 70)",
+                showCancelButton: true,
+            });
+            if (result.isConfirmed === false) {
+                // navigate("/account/cart");
+            };
+    }, [quantity]);
+
+
 
     if (sale === null) {
         return <h1>loading...</h1>
@@ -116,15 +163,17 @@ export default function SaleDetail() {
                 <div className="mt-2 d-flex">
                     {/* 수량 선택창과 구매버튼 */}
                     <Form.Control type="number" className="d-inline-block"
-                        style={{ width: 80 }} value={quantity} 
-                        onChange={e=>{
+                        style={{ width: 80 }} value={quantity}
+                        onChange={e => {
                             const number = parseInt(e.target.value) || 1;
                             setQuantity(number);
                         }} />
-                    <Button variant="success" className="ms-2" onClick={purchase}>
+                    <Button variant="success" className="ms-2"
+                        onClick={purchase}>
                         구매
                     </Button>
-                    <Button variant="secondary" className="ms-2">
+                    <Button variant="secondary" className="ms-2"
+                        onClick={addCart}>
                         <FaBagShopping />장바구니
                     </Button>
                 </div>

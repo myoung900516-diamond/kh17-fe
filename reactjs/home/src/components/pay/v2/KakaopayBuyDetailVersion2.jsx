@@ -6,6 +6,7 @@ import { ClockLoader } from "react-spinners";
 import { Col, ListGroup, Row, ListGroupItem, Badge, Button } from "react-bootstrap";
 import NoImage from "@assets/images/no-image.png";
 import { MdSubdirectoryArrowRight } from "react-icons/md";
+import Swal from "sweetalert2";
 
 import dayjs from "dayjs";
 
@@ -16,6 +17,7 @@ dayjs.locale("ko");
 //상대시간 표시를 원할 경우 (000분전...)
 import relativeTime from "dayjs/plugin/relativeTime";
 import { FaXmark } from "react-icons/fa6";
+import { toast } from "react-toastify";
 dayjs.extend(relativeTime);
 
 
@@ -54,6 +56,78 @@ export default function KakaopayBuyDetailVersion2() {
         if (purchase === null) return false;
         return dayjs().diff(purchase.purchaseCtime, "day", false) <= 7;
     }, [purchase]);
+
+    //전체 취소
+    const cancelAll = useCallback(async () => {
+        try{
+            const result = await Swal.fire({
+            title: `정말 취소하시겠습니까?`,
+            text:"취소한 결제는 다시 복구할 수 없습니다",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "네, 취소하겠습니다",
+            confirmButtonColor: "#d63031",
+            cancelButtonText: "아니오, 취소하지 않겠습니다",
+            cancelButtonColor: "#b2bec3",
+            showCancelButton : true,
+        });
+        if (result.isConfirmed === false) return;
+
+        const { data } = await apiClient.delete(`/purchase/cancelAll/${purchaseNo}`);
+
+        toast.success("결제가 취소되었습니다");
+        }
+        catch(e){
+            toast.error("일시적인 오류입니다. \n 잠시 후 다시 시도해주세요.")
+        }
+        //화면 갱신 처리
+        loadData();//뒷작업이 동시에 실행
+        // await loadData();//이렇게 하면 쉿작업이 순차적으로 실행됨. (async함수 내에서 다른 async 함수를 부를 때)
+    }, []);
+
+    //항목취소
+
+    const cancelUnit = useCallback(async(detail)=>{
+        try{
+            const result = await Swal.fire({
+            title: `해당 상품의 구매를 정말 취소하시겠습니까?`,
+            text:"취소한 결제는 다시 복구할 수 없습니다",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "네, 취소하겠습니다",
+            confirmButtonColor: "#d63031",
+            cancelButtonText: "아니오, 취소하지 않겠습니다",
+            cancelButtonColor: "#b2bec3",
+            showCancelButton : true,
+        });
+        if (result.isConfirmed === false) return;
+
+        const { data } = await apiClient.delete(
+            `/purchase/cancelUnit/${detail.purchaseDetailNo}`
+        );
+        toast.success("결제가 취소되었습니다");
+        }
+        catch(e){
+            toast.error("일시적인 오류입니다. \n 잠시 후 다시 시도해주세요.")
+        }
+
+        
+        //화면 갱신 처리
+        loadData();
+
+    }, []);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     if (purchase === null || details === null || payResponse === null) {
@@ -126,7 +200,7 @@ export default function KakaopayBuyDetailVersion2() {
         {(withInPeriod && purchase.purchaseRemain > 0) && (
             <Row>
                 <Col>
-                    <Button variant="danger" size="lg">
+                    <Button variant="danger" size="lg" onClick={cancelAll}>
                         <FaXmark />
                         <span className="ms-2">현재 구매내역 취소하기</span>
                     </Button>
@@ -180,9 +254,10 @@ export default function KakaopayBuyDetailVersion2() {
                                         && (
 
                                             <div className="mt-2 text-end">
-                                                <Button variant="danger" size="sm">
+                                                <Button variant="danger" size="sm"
+                                                    onClick={e=>cancelUnit(detail)}>
                                                     <FaXmark />
-                                                    <span>취소하기</span>
+                                                    <span>이 항목 취소하기</span>
                                                 </Button>
                                             </div>
                                         )}
@@ -196,7 +271,7 @@ export default function KakaopayBuyDetailVersion2() {
         {/* 카카오페이 정보 */}
 
         {/* 카카오페이 정보 */}
-        <hr className="my-5"/>
+        <hr className="my-5" />
         <Row className="mt-2">
             <Col sm={3} className="text-info fw-bold">지불방식</Col>
             <Col sm={9} className="text-secondary">
@@ -216,40 +291,40 @@ export default function KakaopayBuyDetailVersion2() {
             </Col>
         </Row>
         {payResponse.canceledAt !== null && (
-        <Row className="mt-2">
-            <Col sm={3} className="text-info fw-bold">결제 취소시간</Col>
-            <Col sm={9} className="text-secondary">
-                {dayjs(payResponse.canceledAt).format("YYYY년 M월 D일 dddd H시 m분 s초")}
-            </Col>
-        </Row>
-        ) }
+            <Row className="mt-2">
+                <Col sm={3} className="text-info fw-bold">결제 취소시간</Col>
+                <Col sm={9} className="text-secondary">
+                    {dayjs(payResponse.canceledAt).format("YYYY년 M월 D일 dddd H시 m분 s초")}
+                </Col>
+            </Row>
+        )}
         <Row className="mt-2">
             <Col sm={3} className="text-info fw-bold">금액상세</Col>
             <Col sm={9} className="text-secondary">
                 <div>
-                    총 
+                    총
                     <span className="text-info fw-bold mx-2">
                         {payResponse.amount.total.toLocaleString()}
                     </span>
                     원
                 </div>
                 <div className="ps-2">
-                    <MdSubdirectoryArrowRight/>
+                    <MdSubdirectoryArrowRight />
                     <span>
-                        상품가 
+                        상품가
                         <span className="text-info fw-bold mx-2">
                             {(payResponse.amount.total - payResponse.amount.vat).toLocaleString()}
-                        </span>    
+                        </span>
                         원
                     </span>
                 </div>
                 <div className="ps-2">
-                    <MdSubdirectoryArrowRight/>
+                    <MdSubdirectoryArrowRight />
                     <span>
-                        부가세 
+                        부가세
                         <span className="text-muted fw-bold mx-2">
                             {payResponse.amount.vat.toLocaleString()}
-                        </span>    
+                        </span>
                         원
                     </span>
                 </div>
@@ -260,23 +335,23 @@ export default function KakaopayBuyDetailVersion2() {
             <Col sm={3} className="text-info fw-bold">결제 상세</Col>
             <Col sm={9} className="text-secondary">
                 <ListGroup>
-                    {payResponse.paymentActionDetails.map((action, index)=>(
-                    <ListGroupItem key={index}>
-                        <div className="d-flex justify-content-between">
-                            <div>
-                                <Badge bg={
-                                    action.paymentActionType === "PAYMENT" ? "success" : "danger"
-                                }>{action.paymentActionType}</Badge>
+                    {payResponse.paymentActionDetails.map((action, index) => (
+                        <ListGroupItem key={index}>
+                            <div className="d-flex justify-content-between">
+                                <div>
+                                    <Badge bg={
+                                        action.paymentActionType === "PAYMENT" ? "success" : "danger"
+                                    }>{action.paymentActionType}</Badge>
 
-                                <span className="ms-2">
-                                    {action.amount.toLocaleString()} 원
-                                </span>
+                                    <span className="ms-2">
+                                        {action.amount.toLocaleString()} 원
+                                    </span>
+                                </div>
+                                <div>
+                                    {dayjs(action.approvedAt).format()}
+                                </div>
                             </div>
-                            <div>
-                                {dayjs(action.approvedAt).format()}
-                            </div>
-                        </div>
-                    </ListGroupItem>
+                        </ListGroupItem>
                     ))}
                 </ListGroup>
             </Col>

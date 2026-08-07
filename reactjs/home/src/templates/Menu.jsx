@@ -9,6 +9,7 @@ import { isLoginState } from "@utils/storage";
 import { isAdminState } from "@utils/storage";
 import { useCallback } from "react";
 import { authClient } from "@utils/reaxios";
+import { FaCartPlus, FaCartShopping } from "react-icons/fa6";
 
 
 export default function Menu() {
@@ -77,7 +78,7 @@ export default function Menu() {
                 <NavDropdown.Item as={Link} to="/book/list">도서정보</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/book/spa">도서정보(SPA)</NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link as={Link} to="/session/test">세션테스트</Nav.Link>
+              {/* <Nav.Link as={Link} to="/session/test">세션테스트</Nav.Link> */}
               <NavDropdown title="store" id="basic-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/sale/list">상품목록</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/pay/v1/buy">상품구매</NavDropdown.Item>
@@ -99,6 +100,10 @@ export default function Menu() {
                   </NavDropdown>
                 </>)}
                 {isAdmin === false && (<>
+                  <Nav.Link as={Link} to="/account/cart">
+                    <FaCartShopping/>
+                    <span className="ms-1">장바구니</span>
+                  </Nav.Link>
                   <Nav.Link as={Link} to="/account/mypage">내정보</Nav.Link>
 
                 </>)}
