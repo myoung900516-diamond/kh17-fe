@@ -350,7 +350,7 @@ export default function AccountJoin() {
         }
         catch(e){
             toast.error("회원 가입 과정에서 오류가 발생했습니다.")
-            navegate("/account/joinFail");
+            navigate("/account/joinFail");
         }
         //앤드포인트
         // console.log(result);
