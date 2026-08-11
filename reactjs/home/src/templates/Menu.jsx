@@ -87,6 +87,12 @@ export default function Menu() {
               <NavDropdown.Item as={Link} to="/minigame/sudoku">스토쿠</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/minigame/sudoku2">스토쿠2</NavDropdown.Item>
               </NavDropdown>
+
+              <NavDropdown title="웹소켓" id="basic-nav-dropdown">
+                    <NavDropdown.Item as={Link} to="/websocket/v1">기본 웹소켓</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/websocket/v2">헤더가 추가된 웹소켓</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/websocket/v3">회원전용 웹소켓</NavDropdown.Item>
+              </NavDropdown>
             </Nav>
             <Nav>
               {isLogin === true && (<>

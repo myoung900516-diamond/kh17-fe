@@ -81,8 +81,9 @@ export default function AccountLogin() {
             }
             else{
                 await Swal.fire("일시적인 서버 오류입니다. \n잠시후 시도해 주세요.");
-
             }
+            console.log("e : ", e);
+
         }
     }, [account]);
     return (<>
