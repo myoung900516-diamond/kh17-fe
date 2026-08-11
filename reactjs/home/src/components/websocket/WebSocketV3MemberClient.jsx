@@ -12,6 +12,7 @@ dayjs.locale("ko");//한국어로 설정
 
 import "./WebSocketV2AdvancedClient.css";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 
 
@@ -21,6 +22,7 @@ export default function WebSocketV3MemberClient() {
     const loginUser = useAtomValue(loginUserState);
     const [history, setHistory] = useState([]);//메세지 저장소
     const [input, setInput] = useState("");//사용자의 입력
+    const inputRef = useRef();//입력창 제어용 리모컨
     const [users, setUsers] = useState([]);//접속한 사용자의 목록
 
 
@@ -71,7 +73,11 @@ export default function WebSocketV3MemberClient() {
                     setUsers(jsonArray);
                 });
                 client.subscribe(`/private/dm/${loginUser.accountId}`, (message) => {
+                    console.log("DM수신!");
+                    console.log(message.body);
+                    
                     const json = JSON.parse(message.body);
+                    console.log("dm json = ", json);
                     setHistory(prev => [...prev, json]);
 
 
@@ -141,11 +147,11 @@ export default function WebSocketV3MemberClient() {
 
     //시간을 표시해야 되는 상황인지 판정하는 함수
     const checkTimeVisible = useCallback((curr, prev) => {
-        if (!curr) return false; //null, undefined 모두 제거 
-        if (!prev) return false;//null, undefined 모두 제거 
+        if (!curr) return true; //null, undefined 모두 제거 
+        if (!prev) return true;//null, undefined 모두 제거 
 
         if (curr.senderId !== prev.senderId) return true;//작성자가 다르면 시간 표시 
-        if (curr.type !== next.type) return true;//메세지 유
+        if (curr.type !== prev.type) return true;//메세지 유
         const currTime = dayjs(curr.time);
         const prevTime = dayjs(prev.time);
         const isSameTime = currTime.isSame(prevTime, "minute");
@@ -167,6 +173,11 @@ export default function WebSocketV3MemberClient() {
 
     }, []);
 
+    const sendDM = useCallback((accountId)=>{
+        setInput(`/w ${accountId} `);
+        inputRef.current.focus();
+    }, []);
+
     return (<>
         <Jumbotron title="WebSocket Version 3" content="인증된 사용자끼리의 웹소켓 통신 구현" />
 
@@ -182,6 +193,7 @@ export default function WebSocketV3MemberClient() {
                 <div className="d-flex">
                     {/* 입력창과 버튼은 연결이 활성화 되어있을 경우에만 사용 가능하도록 설정 */}
                     <Form.Control type="text" disabled={isConnect === false}
+                    ref={inputRef}
                         value={input}
                         onChange={e => setInput(e.target.value)}
                         onKeyUp={e => {
@@ -281,7 +293,7 @@ export default function WebSocketV3MemberClient() {
                                                         {`To.${message.receiverNickname}`}
                                                         <Badge bg="primary" className="ms-2">
 
-                                                            {message.senderLevel}
+                                                            {message.receiverLevel}
                                                         </Badge>
                                                     </>) : (<>
                                                         {`From.${message.senderNickname}`}
@@ -293,6 +305,7 @@ export default function WebSocketV3MemberClient() {
                                             )}
                                             <div className="content">
                                                 <div className="body">{message.content}</div>
+                                                {/* console.log(message.content); */}
                                                 {/* 시간은 경우에 따라서 나오지 않을 수도 있다 */}
                                                 <div className="time">
                                                     {isDiffTime && (
@@ -326,7 +339,9 @@ export default function WebSocketV3MemberClient() {
                     <ListGroup>
                         {users.map((user,index)=>(
                             <ListGroupItem key={index}>
-                                {user.accountId}
+                                <span onClick={()=>sendDM(user.accountId)} style={{cursor:"pointer"}} >
+                                    {user.accountId}
+                                </span>
                             </ListGroupItem>
                         ))}
                     </ListGroup>
