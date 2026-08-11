@@ -26,6 +26,8 @@ export default function AccountCart() {
         setCartList(data.cartItems.map(
             item => ({...item, choice : true})
         ))
+        console.log("data.cartItems : ", data.cartItems);
+
         // console.log(data.cartItems);
     }, []);
     //할인율 계산 함수
@@ -88,6 +90,7 @@ export default function AccountCart() {
         setCartList(prev=>prev.map(
             item=>({...item, choice:checked})
         ))
+        
     }, []);
 
     //[1] 체크된 상품의 총 계산금액을 구하여 하단에 출력
@@ -121,16 +124,19 @@ export default function AccountCart() {
         //파라미터 생성도구 만들기
         const params = new URLSearchParams();//javascript도구
         //체크된 모든 항목의 상품번호와 수량을 콜론(:)을 두고 합성해서 추가
-        cartList?.forEach(item=>{
+        // console.log(cartList);
+        cartList.forEach(item=>{
             if(item.choice === true){
                 const value = `${item.no}:${item.qty}`;
                 params.append("sale", value);
+                // params.set("sale", value);
             }
         });
-        console.log(params);
+        // console.log(params);
+
         //파라미터를 추가해서 구매페이지로 이동 
         navigate(`/pay/v2/buy?${params.toString()}`);
-    },[]);
+    },[cartList]);
     return (<>
         <Jumbotron title="장바구니" content="상품 수량을 확인하고 구매를 진행해주세요" />
 

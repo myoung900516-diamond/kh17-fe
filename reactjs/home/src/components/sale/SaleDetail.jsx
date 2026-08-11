@@ -92,7 +92,7 @@ export default function SaleDetail() {
                 cancelButtonColor: "rgb(236, 91, 56)",
                 showCancelButton: true,
             });
-            if (result.isConfirmed === false) {
+            if (result.isConfirmed === true) {
                 navigate("/account/login");
             };
             return;
@@ -114,8 +114,9 @@ export default function SaleDetail() {
                 cancelButtonColor: "rgb(82, 70, 70)",
                 showCancelButton: true,
             });
-            if (result.isConfirmed === false) {
-                // navigate("/account/cart");
+            if (result.isConfirmed === true) {
+                navigate("/account/cart");
+
             };
     }, [quantity]);
 

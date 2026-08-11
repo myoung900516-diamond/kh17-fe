@@ -126,6 +126,7 @@ export default function KakaopayBuyVersion2() {
             }
         );
 
+        console.log(data.url);
         navigate(data.url);
 
     }, [orders]);
