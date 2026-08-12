@@ -110,6 +110,14 @@ export default function WebSocketV3MemberClient() {
             client.deactivate();//비활성화
         }
     }, []);
+
+    //client가 연결중인지 확인하는 메모
+    const isConnect = useMemo(() => {
+        if (client === null) return false;//client가 없는 경우
+        if (client.active === false) return false;//deactivate() 상태인 경우
+        return true;
+    }, [client]);
+
     //메세지 전송 함수
     const sendMessage = useCallback(() => {
         //보낼 수 있는 상태인지를 검증
@@ -128,14 +136,9 @@ export default function WebSocketV3MemberClient() {
         //전송
         client.publish(stompMessage);
         setInput("");//입력값 청소
-    }, [client, input]);
+    }, [client, input, isConnect]);
 
-    //client가 연결중인지 확인하는 메모
-    const isConnect = useMemo(() => {
-        if (client === null) return false;//client가 없는 경우
-        if (client.active === false) return false;//deactivate() 상태인 경우
-        return true;
-    }, [client]);
+    
 
     //(+추가) 스크롤을 끝으로 갱신시키는 처리(반대도 가능), 
     const messageWrapperRef = useRef();
@@ -186,6 +189,7 @@ export default function WebSocketV3MemberClient() {
                 <h4>현재 아이디:{loginUser.accountId}</h4>
             </Col>
         </Row>
+        {/* 입력창 */}
         <Row className="mt-5">
             <Form.Label column sm={3}>메세지 입력</Form.Label>
             <Col sm={9}>
