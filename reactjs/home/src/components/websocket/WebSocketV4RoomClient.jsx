@@ -3,12 +3,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { apiClient } from "@utils/reaxios";
 import Swal from "sweetalert2";
-import { Col, ListGroup, ListGroupItem, Row, Form, Button } from "react-bootstrap";
+import { Col, ListGroup, ListGroupItem, Row, Form, Button, Badge } from "react-bootstrap";
 import { useAtomValue } from "jotai";
 import { loginUserState } from "@utils/storage";
-import { FaCircleInfo, FaUsers, FaPaperPlane, FaChevronDown } from "react-icons/fa6";
+import { FaCircleInfo, FaUsers, FaPaperPlane, FaChevronDown, FaXmark } from "react-icons/fa6";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
+import { GiExitDoor } from "react-icons/gi";
 
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
@@ -56,31 +57,31 @@ export default function WebSocketV4RoomClient() {
     const inputRef = useRef();//입력창 제어용 리모컨
     const [users, setUsers] = useState([]);//접속한 사용자의 목록
     const [last, setLast] = useState(true);//더버기 가능 여부
-    const lastMessageNo = useMemo(()=>{
-        if(!history) return null;
-        if(history.length === 0) return null;
+    const lastMessageNo = useMemo(() => {
+        if (!history) return null;
+        if (history.length === 0) return null;
 
         return history[0].no || null;
     }, [history]);
 
     //웹소켓과 별개로 채팅내역을 불러오는 작업이 필요
-    useEffect(()=>{
+    useEffect(() => {
         loadHistory();
     }, []);
-    const loadHistory = useCallback(async()=>{
-        const {data} = await apiClient.post(`/room/${roomNo}/messages`, 
-            {size : 100}
+    const loadHistory = useCallback(async () => {
+        const { data } = await apiClient.post(`/room/${roomNo}/messages`,
+            { size: 100 }
         );
         // console.log(data);
         setHistory(data.messages);
         setLast(data.last);
     }, []);
-    const loadMoreHistory = useCallback(async()=>{
-        const {data} = await apiClient.get(`/room/${roomNo}/messages`,
-            {size:100, lastMessageNo : lastMessageNo}
+    const loadMoreHistory = useCallback(async () => {
+        const { data } = await apiClient.get(`/room/${roomNo}/messages`,
+            { size: 100, lastMessageNo: lastMessageNo }
         );
         // console.log(data);
-        setHistory(prev=>[...data.messages, ...prev]);//앞에 추가
+        setHistory(prev => [...data.messages, ...prev]);//앞에 추가
         setLast(data.last);
     }, [lastMessageNo]);
 
@@ -146,6 +147,15 @@ export default function WebSocketV4RoomClient() {
                     console.log(jsonArray);
                     setUsers(jsonArray);
                 });
+                client.subscribe(`/private/${roomNo}/action/${loginUser.accountId}`, (message)=>{
+                    const text = message.body;
+                    switch(cmd){
+                        case "leave":
+                            toast.error("방에서 추방되셨습니다.");
+                            navigate("/websocket/v4");
+                        break;
+                    }
+                })
 
             },
             //디버깅 설정(옵션)
@@ -196,36 +206,36 @@ export default function WebSocketV4RoomClient() {
 
     const topFlag = useRef(true);//최상단이면 true, 아니면 false인 값(태그 제거 목적이 아님)
 
-    useEffect(()=>{
-        if(topFlag.current === true ){
+    useEffect(() => {
+        if (topFlag.current === true) {
             keepScrollTop();
         }
     }, [history]);
-    const isScrollTop = useCallback(()=>{
+    const isScrollTop = useCallback(() => {
         // console.log(messageWrapperRef.current.scrollTop, messageWrapperRef.current.scrollHeight);
         // topFlag.current = true or false;
         // console.log("실행되고있니");
-        if(messageWrapperRef.current){
-            const {scrollTop, schollHeight, clientHeight} = messageWrapperRef.current;
-            console.log(`scrollTop = ${schrollTop}, 
-                        scrollHeight = ${schrollHeight},
+        if (messageWrapperRef.current) {
+            const { scrollTop, scrollHeight, clientHeight } = messageWrapperRef.current;
+            console.log(`scrollTop = ${scrollTop}, 
+                        scrollHeight = ${scrollHeight},
                         clientHeight = ${clientHeight}`)
 
             const diff = scrollHeight - Math.abs(scrollTop) + clientHeight;
             topFlag.current = diff <= 5;
-            console.log("스크롤 최상단 여부 : "+ topFlag.current);
+            console.log("스크롤 최상단 여부 : " + topFlag.current);
         }
 
         // return false;
     }, []);
-    const keepScrollTop = useCallback(()=>{
-        if(messageWrapperRef.current){
+    const keepScrollTop = useCallback(() => {
+        if (messageWrapperRef.current) {
             // messageWrapperRef.current.scrollTop = 0;//처음으로 (하단)
             messageWrapperRef.current.scrollTop = - messageWrapperRef.current.scrollHeight;//마지막으로 (상단)
         }
     }, []);
 
-    
+
 
     //시간을 표시해야 되는 상황인지 판정하는 함수
     const checkTimeVisible = useCallback((curr, prev) => {
@@ -252,6 +262,51 @@ export default function WebSocketV4RoomClient() {
         if (curr.type !== next.type) return true;
 
         return false;
+
+    }, []);
+
+    //방 나가기
+    const exitRoom = useCallback(async () => {
+
+        //확인창
+        const result = await Swal.fire({
+            title: `방을 나가시겠습니까?`,
+            text: "사라진 대화내역은 다시 복구할 수 없습니다",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "네, 나가겠습니다.",
+            confirmButtonColor: "#d63031",
+            cancelButtonText: "아니오, 나가지 않겠습니다.",
+            cancelButtonColor: "#b2bec3"
+        });
+        if (result.isConfirmed === false) return;
+
+        //서버에 알려 처리하고
+        const { data } = await apiClient.post(`/room/leave`, { roomNo: roomNo });
+
+        //목록으로 이동
+
+        navigate("/websocket/v4");
+    }, [roomNo]);
+
+    const kickRoom = useCallback(async (target) => {
+
+        //확인창
+        const result = await Swal.fire({
+            title: `${target.accountId}님을 추방하시겠습니까?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "네, 추방하겠습니다.",
+            confirmButtonColor: "#d63031",
+            cancelButtonText: "아니오, 추방하지 않겠습니다.",
+            cancelButtonColor: "#b2bec3"
+        });
+        if (result.isConfirmed === false) return;
+
+
+        //서버에 알려 처리하고
+        const { data } = await apiClient.post('/room/kick', 
+            {roomNo : roomNo, accountId : target.accountId});
 
     }, []);
 
@@ -282,8 +337,17 @@ export default function WebSocketV4RoomClient() {
             </Col>
             <Col sm={9}>? / {room.roomLimit ?? "제한 없음"}</Col>
         </Row>
+        {/* 나가기 버튼 */}
+        <Row>
+            <Col className="text-end">
+                <Button variant="danger" onClick={exitRoom}>
+                    <GiExitDoor />
+                    <span className="ms-2">퇴실하기</span>
+                </Button>
+            </Col>
+        </Row>
 
-                {/* 입력창 */}
+        {/* 입력창 */}
         <Row className="mt-5">
             <Form.Label column sm={3}>메세지 입력</Form.Label>
             <Col sm={9}>
@@ -291,7 +355,7 @@ export default function WebSocketV4RoomClient() {
                 <div className="d-flex">
                     {/* 입력창과 버튼은 연결이 활성화 되어있을 경우에만 사용 가능하도록 설정 */}
                     <Form.Control type="text" disabled={isConnect === false}
-                    ref={inputRef}
+                        ref={inputRef}
                         value={input}
                         onChange={e => setInput(e.target.value)}
                         onKeyUp={e => {
@@ -314,25 +378,25 @@ export default function WebSocketV4RoomClient() {
         {/* 메세지를 출력 (+부트스트랩 디자인) */}
         <Row className="mt-5">
             <Col xs={12} className="fs-4">
-                        <FaUsers className="me-2"/>
-                        <span>{users.length}명</span>
+                <FaUsers className="me-2" />
+                <span>{users.length}명</span>
             </Col>
-          
+
             {/* <Col xs={12}>
                       현재 스크롤 최상단 여부 : {topFlag.current ? "TRUE" : "FALSE"}  
             </Col> */}
             {/* 메세지 이력 */}
 
-            <Col sm={9}>
-                <div className="message-wrapper" ref={messageWrapperRef} 
-                onScroll={isScrollTop}>
+            <Col sm={8}>
+                <div className="message-wrapper" ref={messageWrapperRef}
+                    onScroll={isScrollTop}>
                     {/* 맨아래 */}
                     {last === false && (
-                    <Button variant="secondary" onClick={loadMoreHistory}>
-                        <FaChevronDown/>
-                        <span className="mx-2">메세지불러오기</span>
-                        <FaChevronDown/>
-                    </Button>
+                        <Button variant="secondary" onClick={loadMoreHistory}>
+                            <FaChevronDown />
+                            <span className="mx-2">메세지불러오기</span>
+                            <FaChevronDown />
+                        </Button>
                     )}
                     {history.map((message, index) => {
                         //내 메세지인지 판정
@@ -398,7 +462,7 @@ export default function WebSocketV4RoomClient() {
                                                         -발신자에게는 수신자의 정보가
                                                         -수신자에게는 발신자의 정보가 
                                                     */}
-                                                    <FaCircleInfo className="ms-2"/>
+                                                    <FaCircleInfo className="ms-2" />
                                                     {my ? (<>
                                                         {`To.${message.receiverNickname}`}
                                                         <Badge bg="primary" className="ms-2">
@@ -426,14 +490,14 @@ export default function WebSocketV4RoomClient() {
                                         </div>
                                     </div>
                                 )}
-            
+
                                 {/* 시스템 메세지 */}
-                                {message.type === "system"&&(
+                                {message.type === "system" && (
                                     <div className={`system-message 
                                     text-${message.level} 
                                     bg-${message.level}  
                                     border-${message.level}`}
-                                    style={{"--bs-bg-opacity" : ".10"}}>
+                                        style={{ "--bs-bg-opacity": ".10" }}>
                                         {message.content}
                                     </div>
                                 )}
@@ -445,18 +509,40 @@ export default function WebSocketV4RoomClient() {
                 </div>
             </Col>
 
-              {/* 사용자 목록 */}
-                    <Col sm={3}>
-                    <ListGroup>
-                        {users.map((user,index)=>(
-                            <ListGroupItem key={index}>
-                                <span onClick={()=>sendDM(user.accountId)} style={{cursor:"pointer"}} >
-                                    {user.accountId}
-                                </span>
-                            </ListGroupItem>
-                        ))}
-                    </ListGroup>
-                    </Col>
+            {/* 사용자 목록 */}
+            {/* 사용자 목록 */}
+            <Col sm={4}>
+                <ListGroup>
+                    {users.map((user,index)=>(
+                    <ListGroupItem key={index} 
+                        className={user.accountId === loginUser.accountId ? "active" : ""}
+                        
+                        style={{"cursor":"pointer"}}>
+                        
+                        <div className="d-flex justify-content-between">
+                            <div>
+                                <span>{user.accountId}</span>
+                                { user.accountId === loginUser.accountId && (
+                                    <span className="ms-1 fw-bold">(나)</span>
+                                ) }                                
+                            </div>
+                            <div>
+                                {/* 방장이면서 자신을 제외한 사람에게 x마크를 추가 */}
+                                {   ( 
+                                    room.roomOwner === loginUser.accountId 
+                                    && 
+                                    user.accountId !== loginUser.accountId
+                                    ) && (
+                                    <FaXmark className="text-danger fw-bold"
+                                        onClick={e=>kickRoom(user)}/>    
+                                )}
+                            </div>
+                        </div>
+                        
+                    </ListGroupItem>
+                    ))}
+                </ListGroup>
+            </Col>
         </Row>
 
 
