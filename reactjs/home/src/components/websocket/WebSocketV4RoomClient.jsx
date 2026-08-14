@@ -55,6 +55,34 @@ export default function WebSocketV4RoomClient() {
     const [input, setInput] = useState("");//사용자의 입력
     const inputRef = useRef();//입력창 제어용 리모컨
     const [users, setUsers] = useState([]);//접속한 사용자의 목록
+    const [last, setLast] = useState(true);//더버기 가능 여부
+    const lastMessageNo = useMemo(()=>{
+        if(!history) return null;
+        if(history.length === 0) return null;
+
+        return history[0].no || null;
+    }, [history]);
+
+    //웹소켓과 별개로 채팅내역을 불러오는 작업이 필요
+    useEffect(()=>{
+        loadHistory();
+    }, []);
+    const loadHistory = useCallback(async()=>{
+        const {data} = await apiClient.post(`/room/${roomNo}/messages`, 
+            {size : 100}
+        );
+        // console.log(data);
+        setHistory(data.messages);
+        setLast(data.last);
+    }, []);
+    const loadMoreHistory = useCallback(async()=>{
+        const {data} = await apiClient.get(`/room/${roomNo}/messages`,
+            {size:100, lastMessageNo : lastMessageNo}
+        );
+        // console.log(data);
+        setHistory(prev=>[...data.messages, ...prev]);//앞에 추가
+        setLast(data.last);
+    }, [lastMessageNo]);
 
     //연결 및 해제 
     useEffect(() => {
