@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import { Col, ListGroup, ListGroupItem, Row, Form, Button } from "react-bootstrap";
 import { useAtomValue } from "jotai";
 import { loginUserState } from "@utils/storage";
-import { FaCircleInfo, FaUsers, FaPaperPlane } from "react-icons/fa6";
+import { FaCircleInfo, FaUsers, FaPaperPlane, FaChevronDown } from "react-icons/fa6";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 
@@ -194,12 +194,38 @@ export default function WebSocketV4RoomClient() {
     //(+추가) 스크롤을 끝으로 갱신시키는 처리(반대도 가능), 
     const messageWrapperRef = useRef();
 
-    useEffect(() => {
+    const topFlag = useRef(true);//최상단이면 true, 아니면 false인 값(태그 제거 목적이 아님)
+
+    useEffect(()=>{
+        if(topFlag.current === true ){
+            keepScrollTop();
+        }
+    }, [history]);
+    const isScrollTop = useCallback(()=>{
+        // console.log(messageWrapperRef.current.scrollTop, messageWrapperRef.current.scrollHeight);
+        // topFlag.current = true or false;
+        // console.log("실행되고있니");
+        if(messageWrapperRef.current){
+            const {scrollTop, schollHeight, clientHeight} = messageWrapperRef.current;
+            console.log(`scrollTop = ${schrollTop}, 
+                        scrollHeight = ${schrollHeight},
+                        clientHeight = ${clientHeight}`)
+
+            const diff = scrollHeight - Math.abs(scrollTop) + clientHeight;
+            topFlag.current = diff <= 5;
+            console.log("스크롤 최상단 여부 : "+ topFlag.current);
+        }
+
+        // return false;
+    }, []);
+    const keepScrollTop = useCallback(()=>{
         if(messageWrapperRef.current){
             // messageWrapperRef.current.scrollTop = 0;//처음으로 (하단)
             messageWrapperRef.current.scrollTop = - messageWrapperRef.current.scrollHeight;//마지막으로 (상단)
         }
-    }, [history]);
+    }, []);
+
+    
 
     //시간을 표시해야 되는 상황인지 판정하는 함수
     const checkTimeVisible = useCallback((curr, prev) => {
@@ -292,10 +318,22 @@ export default function WebSocketV4RoomClient() {
                         <span>{users.length}명</span>
             </Col>
           
+            {/* <Col xs={12}>
+                      현재 스크롤 최상단 여부 : {topFlag.current ? "TRUE" : "FALSE"}  
+            </Col> */}
             {/* 메세지 이력 */}
 
             <Col sm={9}>
-                <div className="message-wrapper" ref={messageWrapperRef}>
+                <div className="message-wrapper" ref={messageWrapperRef} 
+                onScroll={isScrollTop}>
+                    {/* 맨아래 */}
+                    {last === false && (
+                    <Button variant="secondary" onClick={loadMoreHistory}>
+                        <FaChevronDown/>
+                        <span className="mx-2">메세지불러오기</span>
+                        <FaChevronDown/>
+                    </Button>
+                    )}
                     {history.map((message, index) => {
                         //내 메세지인지 판정
                         const my = loginUser.accountId === message.senderId;
@@ -402,6 +440,7 @@ export default function WebSocketV4RoomClient() {
                             </div>
                         );
                     })}
+
 
                 </div>
             </Col>
