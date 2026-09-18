@@ -7,6 +7,7 @@ on:
       - main
     paths: 
       - 'reactjs/demo01/**'
+      - '.github/workflows/deploy.yml'
 
 permissions: 
   contents: write
