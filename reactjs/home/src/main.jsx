@@ -37,7 +37,7 @@ import { Provider } from "jotai";
 
 createRoot(document.getElementById('root')).render(
   // <StrictMode>
-  <BrowserRouter>
+  <BrowserRouter basename="/views">
     {/* <HashRouter> */}
     <Provider>
       {/* 개발모드일 때만 표시되도록 조건 설정, 포함하고 빌드할 때는 없어지게 조건을 걸어야함 */}
